@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    // Connexion
     private void signIn() {
         showProgressBar();
         authenticationHelper.getPublicClient().getAccounts(new PublicClientApplication.AccountsLoadedCallback() {

@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.PublicClientApplication;
+import com.microsoft.identity.client.exception.MsalClientException;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class AuthenticationHelper {
 
     /*Debug*/
     private final String TAG = AuthenticationHelper.class.getSimpleName();
-
 
     private AuthenticationHelper(Context ctx) {
         this.clientid = Constantes.CLIENT_ID;
@@ -64,20 +64,18 @@ public class AuthenticationHelper {
     }
 
     // Connexion silencieuse - utilisée s'il y a déjà un compte d'utilisateur dans le cache MSAL
-    public void acquireTokenSilently(AuthenticationCallback callback) {
-        publicClientApplication.acquireTokenSilentAsync(scopes, getMAccounts(), callback);
-    }
-
-    // vérifie le compte courant
-    private IAccount getMAccounts() {
+    public void acquireTokenSilently(final AuthenticationCallback callback) {
         publicClientApplication.getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
             @Override
             public void onAccountsLoaded(List<IAccount> accounts) {
-                accounts.get(0);
+                if(!accounts.isEmpty()){
+                    publicClientApplication.acquireTokenSilentAsync(scopes, accounts.get(0), callback);
+                }else{
+                    /* no account */
+                }
             }
         });
-        return null;
-    }
 
+    }
 
 }
