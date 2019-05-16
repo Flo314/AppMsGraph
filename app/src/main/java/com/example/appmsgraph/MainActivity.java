@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 //    /* Azure AD Variables */
 //    private PublicClientApplication publicClientApplication;
 //    private AuthenticationResult authResult;
-    AuthenticationCallback callback;
-
+    AuthenticationCallback callback = null;
+    AuthenticationResult authResult = null;
     AuthenticationHelper authenticationHelper = null;
 
     /*Debug*/
@@ -70,10 +70,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(AuthenticationHelper.getInstance(this).getPublicClient() != null){
+            AuthenticationHelper.getInstance(this).getPublicClient().handleInteractiveRequestRedirect(requestCode, resultCode, data);
+            Log.d(TAG, "Token: " + authResult.getIdToken());
+        }
+    }
+
     private void onSign() {
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
-        authenticationHelper.getPublicClient();
-        authenticationHelper.doAquireToken(this, callback);
+        final List<Account> users = null;
+        try {
+            authenticationHelper.getPublicClient().getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
+                @Override
+                public void onAccountsLoaded(List<IAccount> accounts) {
+
+                    if (users != null && users.size() == 1) {
+                        /* 1 user */
+                        authenticationHelper.getPublicClient().acquireTokenSilentAsync(SCOPES, (IAccount) users.get(0), authenticationHelper.getAuthSilentCallback());
+                    } else {
+                        /* 0 user */
+                        authenticationHelper.getPublicClient().acquireToken(getActivity(), SCOPES, authenticationHelper.getAuthInteractiveCallback());
+                    }
+                }
+            });
+
+        } catch (IndexOutOfBoundsException e) {
+            Log.d(TAG, "User at this position does not exist: " + e.toString());
+        }
     }
 
     //    /* Regarde si les jetons sont dans le cache (rafraîchit si nécessaire et si on ne force pas Refresh */
@@ -172,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    // ProgressBar ---------------------------------------------------------------------------------------
 
     private void showProgressBar() {
         runOnUiThread(new Runnable() {

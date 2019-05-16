@@ -54,30 +54,30 @@ public class AuthenticationHelper {
     }
 
     public void doAquireToken(final Activity activity, AuthenticationCallback callback ){
-        //publicClientApplication.acquireToken(getActivity(), SCOPES, getAuthInteractiveCallback());
+        publicClientApplication.acquireToken(activity, SCOPES, getAuthInteractiveCallback());
 
         /* Essayer d'obtenir un utilisateur et acquérir TokenSilent
           Si cela échoue, demande interactive */
-        final List<Account> users = null;
-
-        try {
-            publicClientApplication.getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
-                @Override
-                public void onAccountsLoaded(List<IAccount> accounts) {
-
-                    if (users != null && users.size() == 1) {
-                        /* 1 user */
-                        publicClientApplication.acquireTokenSilentAsync(SCOPES, (IAccount) users.get(0), getAuthSilentCallback());
-                    } else {
-                        /* 0 user */
-                        publicClientApplication.acquireToken(activity, SCOPES, getAuthInteractiveCallback());
-                    }
-                }
-            });
-
-        } catch (IndexOutOfBoundsException e) {
-            Log.d(TAG, "User at this position does not exist: " + e.toString());
-        }
+//        final List<Account> users = null;
+//
+//        try {
+//            publicClientApplication.getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
+//                @Override
+//                public void onAccountsLoaded(List<IAccount> accounts) {
+//
+//                    if (users != null && users.size() == 1) {
+//                        /* 1 user */
+//                        publicClientApplication.acquireTokenSilentAsync(SCOPES, (IAccount) users.get(0), getAuthSilentCallback());
+//                    } else {
+//                        /* 0 user */
+//                        publicClientApplication.acquireToken(activity, SCOPES, getAuthInteractiveCallback());
+//                    }
+//                }
+//            });
+//
+//        } catch (IndexOutOfBoundsException e) {
+//            Log.d(TAG, "User at this position does not exist: " + e.toString());
+//        }
     }
 
     public AuthenticationCallback getAuthInteractiveCallback() {
@@ -119,7 +119,7 @@ public class AuthenticationHelper {
             @Override
             public void onSuccess(IAuthenticationResult authenticationResult) {
                 /* Successfully got a token, call Graph now */
-                Log.d(TAG, "Successfully authenticated");
+                Log.d(TAG, "Successfully authenticated: " + authenticationResult.getIdToken());
 
                 /* Store the authResult */
                 authResult = (AuthenticationResult) authenticationResult;
@@ -133,6 +133,7 @@ public class AuthenticationHelper {
                 }else if(exception instanceof MsalClientException){
                     // Exception lors de la communication avec le serveur d'authentification
                 }else if(exception instanceof MsalServiceException);
+                Log.d(TAG, "OnError cache: " + exception.toString());
             }
 
             @Override
