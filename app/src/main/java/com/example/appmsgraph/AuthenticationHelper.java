@@ -1,146 +1,83 @@
 package com.example.appmsgraph;
 
-
-import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
 
 import com.microsoft.identity.client.AuthenticationCallback;
-import com.microsoft.identity.client.AuthenticationResult;
 import com.microsoft.identity.client.IAccount;
-import com.microsoft.identity.client.IAuthenticationResult;
 import com.microsoft.identity.client.PublicClientApplication;
-import com.microsoft.identity.client.exception.MsalClientException;
-import com.microsoft.identity.client.exception.MsalException;
-import com.microsoft.identity.client.exception.MsalServiceException;
-import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
 import java.util.List;
+
 
 public class AuthenticationHelper {
 
     private static AuthenticationHelper INSTANCE = null;
     private static PublicClientApplication publicClientApplication = null;
     public static Context context;
-    private Activity activity;
 
-    final static String CLIENT_ID = Constantes.CLIENT_ID;
-    final static String SCOPES [] = Constantes.SCOPES;
+    private String clientid;
+    private String scopes[];
 
     /*Debug*/
     private final String TAG = AuthenticationHelper.class.getSimpleName();
 
-    private AuthenticationResult authResult;
 
-    private AuthenticationHelper(){
+    private AuthenticationHelper(Context ctx) {
+        this.clientid = Constantes.CLIENT_ID;
+        this.scopes = Constantes.SCOPES;
+        publicClientApplication = new PublicClientApplication(ctx, clientid);
     }
 
-    public static synchronized AuthenticationHelper getInstance(Context ctx){
-        // En passant le context on sauve le context qui est l'activity elle-même
-        context = ctx;
-
-        if(INSTANCE == null){
-            INSTANCE = new AuthenticationHelper();
-            if(publicClientApplication == null){
-                publicClientApplication = new PublicClientApplication(ctx, CLIENT_ID);
-            }
+    public static synchronized AuthenticationHelper getInstance(Context ctx) {
+        if (INSTANCE == null) {
+            INSTANCE = new AuthenticationHelper(ctx);
         }
+
         return INSTANCE;
     }
 
-    public PublicClientApplication getPublicClient(){
+    // Version appelée à partir de fragments. Ne crée pas de
+    // instance s'il n'en existe pas
+    public static synchronized AuthenticationHelper getInstance() {
+        if (INSTANCE == null) {
+            throw new IllegalStateException(
+                    "AuthenticationHelper has not been initialized from MainActivity");
+        }
+
+        return INSTANCE;
+    }
+
+    public PublicClientApplication getPublicClient() {
         return publicClientApplication;
     }
 
-    public void doAquireToken(final Activity activity, AuthenticationCallback callback ){
-        publicClientApplication.acquireToken(activity, SCOPES, getAuthInteractiveCallback());
 
-        /* Essayer d'obtenir un utilisateur et acquérir TokenSilent
-          Si cela échoue, demande interactive */
-//        final List<Account> users = null;
-//
-//        try {
-//            publicClientApplication.getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
-//                @Override
-//                public void onAccountsLoaded(List<IAccount> accounts) {
-//
-//                    if (users != null && users.size() == 1) {
-//                        /* 1 user */
-//                        publicClientApplication.acquireTokenSilentAsync(SCOPES, (IAccount) users.get(0), getAuthSilentCallback());
-//                    } else {
-//                        /* 0 user */
-//                        publicClientApplication.acquireToken(activity, SCOPES, getAuthInteractiveCallback());
-//                    }
-//                }
-//            });
-//
-//        } catch (IndexOutOfBoundsException e) {
-//            Log.d(TAG, "User at this position does not exist: " + e.toString());
-//        }
+    public void handleRedirect(int requestCode, int resultCode, Intent data) {
+        publicClientApplication.handleInteractiveRequestRedirect(requestCode, resultCode, data);
     }
 
-    public AuthenticationCallback getAuthInteractiveCallback() {
-        return new AuthenticationCallback() {
-
-            @Override
-            public void onSuccess(IAuthenticationResult authenticationResult) {
-                /* Successfully got a token, call graph now */
-                Log.d(TAG, "Successfully authenticated");
-                Log.d(TAG, "ID Token: " + authenticationResult.getIdToken());
-
-                /* Store the auth result */
-                authResult = (AuthenticationResult) authenticationResult;
-            }
-
-            @Override
-            public void onError(MsalException exception) {
-                /* Failed to acquireToken */
-                Log.d(TAG, "Authentication failed: " + exception.toString());
-
-                if (exception instanceof MsalClientException) {
-                    /* Exception inside MSAL, more info inside MsalError.java */
-                } else if (exception instanceof MsalServiceException) {
-                    /* Exception when communicating with the STS, likely config issue */
-                }
-            }
-
-            @Override
-            public void onCancel() {
-                /* User cancelled the authentication */
-                Log.d(TAG, "User cancelled login.");
-            }
-        };
+    // Demander à l'utilisateur de se connecter
+    public void acquireTokenInteractively(Activity activity, AuthenticationCallback callback) {
+        publicClientApplication.acquireToken(activity, scopes, callback);
     }
 
-    /* Regarde si les jetons sont dans le cache (rafraîchit si nécessaire et si on ne force pas Refresh */
-    public AuthenticationCallback getAuthSilentCallback(){
-        return new AuthenticationCallback() {
-            @Override
-            public void onSuccess(IAuthenticationResult authenticationResult) {
-                /* Successfully got a token, call Graph now */
-                Log.d(TAG, "Successfully authenticated: " + authenticationResult.getIdToken());
-
-                /* Store the authResult */
-                authResult = (AuthenticationResult) authenticationResult;
-            }
-
-            @Override
-            public void onError(MsalException exception) {
-                // vérifie le type d'exception
-                if(exception instanceof MsalUiRequiredException){
-                    // Exception dans Msal
-                }else if(exception instanceof MsalClientException){
-                    // Exception lors de la communication avec le serveur d'authentification
-                }else if(exception instanceof MsalServiceException);
-                Log.d(TAG, "OnError cache: " + exception.toString());
-            }
-
-            @Override
-            public void onCancel() {
-                /* User cancelled the authentication */
-                Log.d(TAG, "User cancelled login.");
-            }
-        };
+    // Connexion silencieuse - utilisée s'il y a déjà un compte d'utilisateur dans le cache MSAL
+    public void acquireTokenSilently(AuthenticationCallback callback) {
+        publicClientApplication.acquireTokenSilentAsync(scopes, getMAccounts(), callback);
     }
+
+    // vérifie le compte courant
+    private IAccount getMAccounts() {
+        publicClientApplication.getAccounts(new PublicClientApplication.AccountsLoadedCallback() {
+            @Override
+            public void onAccountsLoaded(List<IAccount> accounts) {
+                accounts.get(0);
+            }
+        });
+        return null;
+    }
+
+
 }
