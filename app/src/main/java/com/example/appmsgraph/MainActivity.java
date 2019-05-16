@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
+import com.example.appmsgraph.auth.AuthenticationHelper;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.IAuthenticationResult;

@@ -1,4 +1,4 @@
-package com.example.appmsgraph;
+package com.example.appmsgraph.auth;
 
 public class Constantes {
 

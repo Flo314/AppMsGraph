@@ -1,4 +1,4 @@
-package com.example.appmsgraph;
+package com.example.appmsgraph.auth;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.PublicClientApplication;
-import com.microsoft.identity.client.exception.MsalClientException;
 
 import java.util.List;
 
