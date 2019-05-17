@@ -10,15 +10,16 @@ import android.widget.TextView;
 import com.example.appmsgraph.model.Fields;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * adaptateur qui sera utilisé par RecyclerView pour afficher la liste des collaborateurs
  */
 public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> {
 
-    private ArrayList<Fields> dataList;
+    private List<Fields> dataList;
 
-    public CollaboratorAdapter(ArrayList<Fields> dataList) {
+    public CollaboratorAdapter(List<Fields> dataList) {
         this.dataList = dataList;
     }
 
