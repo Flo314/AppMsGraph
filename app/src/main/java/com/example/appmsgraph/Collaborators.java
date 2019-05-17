@@ -1,4 +1,4 @@
 package com.example.appmsgraph;
 
-class Collaborators {
+public class Collaborators {
 }

@@ -3,6 +3,7 @@ package com.example.appmsgraph.auth;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
@@ -37,8 +38,7 @@ public class AuthenticationHelper {
         return INSTANCE;
     }
 
-    // Version appelée à partir de fragments. Ne crée pas de
-    // instance s'il n'en existe pas
+    // Version appelée à partir de fragments. Ne crée pas de instance s'il n'en existe pas
     public static synchronized AuthenticationHelper getInstance() {
         if (INSTANCE == null) {
             throw new IllegalStateException(
@@ -71,6 +71,7 @@ public class AuthenticationHelper {
                     publicClientApplication.acquireTokenSilentAsync(scopes, accounts.get(0), callback);
                 }else{
                     /* no account */
+                    Log.d(TAG, "No account");
                 }
             }
         });

@@ -24,7 +24,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/me";
 
     AuthenticationHelper authenticationHelper = null;
 

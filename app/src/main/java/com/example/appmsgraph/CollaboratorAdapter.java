@@ -29,7 +29,10 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CollaboratorViewHolder collaboratorViewHolder, int i) {
+    public void onBindViewHolder(@NonNull CollaboratorViewHolder holder, int position) {
+//        holder.textnamecollab.setText(dataList.get(position).getTitle());
+//        holder.textlastvisite.setText(dataList.get(position).getPrenom());
+//        holder.textdate.setText(dataList.get(position).getVisite());
 
     }
 
