@@ -12,7 +12,6 @@ public interface GetDataService {
 
     // https://graph.microsoft.com/v1.0/me
 
-    // nom du fichier qui fournira les données JSON
     // Spécifier le type de requête et transmettre l'URL relative
     @GET("me")
 
