@@ -1,15 +1,22 @@
 package com.example.appmsgraph;
 
 import android.content.Intent;
+import android.media.Image;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.example.appmsgraph.auth.AuthenticationHelper;
+import com.example.appmsgraph.model.Fields;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.IAuthenticationResult;
@@ -19,12 +26,13 @@ import com.microsoft.identity.client.exception.MsalException;
 import com.microsoft.identity.client.exception.MsalServiceException;
 import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
+    /*Auth*/
     AuthenticationHelper authenticationHelper = null;
 
     /*Debug*/
@@ -32,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     /*UI*/
     Button btnSign;
+    ImageView logo;
     private ProgressBar mProgress = null;
+    private CollaboratorAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
 
         mProgress = findViewById(R.id.progressbar);
-
+        logo = findViewById(R.id.logo);
         btnSign = findViewById(R.id.btnSign);
         btnSign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    /* Helper methods Authentification
+    * =================================
+    */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -78,15 +93,18 @@ public class MainActivity extends AppCompatActivity {
     private AuthenticationCallback getAuthCallback() {
         return new AuthenticationCallback() {
             @Override
+            // success
             public void onSuccess(IAuthenticationResult authenticationResult) {
                 // token
                 String accessToken = authenticationResult.getAccessToken();
                 Log.d(TAG, "Authentication success!!! ");
                 Log.d(TAG, "Access token: " + accessToken);
                 hideProgressBar();
+                updateSuccessUI();
             }
 
             @Override
+            // error
             public void onError(MsalException exception) {
                 // vérifie le type d'exception
                 if (exception instanceof MsalUiRequiredException) {
@@ -94,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
                     doInteractiveSignIn();
 
                 } else if (exception instanceof MsalClientException) {
-                    //Exception dans MSAL, plus d'informations dans MsalError.java
-                    Log.e(TAG, "Client error authenticating: ", exception);
+                    // Exception dans MSAL, plus d'informations dans MsalError.java
+                    Log.e(TAG, "Client error authenticating: "+ exception.toString());
                 } else if (exception instanceof MsalServiceException) {
                     // Exception lors de la communication avec le serveur d'authentification
-                    Log.e(TAG, "Service error authenticating: ", exception);
+                    Log.e(TAG, "Service error authenticating: "+ exception.toString());
                 }
                 hideProgressBar();
             }
@@ -129,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // ProgressBar ---------------------------------------------------------------------------------------
+    /* ProgressBar
+    * ============= */
 
     private void showProgressBar() {
         runOnUiThread(new Runnable() {
@@ -149,7 +168,30 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Cycle de vie Activity ------------------------------------------------------------------------------
+    /* Helper methods gèrent les mises à jour de l'interface utilisateur
+     * =================================================================
+     * updateSuccessUi() - Met à jour l'interface utilisateur lorsque l'acquisition de jeton réussit
+     * loadDataList() - charge les données réseaux dans le recyclerview */
+
+    private void updateSuccessUI(){
+        btnSign.setVisibility(View.INVISIBLE);
+        logo.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void loadDataList(ArrayList<Fields> datalist){
+        recyclerView = findViewById(R.id.recyclerview);
+        adapter = new CollaboratorAdapter(datalist);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
+
+
+
+    /* Cycle de vie Activity
+    * =======================*/
 
     @Override
     protected void onStart() {
