@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitInstance {
 
     private static Retrofit retrofit;
-    final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/";
+    final static String MSGRAPH_URL = "https://graph.microsoft.com/v1.0/sites/florentlosada.sharepoint.com,";
 
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {

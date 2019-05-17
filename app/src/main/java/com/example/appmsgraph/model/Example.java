@@ -1,7 +1,8 @@
 
-package com.example;
+package com.example.appmsgraph.model;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
