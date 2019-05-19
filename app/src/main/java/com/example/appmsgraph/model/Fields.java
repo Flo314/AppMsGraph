@@ -76,6 +76,12 @@ public class Fields {
     @Expose
     private String complianceTagUserId;
 
+    public Fields(String title, String visite, String prenom) {
+        this.title = title;
+        this.visite = visite;
+        this.prenom = prenom;
+    }
+
     public String getOdataEtag() {
         return odataEtag;
     }

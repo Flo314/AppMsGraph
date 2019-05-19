@@ -1,10 +1,7 @@
 package com.example.appmsgraph;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.auth.AuthenticationHelper;
 import com.example.appmsgraph.model.Fields;
+import com.example.appmsgraph.model.FieldsList;
+import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.microsoft.identity.client.AuthenticationCallback;
@@ -41,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*Auth*/
     AuthenticationHelper authenticationHelper = null;
+    String authHeader;
 
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 String accessToken = authenticationResult.getAccessToken();
                 Log.d(TAG, "Authentication success!!! ");
                 Log.d(TAG, "Access token: " + accessToken);
+                authHeader = accessToken;
                 hideProgressBar();
                 updateSuccessUI();
             }
@@ -186,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         network();
     }
 
-    private void loadDataList(List<Fields> datalist){
+    private void loadDataList(ArrayList<Fields> datalist){
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new CollaboratorAdapter(datalist);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
@@ -202,18 +203,19 @@ public class MainActivity extends AppCompatActivity {
         //Créer un identifiant pour l'interface RetrofitInstance
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
-        Call<List<Fields>> call = service.getCollaboratorsData();
+        Call<FieldsList> call = service.getCollaboratorsData(authHeader);
         Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
-        call.enqueue(new Callback<List<Fields>>() {
+        call.enqueue(new Callback<FieldsList>() {
             @Override
-            public void onResponse(Call<List<Fields>> call, Response<List<Fields>> response) {
-                loadDataList(response.body());
+            public void onResponse(Call<FieldsList> call, Response<FieldsList> response) {
+                loadDataList(response.body().getFieldsList());
                 Log.d(TAG, "Response: " + response.toString());
             }
 
             @Override
-            public void onFailure(Call<List<Fields>> call, Throwable t) {
+            public void onFailure(Call<FieldsList> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "Failure: " + t.toString());
             }

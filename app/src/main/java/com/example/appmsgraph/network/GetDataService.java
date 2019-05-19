@@ -1,7 +1,10 @@
 package com.example.appmsgraph.network;
 
 import com.example.appmsgraph.model.Fields;
+import com.example.appmsgraph.model.FieldsList;
+import com.example.appmsgraph.model.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,7 +19,7 @@ public interface GetDataService {
     @GET("lists/7ad30a01-7a94-4e6e-97a9-938e81822ff5/items?expand=fields")
 
     // Call méthode type retour EmployeeList
-    // @Query = paramètre d'URL
-    Call<List<Fields>> getCollaboratorsData(@Header("authorization") String auth);
+//    Call<List<Fields>> getCollaboratorsData();
+    Call<FieldsList> getCollaboratorsData(@Header("Authorization") String authHeader);
 }
 
