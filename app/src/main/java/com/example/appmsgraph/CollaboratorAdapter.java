@@ -55,9 +55,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
         public CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);
-            textnamecollab = (TextView) itemView.findViewById(R.id.textnamecollab);
-            textlastvisite = (TextView) itemView.findViewById(R.id.textlastvisite);
-            textdate = (TextView) itemView.findViewById(R.id.textdate);
+            textnamecollab = itemView.findViewById(R.id.textnamecollab);
+            textlastvisite = itemView.findViewById(R.id.textlastvisite);
+            textdate = itemView.findViewById(R.id.textdate);
         }
     }
 }
