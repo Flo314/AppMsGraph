@@ -3,17 +3,18 @@ package com.example.appmsgraph.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FieldsList {
 
-    @SerializedName("fields")
-    private ArrayList<Fields> fieldsList;
+    @SerializedName("fieldslist")
+    private List<Fields> fieldsList;
 
-    public ArrayList<Fields> getFieldsList() {
+    public List<Fields> getFieldsList() {
         return fieldsList;
     }
 
-    public void setFieldsList(ArrayList<Fields> fieldsList) {
+    public void setFieldsList(List<Fields> fieldsList) {
         this.fieldsList = fieldsList;
     }
 }

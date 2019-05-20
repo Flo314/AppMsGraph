@@ -4,7 +4,23 @@ package com.example.appmsgraph.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Value {
+    public Value(String odataEtag, String createdDateTime, String eTag, String id, String lastModifiedDateTime, String webUrl, CreatedBy createdBy, LastModifiedBy lastModifiedBy, ParentReference parentReference, ContentType contentType, String fieldsOdataContext, Fields fields) {
+        this.odataEtag = odataEtag;
+        this.createdDateTime = createdDateTime;
+        this.eTag = eTag;
+        this.id = id;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+        this.webUrl = webUrl;
+        this.createdBy = createdBy;
+        this.lastModifiedBy = lastModifiedBy;
+        this.parentReference = parentReference;
+        this.contentType = contentType;
+        this.fieldsOdataContext = fieldsOdataContext;
+        this.fields = fields;
+    }
 
     @SerializedName("@odata.etag")
     @Expose
