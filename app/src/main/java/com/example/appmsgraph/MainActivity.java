@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.auth.AuthenticationHelper;
 import com.example.appmsgraph.model.Fields;
-import com.example.appmsgraph.model.FieldsList;
+import com.example.appmsgraph.model.ResultValue;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
 
+    ArrayList<Object> data;
+
     /*UI*/
     Button btnSign;
     ImageView logo;
@@ -58,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
+
+        data = new ArrayList<>();
 
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
@@ -187,13 +191,14 @@ public class MainActivity extends AppCompatActivity {
         network();
     }
 
-    private void loadDataList(List<Value> datalist){
+    private void loadDataList(ArrayList<Fields> datalist){
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new CollaboratorAdapter(datalist);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
+
     }
 
     /* Helper methods gèrent les appels réseaux
@@ -203,23 +208,22 @@ public class MainActivity extends AppCompatActivity {
         //Créer un identifiant pour l'interface RetrofitInstance
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
-        Call<List<Value>> call = service.getCollaboratorsData(authHeader);
+        Call<Value> call = service.getCollaboratorsData(authHeader);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
-        call.enqueue(new Callback<List<Value>>() {
+        call.enqueue(new Callback<Value>() {
             @Override
-            public void onResponse(Call<List<Value>> call, Response<List<Value>> response) {
-                loadDataList(response.body());
-                Log.d(TAG, "Response: " + response.body().toString());
+            public void onResponse(Call<Value> call, Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
+                loadDataList(response.body().getValue());
             }
 
             @Override
-            public void onFailure(Call<List<Value>> call, Throwable t) {
+            public void onFailure(Call<Value> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "Failure: " + t.toString());
-                Log.d(TAG, "FailureCall: " + call.toString());
+                Log.e(TAG, "Failure: " + t.toString());
             }
         });
     }

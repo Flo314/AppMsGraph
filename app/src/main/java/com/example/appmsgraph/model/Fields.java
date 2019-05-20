@@ -78,31 +78,6 @@ public class Fields {
     @Expose
     private String complianceTagUserId;
 
-    public Fields(String odataEtag, String title, String visite, String prenom, String businessManager, String historiquevisite, String id, String contentType, String modified, String created, String authorLookupId, String editorLookupId, String uIVersionString, Boolean attachments, String edit, String linkTitleNoMenu, String linkTitle, String itemChildCount, String folderChildCount, String complianceFlags, String complianceTag, String complianceTagWrittenTime, String complianceTagUserId) {
-        this.odataEtag = odataEtag;
-        this.title = title;
-        this.visite = visite;
-        this.prenom = prenom;
-        this.businessManager = businessManager;
-        this.historiquevisite = historiquevisite;
-        this.id = id;
-        this.contentType = contentType;
-        this.modified = modified;
-        this.created = created;
-        this.authorLookupId = authorLookupId;
-        this.editorLookupId = editorLookupId;
-        this.uIVersionString = uIVersionString;
-        this.attachments = attachments;
-        this.edit = edit;
-        this.linkTitleNoMenu = linkTitleNoMenu;
-        this.linkTitle = linkTitle;
-        this.itemChildCount = itemChildCount;
-        this.folderChildCount = folderChildCount;
-        this.complianceFlags = complianceFlags;
-        this.complianceTag = complianceTag;
-        this.complianceTagWrittenTime = complianceTagWrittenTime;
-        this.complianceTagUserId = complianceTagUserId;
-    }
 
     public String getOdataEtag() {
         return odataEtag;

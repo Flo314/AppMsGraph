@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.appmsgraph.model.Value;
+import com.example.appmsgraph.model.Fields;
+import com.example.appmsgraph.model.Value_;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,9 +18,9 @@ import java.util.List;
  */
 public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> {
 
-    private List<Value> dataList;
+    private ArrayList<Fields> dataList;
 
-    public CollaboratorAdapter(List<Value> dataList) {
+    public CollaboratorAdapter(ArrayList<Fields> dataList) {
         this.dataList = dataList;
     }
 
@@ -32,16 +34,19 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CollaboratorViewHolder holder, int position) {
-        holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
-        holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
-        holder.textdate.setText(dataList.get(position).getFields().getVisite());
+        holder.textnamecollab.setText(dataList.get(position).getTitle());
+        holder.textlastvisite.setText(dataList.get(position).getPrenom());
+        holder.textdate.setText(dataList.get(position).getVisite());
 
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
-    }
+        if(dataList != null){
+            return dataList.size();
+        }
+        return 0;
+     }
 
     // récupère tous les item de la view
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder {

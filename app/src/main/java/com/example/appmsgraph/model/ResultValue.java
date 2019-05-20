@@ -12,7 +12,7 @@ public class ResultValue {
     private String odataContext;
     @SerializedName("value")
     @Expose
-    private List<Value> value = null;
+    private List<Value_> value = null;
 
     public String getOdataContext() {
         return odataContext;
@@ -22,11 +22,11 @@ public class ResultValue {
         this.odataContext = odataContext;
     }
 
-    public List<Value> getValue() {
+    public List<Value_> getValue() {
         return value;
     }
 
-    public void setValue(List<Value> value) {
+    public void setValue(List<Value_> value) {
         this.value = value;
     }
 
