@@ -1,6 +1,7 @@
 package com.example.appmsgraph;
 
 import android.annotation.SuppressLint;
+import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,8 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.appmsgraph.auth.AuthenticationHelper;
-import com.example.appmsgraph.model.Fields;
-import com.example.appmsgraph.model.ResultValue;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*UI*/
     Button btnSign;
+    ActionBar actionBar;
     FloatingActionButton addVisite;
     ImageView logo;
     private ProgressBar mProgress = null;
@@ -60,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        actionBar = getSupportActionBar();
+        actionBar.hide();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
+        actionBar.setTitle("Team");
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
 
@@ -192,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
         addVisite.setVisibility(View.VISIBLE);
+        actionBar.show();
         network();
     }
 
@@ -232,6 +239,21 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /* Menu ActionBar Team
+     * =======================*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    // item du menu selectionné
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
 
     /* Cycle de vie Activity
