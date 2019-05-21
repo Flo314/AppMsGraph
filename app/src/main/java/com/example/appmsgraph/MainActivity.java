@@ -1,7 +1,9 @@
 package com.example.appmsgraph;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,10 +48,9 @@ public class MainActivity extends AppCompatActivity {
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
 
-    ArrayList<Object> data;
-
     /*UI*/
     Button btnSign;
+    FloatingActionButton addVisite;
     ImageView logo;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
 
-        data = new ArrayList<>();
+        addVisite = findViewById(R.id.add_visite);
 
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
@@ -186,9 +187,11 @@ public class MainActivity extends AppCompatActivity {
      * updateSuccessUi() - Met à jour l'interface utilisateur lorsque l'acquisition de jeton réussit
      * loadDataList() - charge les données réseaux dans le recyclerview */
 
+    @SuppressLint("RestrictedApi")
     private void updateSuccessUI(){
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
+        addVisite.setVisibility(View.VISIBLE);
         network();
     }
 
