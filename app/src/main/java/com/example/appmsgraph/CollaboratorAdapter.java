@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.appmsgraph.model.Fields;
 import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.utils.ItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,14 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
 
+        // utiliser lorsqu'on veux mettre chaque donnée d'item dans la même activity
+        holder.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+            }
+        });
+
     }
 
     @Override
@@ -49,15 +58,26 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
      }
 
     // récupère tous les item de la view
-    public class CollaboratorViewHolder extends RecyclerView.ViewHolder {
+    public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textnamecollab, textlastvisite, textdate;
+        ItemClickListener itemClickListener;
 
         public CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);
             textnamecollab = itemView.findViewById(R.id.textnamecollab);
             textlastvisite = itemView.findViewById(R.id.textlastvisite);
             textdate = itemView.findViewById(R.id.textdate);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.itemClickListener.onItemClick(v, getLayoutPosition());
+        }
+
+        public void setItemClickListener(ItemClickListener ic){
+            this.itemClickListener = ic;
         }
     }
 }

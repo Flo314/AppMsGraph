@@ -249,9 +249,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // item du menu selectionné
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // icon filter
+            case R.id.action_filtre:
+                Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show();
+                return true;
+            // icon search
+            case R.id.action_search:
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
