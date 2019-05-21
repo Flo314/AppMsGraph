@@ -18,9 +18,9 @@ import java.util.List;
  */
 public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> {
 
-    private ArrayList<Fields> dataList;
+    private ArrayList<Value_> dataList;
 
-    public CollaboratorAdapter(ArrayList<Fields> dataList) {
+    public CollaboratorAdapter(ArrayList<Value_> dataList) {
         this.dataList = dataList;
     }
 
@@ -34,9 +34,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CollaboratorViewHolder holder, int position) {
-        holder.textnamecollab.setText(dataList.get(position).getTitle());
-        holder.textlastvisite.setText(dataList.get(position).getPrenom());
-        holder.textdate.setText(dataList.get(position).getVisite());
+        holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
+        holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
+        holder.textdate.setText(dataList.get(position).getFields().getVisite());
 
     }
 

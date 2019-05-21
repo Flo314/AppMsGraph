@@ -17,6 +17,7 @@ import com.example.appmsgraph.auth.AuthenticationHelper;
 import com.example.appmsgraph.model.Fields;
 import com.example.appmsgraph.model.ResultValue;
 import com.example.appmsgraph.model.Value;
+import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.microsoft.identity.client.AuthenticationCallback;
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         network();
     }
 
-    private void loadDataList(ArrayList<Fields> datalist){
+    private void loadDataList(ArrayList<Value_> datalist){
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new CollaboratorAdapter(datalist);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);

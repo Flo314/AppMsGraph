@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class Value {
 
     @SerializedName("value")
-    private ArrayList<Fields> value;
+    private ArrayList<Value_> value;
 
-    public ArrayList<Fields> getValue() {
+    public ArrayList<Value_> getValue() {
         return value;
     }
 
-    public void setValue(ArrayList<Fields> value) {
+    public void setValue(ArrayList<Value_> value) {
         this.value = value;
     }
 }
