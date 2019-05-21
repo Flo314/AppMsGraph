@@ -1,5 +1,7 @@
 package com.example.appmsgraph;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import java.util.List;
 public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> {
 
     private ArrayList<Value_> dataList;
+    private Context context;
 
     public CollaboratorAdapter(ArrayList<Value_> dataList) {
         this.dataList = dataList;
@@ -43,7 +46,15 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
+                String name = dataList.get(position).getFields().getTitle();
+                String prenom = dataList.get(position).getFields().getPrenom();
+                String histo = dataList.get(position).getFields().getHistoriquevisite();
 
+                Intent intent = new Intent(context, CreateVisite.class);
+                intent.putExtra("iTitle", name);
+                intent.putExtra("iTitle", prenom);
+                intent.putExtra("iTitle", histo);
+                context.startActivity(intent);
             }
         });
 

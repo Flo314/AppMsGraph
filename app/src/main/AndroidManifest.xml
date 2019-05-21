@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CreateVisite"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,17 +20,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!--Cela permet à MSAL d'utiliser un navigateur pour authentifier l'utilisateur
-         et d'enregistrer votre URI de redirection comme étant géré par l'application-->
-        <activity
-            android:name="com.microsoft.identity.client.BrowserTabActivity">
+        <!--
+Cela permet à MSAL d'utiliser un navigateur pour authentifier l'utilisateur
+         et d'enregistrer votre URI de redirection comme étant géré par l'application
+        -->
+        <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="msal40a245ff-e9a1-42d4-9ff8-62d90675057e"
-                    android:host="auth" />
+
+                <data
+                    android:host="auth"
+                    android:scheme="msal40a245ff-e9a1-42d4-9ff8-62d90675057e" />
             </intent-filter>
         </activity>
     </application>
