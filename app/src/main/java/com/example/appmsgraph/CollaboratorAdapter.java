@@ -22,6 +22,7 @@ import java.util.Collection;
 public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> implements Filterable {
 
     private ArrayList<Value_> dataList;
+    // list pour filtrer
     private ArrayList<Value_> dataListFull;
     Context context;
 
