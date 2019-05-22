@@ -1,6 +1,5 @@
 package com.example.appmsgraph;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*Auth*/
     AuthenticationHelper authenticationHelper = null;
-    String authHeader;
+    private String authHeader;
 
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
@@ -57,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
+
+    /*Data*/
+    private ArrayList<Value_> datalist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 authHeader = accessToken;
                 hideProgressBar();
                 updateSuccessUI();
+                network();
             }
 
             @Override
@@ -193,23 +196,22 @@ public class MainActivity extends AppCompatActivity {
      * updateSuccessUi() - Met à jour l'interface utilisateur lorsque l'acquisition de jeton réussit
      * loadDataList() - charge les données réseaux dans le recyclerview */
 
-    @SuppressLint("RestrictedApi")
+
     private void updateSuccessUI(){
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
-        addVisite.setVisibility(View.VISIBLE);
+//        addVisite.setVisibility(View.VISIBLE);
         actionBar.show();
-        network();
+//        network();
     }
 
     private void loadDataList(ArrayList<Value_> datalist){
         recyclerView = findViewById(R.id.recyclerview);
-        adapter = new CollaboratorAdapter(datalist);
+        adapter = new CollaboratorAdapter(datalist, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
-
     }
 
     /* Helper methods gèrent les appels réseaux

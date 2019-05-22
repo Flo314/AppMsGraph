@@ -27,5 +27,14 @@ public class CreateVisite extends AppCompatActivity {
 
         // Intent
         Intent intent = getIntent();
+        String nameCo = intent.getStringExtra("iTitle");
+        String prenomCo = intent.getStringExtra("iPrenom");
+
+        // title actionBar
+        actionBar.setTitle("Historique");
+
+        // set data dans la view
+        name.setText(nameCo);
+        prenom.setText(prenomCo);
     }
 }

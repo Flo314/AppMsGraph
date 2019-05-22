@@ -1,10 +1,8 @@
 package com.example.appmsgraph.network;
 
-import com.example.appmsgraph.model.Fields;
+
 import com.example.appmsgraph.model.Value;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
