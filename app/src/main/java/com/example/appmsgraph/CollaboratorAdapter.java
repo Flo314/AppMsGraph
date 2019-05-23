@@ -34,7 +34,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
     final private ListItemClickListener onClickListener;
 
-    // interface qui définit l'auditeur
+    // interface qui définit l'auditeur click recyclerview
     public interface ListItemClickListener{
         void onListItemClick(int clickedItemIndex);
     }
@@ -58,11 +58,12 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
+
         // Todo pour la date de visite
 //        final Drawable drawablegreen = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundgreen);
 //        final Drawable drawablered = ContextCompat.getDrawable(context, R.drawable.cerclebackgroungred);
 //        final Drawable drawableorange = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundorange);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //        Date strDate = null;
 //        try {
 //            strDate = sdf.parse(dataList.get(position).getFields().getVisite());
@@ -75,25 +76,17 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 //        }else{
 //            holder.textdate.setBackground(drawablered);
 //        }
-
     }
-//
-//    public boolean isDateExpired(String startDate, String endDate) {
-//        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
-//        boolean b = false;
-//        try {
-//            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
-//                return true;  // If start date is before end date.
-//            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
-//                return false;  // If two dates are equal.
-//            } else {
-//                return false; // If start date is after the end date.
-//            }
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
+
+    // Récupère le nombre de jours entre deux dates
+    public static double getDaysBetweenTwoDate(Date srcDate, Date destDate) {
+        long startTime = srcDate.getTime();
+        long destTime = destDate.getTime();
+        long deltaTime = destTime - startTime;
+        long oneDayTime = 24 * 60 * 60 * 1000;
+        double deltaDay = Math.abs(deltaTime / oneDayTime);
+        return deltaDay;
+    }
 
     @Override
     public int getItemCount() {

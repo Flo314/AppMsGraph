@@ -1,5 +1,6 @@
 package com.example.appmsgraph;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     /*UI*/
     Button btnSign;
     ActionBar actionBar;
-//    FloatingActionButton addVisite;
     ImageView logo;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private Toast toast;
 
     /*Data*/
-    private ArrayList<Value_> datalist;
+    private ArrayList<Value_> datalistObj = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         actionBar.setTitle("Team");
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
-
-//        addVisite = findViewById(R.id.add_visite);
 
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
@@ -203,7 +201,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private void updateSuccessUI(){
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
-//        addVisite.setVisibility(View.VISIBLE);
         actionBar.show();
 //        network();
     }
@@ -234,6 +231,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
                 loadDataList(response.body().getValue());
+                datalistObj = response.body().getValue();
             }
 
             @Override
@@ -255,7 +253,10 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 //        toast.show();
         Log.d(TAG, "clickItem: " + clickedItemIndex);
         Intent intent = new Intent(this, CreateVisite.class);
+        Value_ clickItem = datalistObj.get(clickedItemIndex);
+        intent.putExtra("someObject", clickItem.getFields().getTitle());
         startActivity(intent);
+        Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
     }
 
     /* Menu ActionBar Team
