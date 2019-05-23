@@ -1,7 +1,10 @@
 package com.example.appmsgraph;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +16,11 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.model.Value_;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * adaptateur qui sera utilisé par RecyclerView pour afficher la liste des collaborateurs
@@ -52,8 +58,42 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
+        // Todo pour la date de visite
+//        final Drawable drawablegreen = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundgreen);
+//        final Drawable drawablered = ContextCompat.getDrawable(context, R.drawable.cerclebackgroungred);
+//        final Drawable drawableorange = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundorange);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//dd/MM/yyyy
+//        Date strDate = null;
+//        try {
+//            strDate = sdf.parse(dataList.get(position).getFields().getVisite());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        assert strDate != null;
+//        if (System.currentTimeMillis() < strDate.getTime()) {
+//            holder.textdate.setBackground(drawablegreen);
+//        }else{
+//            holder.textdate.setBackground(drawablered);
+//        }
 
     }
+//
+//    public boolean isDateExpired(String startDate, String endDate) {
+//        SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
+//        boolean b = false;
+//        try {
+//            if (dfDate.parse(startDate).before(dfDate.parse(endDate))) {
+//                return true;  // If start date is before end date.
+//            } else if (dfDate.parse(startDate).equals(dfDate.parse(endDate))) {
+//                return false;  // If two dates are equal.
+//            } else {
+//                return false; // If start date is after the end date.
+//            }
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
     @Override
     public int getItemCount() {

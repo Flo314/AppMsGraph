@@ -10,8 +10,7 @@ import android.widget.TextView;
 public class CreateVisite extends AppCompatActivity {
 
     /* UI */
-    ImageView imageUser;
-    TextView name, prenom, historic;
+    ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,22 +18,8 @@ public class CreateVisite extends AppCompatActivity {
         setContentView(R.layout.activity_create_visite);
 
         // actionBar
-        ActionBar actionBar = getSupportActionBar();
-
-        imageUser = findViewById(R.id.user);
-        name = findViewById(R.id.name);
-        prenom = findViewById(R.id.prenom);
-
-        // Intent
-        Intent intent = getIntent();
-        String nameCo = intent.getStringExtra("iTitle");
-        String prenomCo = intent.getStringExtra("iPrenom");
-
-        // title actionBar
-        actionBar.setTitle("Historique");
-
-        // set data dans la view
-        name.setText(nameCo);
-        prenom.setText(prenomCo);
+        actionBar = getSupportActionBar();
+        // getDrawable warning
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
     }
 }

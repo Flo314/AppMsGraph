@@ -247,12 +247,15 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     // implementation interface adapter pour la gestion des click sur les items du recyclerview
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        if(toast != null){
-            toast.cancel();
-        }
-        String toastMessage = "Item " + clickedItemIndex + " clicked ";
-        toast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-        toast.show();
+//        if(toast != null){
+//            toast.cancel();
+//        }
+//        String toastMessage = "Item " + clickedItemIndex + " clicked ";
+//        toast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
+//        toast.show();
+        Log.d(TAG, "clickItem: " + clickedItemIndex);
+        Intent intent = new Intent(this, CreateVisite.class);
+        startActivity(intent);
     }
 
     /* Menu ActionBar Team
@@ -292,8 +295,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 return true;
             // icon search
             case R.id.action_search:
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
-                return true;
+//                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
