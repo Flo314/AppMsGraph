@@ -92,7 +92,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
 
     // récupère tous les item de la view
-    public class CollaboratorViewHolder extends RecyclerView.ViewHolder {
+    public class CollaboratorViewHolder extends RecyclerView.ViewHolder{
 
         TextView textnamecollab, textlastvisite, textdate;
 
@@ -101,6 +101,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             textnamecollab = itemView.findViewById(R.id.textnamecollab);
             textlastvisite = itemView.findViewById(R.id.textlastvisite);
             textdate = itemView.findViewById(R.id.textdate);
+
         }
 
     }

@@ -3,7 +3,6 @@ package com.example.appmsgraph;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     /*UI*/
     Button btnSign;
     ActionBar actionBar;
-    FloatingActionButton addVisite;
+//    FloatingActionButton addVisite;
     ImageView logo;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
 
-        addVisite = findViewById(R.id.add_visite);
+//        addVisite = findViewById(R.id.add_visite);
 
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
