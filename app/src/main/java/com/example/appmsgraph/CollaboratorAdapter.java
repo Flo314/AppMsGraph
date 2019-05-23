@@ -26,10 +26,17 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     private ArrayList<Value_> dataListFull;
     Context context;
 
-    public CollaboratorAdapter(ArrayList<Value_> dataList, Context context) {
+    final private ListItemClickListener onClickListener;
+
+    // interface qui définit l'auditeur
+    public interface ListItemClickListener{
+        void onListItemClick(int clickedItemIndex);
+    }
+
+    public CollaboratorAdapter(ArrayList<Value_> dataList, ListItemClickListener listener) {
         this.dataList = dataList;
         dataListFull = new ArrayList<>(dataList);
-        this.context = context;
+        this.onClickListener = listener;
     }
 
     @NonNull
@@ -82,6 +89,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             return results;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             dataList.clear();
@@ -92,7 +100,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
 
     // récupère tous les item de la view
-    public class CollaboratorViewHolder extends RecyclerView.ViewHolder{
+    public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textnamecollab, textlastvisite, textdate;
 
@@ -102,8 +110,15 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             textlastvisite = itemView.findViewById(R.id.textlastvisite);
             textdate = itemView.findViewById(R.id.textdate);
 
+            itemView.setOnClickListener(this);
+
         }
 
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            onClickListener.onListItemClick(clickedPosition);
+        }
     }
 
 }

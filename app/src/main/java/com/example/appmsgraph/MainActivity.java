@@ -40,7 +40,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CollaboratorAdapter.ListItemClickListener {
 
     /*Auth*/
     AuthenticationHelper authenticationHelper = null;
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
+    private Toast toast;
 
     /*Data*/
     private ArrayList<Value_> datalist;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         actionBar = getSupportActionBar();
         actionBar.hide();
+        // getDrawable warning
         actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
         actionBar.setTitle("Team");
 
@@ -240,6 +242,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Failure: " + t.toString());
             }
         });
+    }
+
+    // implementation interface adapter pour la gestion des click sur les items du recyclerview
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        if(toast != null){
+            toast.cancel();
+        }
+        String toastMessage = "Item " + clickedItemIndex + " clicked ";
+        toast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
+        toast.show();
     }
 
     /* Menu ActionBar Team
