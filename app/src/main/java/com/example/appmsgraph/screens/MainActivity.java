@@ -252,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         Intent intent = new Intent(this, Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
         intent.putExtra("someObject", clickItem.getFields().getTitle());
+        intent.putExtra("tok", authHeader);
         startActivity(intent);
         Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
     }
