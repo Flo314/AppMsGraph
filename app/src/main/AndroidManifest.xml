@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".screens.CreateVisite"
-            android:parentActivityName=".screens.Historique">
+        <activity android:name=".screens.CreateVisite">
+            <!--android:parentActivityName=".screens.Historique">-->
         </activity>
 
         <activity android:name=".screens.Historique">
