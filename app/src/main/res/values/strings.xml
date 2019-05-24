@@ -6,4 +6,29 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="visite">Visite :</string>
     <string name="team">Team</string>
+
+    <string-array name="team">
+        <item>AA aa</item>
+        <item>BB bb</item>
+        <item>CC cc</item>
+        <item>DD dd</item>
+        <item>EE ee</item>
+        <item>FF ff</item>
+        <item>GG gg</item>
+        <item>HH hh</item>
+        <item>II ii</item>
+        <item>JJ jj</item>
+    </string-array>
+
+    <string-array name="type_visite">
+        <item>Déjeuner</item>
+        <item>Petit Déjeuner</item>
+        <item>EP</item>
+        <item>DOP</item>
+        <item>RES</item>
+        <item>RDV client</item>
+        <item>RDV agence</item>
+        <item>RDV téléphone</item>
+        <item>Evènement Scalian</item>
+    </string-array>
 </resources>

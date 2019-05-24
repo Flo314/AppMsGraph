@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,30 +64,44 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 //        final Drawable drawablegreen = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundgreen);
 //        final Drawable drawablered = ContextCompat.getDrawable(context, R.drawable.cerclebackgroungred);
 //        final Drawable drawableorange = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundorange);
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        Date strDate = null;
+//
 //        try {
-//            strDate = sdf.parse(dataList.get(position).getFields().getVisite());
+//            String dte = dataList.get(position).getFields().getVisite().toString();
+//            SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy");
+//            Date pdte = sdf.parse(dte);
 //        } catch (ParseException e) {
 //            e.printStackTrace();
 //        }
-//        assert strDate != null;
-//        if (System.currentTimeMillis() < strDate.getTime()) {
-//            holder.textdate.setBackground(drawablegreen);
-//        }else{
-//            holder.textdate.setBackground(drawablered);
+
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Date dateDay = new Date();
+//        try {
+//            Date date = (Date) sdf.parse(String.valueOf(dateDay));
+//            Date dateApres = sdf.parse(dataList.get(position).getFields().getVisite());
+//            long diff = dateApres.getTime() - date.getTime();
+//            float res = (diff / (1000*60*60*24));
+//            if(diff >= 30){
+//                holder.imageIndicator.setBackground(drawablered);
+//            }else if(diff >= 20){
+//                holder.imageIndicator.setBackground(drawableorange);
+//            }else{
+//                holder.imageIndicator.setBackground(drawablegreen);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //        }
     }
 
+
     // Récupère le nombre de jours entre deux dates
-    public static double getDaysBetweenTwoDate(Date srcDate, Date destDate) {
-        long startTime = srcDate.getTime();
-        long destTime = destDate.getTime();
-        long deltaTime = destTime - startTime;
-        long oneDayTime = 24 * 60 * 60 * 1000;
-        double deltaDay = Math.abs(deltaTime / oneDayTime);
-        return deltaDay;
-    }
+//    public static double getDaysBetweenTwoDate(Date srcDate, Date destDate) {
+//        long startTime = srcDate.getTime();
+//        long destTime = destDate.getTime();
+//        long deltaTime = destTime - startTime;
+//        long oneDayTime = 24 * 60 * 60 * 1000;
+//        double deltaDay = Math.abs(deltaTime / oneDayTime);
+//        return deltaDay;
+//    }
 
     @Override
     public int getItemCount() {
@@ -136,12 +151,14 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView textnamecollab, textlastvisite, textdate;
+        ImageView imageIndicator;
 
         public CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);
             textnamecollab = itemView.findViewById(R.id.textnamecollab);
             textlastvisite = itemView.findViewById(R.id.textlastvisite);
             textdate = itemView.findViewById(R.id.textdate);
+            imageIndicator = itemView.findViewById(R.id.imageindicator);
 
             itemView.setOnClickListener(this);
 

@@ -1,6 +1,6 @@
-package com.example.appmsgraph;
+package com.example.appmsgraph.screens;
 
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.appmsgraph.CollaboratorAdapter;
+import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
-    private Toast toast;
 
     /*Data*/
     private ArrayList<Value_> datalistObj = new ArrayList<>();
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         actionBar = getSupportActionBar();
         actionBar.hide();
         // getDrawable warning
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
+//        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.toolbar_visibility));
         actionBar.setTitle("Team");
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
@@ -245,14 +247,9 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     // implementation interface adapter pour la gestion des click sur les items du recyclerview
     @Override
     public void onListItemClick(int clickedItemIndex) {
-//        if(toast != null){
-//            toast.cancel();
-//        }
-//        String toastMessage = "Item " + clickedItemIndex + " clicked ";
-//        toast = Toast.makeText(this, toastMessage, Toast.LENGTH_LONG);
-//        toast.show();
         Log.d(TAG, "clickItem: " + clickedItemIndex);
-        Intent intent = new Intent(this, CreateVisite.class);
+        // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
+        Intent intent = new Intent(this, Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
         intent.putExtra("someObject", clickItem.getFields().getTitle());
         startActivity(intent);
