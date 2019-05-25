@@ -263,4 +263,32 @@ public class Fields {
         this.complianceTagUserId = complianceTagUserId;
     }
 
+    @Override
+    public String toString() {
+        return "Fields{" +
+                "odataEtag='" + odataEtag + '\'' +"\n"+
+                ", title='" + title + '\'' +"\n"+
+                ", visite='" + visite + '\'' +"\n"+
+                ", prenom='" + prenom + '\'' +"\n"+
+                ", businessManager='" + businessManager + '\'' +"\n"+
+                ", historiquevisite='" + historiquevisite + '\'' +"\n"+
+                ", id='" + id + '\'' +"\n"+
+                ", contentType='" + contentType + '\'' +"\n"+
+                ", modified='" + modified + '\'' +"\n"+
+                ", created='" + created + '\'' +"\n"+
+                ", authorLookupId='" + authorLookupId + '\'' +"\n"+
+                ", editorLookupId='" + editorLookupId + '\'' +"\n"+
+                ", uIVersionString='" + uIVersionString + '\'' +"\n"+
+                ", attachments=" + attachments +"\n"+
+                ", edit='" + edit + '\'' +"\n"+
+                ", linkTitleNoMenu='" + linkTitleNoMenu + '\'' +"\n"+
+                ", linkTitle='" + linkTitle + '\'' +"\n"+
+                ", itemChildCount='" + itemChildCount + '\'' +"\n"+
+                ", folderChildCount='" + folderChildCount + '\'' +"\n"+
+                ", complianceFlags='" + complianceFlags + '\'' +"\n"+
+                ", complianceTag='" + complianceTag + '\'' +"\n"+
+                ", complianceTagWrittenTime='" + complianceTagWrittenTime + '\'' +"\n"+
+                ", complianceTagUserId='" + complianceTagUserId + '\'' +"\n"+
+                '}';
+    }
 }

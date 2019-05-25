@@ -253,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
         Intent intent = new Intent(this, Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
+//        intent.putExtra("datalist", datalistObj.toString());
         intent.putExtra("title", clickItem.getFields().getTitle());
         intent.putExtra("prenom", clickItem.getFields().getPrenom());
         intent.putExtra("tok", authHeader);

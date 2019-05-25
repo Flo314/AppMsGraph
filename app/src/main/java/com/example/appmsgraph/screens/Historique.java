@@ -27,6 +27,7 @@ public class Historique extends AppCompatActivity {
     private final String TAG = Historique.class.getSimpleName();
 
     /*Data*/
+//    private String datalist;
     private String nameTitle;
     private String prenom;
     private String tok;
@@ -41,6 +42,7 @@ public class Historique extends AppCompatActivity {
 
         // Data qui vient de MainActivity
         Intent intents = getIntent();
+//        datalist = intents.getStringExtra("datalist");
         nameTitle = intents.getStringExtra("title");
         prenom = intents.getStringExtra("prenom");
         tok = intents.getStringExtra("tok");
@@ -77,6 +79,7 @@ public class Historique extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
                 intent.putExtra("Uniqid",true);
+//                intent.putExtra("datalist",datalist);
                 intent.putExtra("title", nameTitle);
                 intent.putExtra("prenom", prenom);
                 intent.putExtra("tok", tok);

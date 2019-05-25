@@ -2,12 +2,11 @@ package com.example.appmsgraph.screens;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -17,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.model.Value_;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -34,6 +35,7 @@ public class CreateVisite extends AppCompatActivity {
     private EditText commentaire;
 
     /*intent*/
+    private String datalist;
     private String nameTitle;
     private String prenom;
     private String tok;
@@ -44,6 +46,9 @@ public class CreateVisite extends AppCompatActivity {
 
     // DatePicker
     private int mYear, mMonth, mDay;
+
+    /*Debug*/
+    private final String TAG = CreateVisite.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +64,14 @@ public class CreateVisite extends AppCompatActivity {
         Intent intent = getIntent();
         // true = cardView
         Uniqid = intent.getBooleanExtra("Uniqid", true);
+        datalist = intent.getStringExtra("datalist");
         nameTitle = intent.getStringExtra("title");
         prenom = intent.getStringExtra("prenom");
         tok = intent.getStringExtra("tok");
         id = intent.getStringExtra("id");
         visite = intent.getStringExtra("visite");
         histo = intent.getStringExtra("histo");
-        Toast.makeText(this, "UniqId: " + visite, Toast.LENGTH_LONG).show();
+        Log.d(TAG, "Datalist: " + datalist.toString());
 
         // editText fomulaire
         collab = findViewById(R.id.collab);
@@ -77,6 +83,7 @@ public class CreateVisite extends AppCompatActivity {
         editDate = findViewById(R.id.date_visite);
         if (Uniqid) {
             editDate.setText(visite);
+            commentaire.setText(histo);
         }
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,4 +111,5 @@ public class CreateVisite extends AppCompatActivity {
         dpd.getDatePicker().setMinDate(System.currentTimeMillis());
         dpd.show();
     }
+
 }

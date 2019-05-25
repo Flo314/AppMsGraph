@@ -142,4 +142,21 @@ public class Value_ {
         this.fields = fields;
     }
 
+    @Override
+    public String toString() {
+        return "Value_{" +
+                "odataEtag='" + odataEtag + '\'' +
+                ", createdDateTime='" + createdDateTime + '\'' +
+                ", eTag='" + eTag + '\'' +
+                ", id='" + id + '\'' +
+                ", lastModifiedDateTime='" + lastModifiedDateTime + '\'' +
+                ", webUrl='" + webUrl + '\'' +
+                ", createdBy=" + createdBy +
+                ", lastModifiedBy=" + lastModifiedBy +
+                ", parentReference=" + parentReference +
+                ", contentType=" + contentType +
+                ", fieldsOdataContext='" + fieldsOdataContext + '\'' +
+                ", fields=" + fields +
+                '}';
+    }
 }
