@@ -1,6 +1,7 @@
 package com.example.appmsgraph.screens;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +11,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appmsgraph.R;
 
@@ -21,8 +26,21 @@ import java.util.Locale;
 public class CreateVisite extends AppCompatActivity {
 
     /* UI */
-    ActionBar actionBar;
-    private EditText editDate;
+    private ActionBar actionBar;
+    private Spinner collab;
+    private Spinner type_visite;
+    private RatingBar note;
+    private TextView editDate;
+    private EditText commentaire;
+
+    /*intent*/
+    private String nameTitle;
+    private String prenom;
+    private String tok;
+    private String id;
+    private String histo;
+    private String visite;
+    private Boolean Uniqid;
 
     // DatePicker
     private int mYear, mMonth, mDay;
@@ -34,16 +52,43 @@ public class CreateVisite extends AppCompatActivity {
 
         // actionBar
         actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.toolbar_visibility));
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
         actionBar.setTitle("Visite");
+
+        // Data qui vient de Historique
+        Intent intent = getIntent();
+        // true = cardView
+        Uniqid = intent.getBooleanExtra("Uniqid", true);
+        nameTitle = intent.getStringExtra("title");
+        prenom = intent.getStringExtra("prenom");
+        tok = intent.getStringExtra("tok");
+        id = intent.getStringExtra("id");
+        visite = intent.getStringExtra("visite");
+        histo = intent.getStringExtra("histo");
+        Toast.makeText(this, "UniqId: " + visite, Toast.LENGTH_LONG).show();
+
+        // editText fomulaire
+        collab = findViewById(R.id.collab);
+        type_visite = findViewById(R.id.type_visite);
+        note = findViewById(R.id.note);
+        commentaire = findViewById(R.id.commentaire);
 
         // picker date formulaire
         editDate = findViewById(R.id.date_visite);
+        if (Uniqid) {
+            editDate.setText(visite);
+        }
         editDate.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+                getDate(v);
+            }
+        });
+    }
+
+    // Datepiker
+    private void getDate(View v) {
+        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -55,11 +100,8 @@ public class CreateVisite extends AppCompatActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
                         editDate.setText(sdf.format((myCalendar.getTime())));
                     }
-                },mYear, mMonth, mDay);
-                dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-                dpd.show();
-            }
-        });
-
+                }, mYear, mMonth, mDay);
+        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+        dpd.show();
     }
 }

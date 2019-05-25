@@ -1,5 +1,6 @@
 package com.example.appmsgraph.screens;
 
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
@@ -229,15 +230,16 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         // Exécute la requête asynchrone
         call.enqueue(new Callback<Value>() {
             @Override
-            public void onResponse(Call<Value> call, Response<Value> response) {
+            public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
+                assert response.body() != null;
                 loadDataList(response.body().getValue());
                 datalistObj = response.body().getValue();
             }
 
             @Override
-            public void onFailure(Call<Value> call, Throwable t) {
+            public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
             }
@@ -251,8 +253,12 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
         Intent intent = new Intent(this, Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
-        intent.putExtra("someObject", clickItem.getFields().getTitle());
+        intent.putExtra("title", clickItem.getFields().getTitle());
+        intent.putExtra("prenom", clickItem.getFields().getPrenom());
         intent.putExtra("tok", authHeader);
+        intent.putExtra("id", clickItem.getId());
+        intent.putExtra("visite", clickItem.getFields().getVisite());
+        intent.putExtra("histo", clickItem.getFields().getHistoriquevisite());
         startActivity(intent);
         Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
     }

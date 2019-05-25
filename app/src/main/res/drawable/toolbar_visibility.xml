@@ -3,8 +3,9 @@
 
     <!--#D95574F7-->
     <!--#D960C3FF-->
+    EB4D2878
     <gradient
-        android:startColor="#EB4D2878"
-        android:endColor="#E186186D"
-        android:angle="45"/>
+        android:startColor="#86186D"
+        android:endColor="#4D2878"
+        android:angle="90"/>
 </shape>
