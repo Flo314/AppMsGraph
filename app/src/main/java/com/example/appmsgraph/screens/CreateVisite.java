@@ -76,7 +76,7 @@ public class CreateVisite extends AppCompatActivity {
         // editText fomulaire
         collab = findViewById(R.id.collab);
         type_visite = findViewById(R.id.type_visite);
-        note = findViewById(R.id.note);
+//        note = findViewById(R.id.note);
         commentaire = findViewById(R.id.commentaire);
 
         // picker date formulaire

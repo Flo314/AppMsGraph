@@ -1,6 +1,11 @@
 package com.example.appmsgraph.screens;
 
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
@@ -27,6 +32,7 @@ import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
+import com.example.appmsgraph.utils.CompareDate;
 import com.microsoft.identity.client.AuthenticationCallback;
 import com.microsoft.identity.client.IAccount;
 import com.microsoft.identity.client.IAuthenticationResult;
@@ -36,8 +42,17 @@ import com.microsoft.identity.client.exception.MsalException;
 import com.microsoft.identity.client.exception.MsalServiceException;
 import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,12 +72,14 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     Button btnSign;
     ActionBar actionBar;
     ImageView logo;
+    ImageView imageIndicator;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
 
     /*Data*/
-    private ArrayList<Value_> datalistObj = new ArrayList<>();
+    private static ArrayList<Value_> datalistObj = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +222,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
         actionBar.show();
-//        network();
     }
 
     private void loadDataList(ArrayList<Value_> datalist){
@@ -236,6 +252,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 assert response.body() != null;
                 loadDataList(response.body().getValue());
                 datalistObj = response.body().getValue();
+//                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
             }
 
             @Override
@@ -292,20 +309,22 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     }
 
     // item du menu selectionné
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // icon filter
             case R.id.action_filtre:
                 Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show();
-                return true;
-            // icon search
+                // icon search
             case R.id.action_search:
 //                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
 //                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
     /* Cycle de vie Activity

@@ -1,8 +1,11 @@
 package com.example.appmsgraph;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.utils.CompareDate;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * adaptateur qui sera utilisé par RecyclerView pour afficher la liste des collaborateurs
@@ -25,6 +36,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
     Context context;
+
+    /*Utils*/
+    private CompareDate compareDate;
 
     final private ListItemClickListener onClickListener;
 
@@ -52,49 +66,17 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
+        holder.imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
 
-        // Todo pour la date de visite
-//        final Drawable drawablegreen = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundgreen);
-//        final Drawable drawablered = ContextCompat.getDrawable(context, R.drawable.cerclebackgroungred);
-//        final Drawable drawableorange = ContextCompat.getDrawable(context, R.drawable.cerclebackgroundorange);
-//
-//        try {
-//            String dte = dataList.get(position).getFields().getVisite().toString();
-//            SimpleDateFormat sdf  = new SimpleDateFormat("dd/MM/yyyy");
-//            Date pdte = sdf.parse(dte);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
+//        if(s >= 30){
+//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
+//        }else if(s >= 20){
+//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroundorange);
+//        }else{
+//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroundgreen);
 //        }
 
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//        Date dateDay = new Date();
-//        try {
-//            Date date = (Date) sdf.parse(String.valueOf(dateDay));
-//            Date dateApres = sdf.parse(dataList.get(position).getFields().getVisite());
-//            long diff = dateApres.getTime() - date.getTime();
-//            float res = (diff / (1000*60*60*24));
-//            if(diff >= 30){
-//                holder.imageIndicator.setBackground(drawablered);
-//            }else if(diff >= 20){
-//                holder.imageIndicator.setBackground(drawableorange);
-//            }else{
-//                holder.imageIndicator.setBackground(drawablegreen);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
-
-
-    // Récupère le nombre de jours entre deux dates
-//    public static double getDaysBetweenTwoDate(Date srcDate, Date destDate) {
-//        long startTime = srcDate.getTime();
-//        long destTime = destDate.getTime();
-//        long deltaTime = destTime - startTime;
-//        long oneDayTime = 24 * 60 * 60 * 1000;
-//        double deltaDay = Math.abs(deltaTime / oneDayTime);
-//        return deltaDay;
-//    }
 
     @Override
     public int getItemCount() {

@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appmsgraph.R;
 
@@ -50,7 +51,7 @@ public class Historique extends AppCompatActivity {
         visite = intents.getStringExtra("visite");
         histo = intents.getStringExtra("histo");
 //        Toast.makeText(this, "token: " + tok , Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, "id + histo: " + " " + id + " " +histo , Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "histo: "  + " " +histo , Toast.LENGTH_SHORT).show();
 
         // actionBar
         actionBar = getSupportActionBar();
