@@ -64,14 +64,14 @@ public class CreateVisite extends AppCompatActivity {
         Intent intent = getIntent();
         // true = cardView
         Uniqid = intent.getBooleanExtra("Uniqid", true);
-        datalist = intent.getStringExtra("datalist");
+//        datalist = intent.getStringExtra("datalist");
         nameTitle = intent.getStringExtra("title");
         prenom = intent.getStringExtra("prenom");
         tok = intent.getStringExtra("tok");
         id = intent.getStringExtra("id");
         visite = intent.getStringExtra("visite");
         histo = intent.getStringExtra("histo");
-        Log.d(TAG, "Datalist: " + datalist.toString());
+//        Log.d(TAG, "Datalist: " + datalist.toString());
 
         // editText fomulaire
         collab = findViewById(R.id.collab);
