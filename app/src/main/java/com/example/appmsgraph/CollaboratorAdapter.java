@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.screens.MainActivity;
 import com.example.appmsgraph.utils.CompareDate;
 
 import java.text.DateFormat;
@@ -65,7 +66,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
-        holder.imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
+        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroungred);
     }
 
     @Override
@@ -115,8 +116,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // récupère tous les item de la view
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
+        public ImageView imageIndicator;
         TextView textnamecollab, textlastvisite, textdate;
-        ImageView imageIndicator;
+//        ImageView imageIndicator;
 
         public CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);

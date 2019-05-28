@@ -1,6 +1,5 @@
 package com.example.appmsgraph.screens;
 
-
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -24,6 +23,8 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
+import com.example.appmsgraph.model.Fields;
+import com.example.appmsgraph.model.FieldsList;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
-//    final Drawable drawable = ContextCompat.getDrawable(this, R.drawable.cerclebackgroungred).mutate();
 
     /*Utils*/
     private CompareDate compareDate;
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
+        compareDate = new CompareDate();
     }
 
     /* Helper methods gèrent les appels réseaux
@@ -248,12 +248,22 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
 //                visite = datalistObj.get(0).getFields().getVisite().toString();
-                compareDate = new CompareDate();
-                for(Value_ item: datalistObj){
-                    visite = item.getFields().getVisite();
-                    compareDate.getCompareDate(visite);
-                    Log.d(TAG, "DATE.....: " + compareDate.toString());
-                }
+
+                // Traitement de l'icon rond pour la date
+
+                    for(Value_ item: datalistObj){
+                        visite = item.getFields().getVisite();
+//                        visite = datalistObj.get(1).getFields().getVisite();
+                        compareDate.getCompareDate(visite);
+                        if(compareDate.toString() == "RED"){
+
+                        }else if(compareDate.toString() == "ORANGE"){
+
+                        }else {
+
+                        }
+                        Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
+                    }
 
             }
 

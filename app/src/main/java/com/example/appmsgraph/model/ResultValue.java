@@ -30,4 +30,11 @@ public class ResultValue {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "ResultValue{" +
+                "odataContext='" + odataContext + '\'' +
+                ", value=" + value +
+                '}';
+    }
 }

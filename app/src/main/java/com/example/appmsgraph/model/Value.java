@@ -16,4 +16,11 @@ public class Value {
     public void setValue(ArrayList<Value_> value) {
         this.value = value;
     }
+
+    @Override
+    public String toString() {
+        return "Value{" +
+                "value=" + value +
+                '}';
+    }
 }
