@@ -1,9 +1,11 @@
 package com.example.appmsgraph;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,9 +39,6 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     private ArrayList<Value_> dataListFull;
     Context context;
 
-    /*Utils*/
-    private CompareDate compareDate;
-
     final private ListItemClickListener onClickListener;
 
     // interface qui définit l'auditeur click recyclerview
@@ -67,15 +66,6 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
         holder.imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
-
-//        if(s >= 30){
-//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
-//        }else if(s >= 20){
-//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroundorange);
-//        }else{
-//            holder.imageIndicator.setImageResource(R.drawable.cerclebackgroundgreen);
-//        }
-
     }
 
     @Override

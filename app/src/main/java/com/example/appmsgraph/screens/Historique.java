@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.utils.CompareDate;
 
 import java.util.Objects;
 
@@ -26,6 +27,8 @@ public class Historique extends AppCompatActivity {
 
     /*Debug*/
     private final String TAG = Historique.class.getSimpleName();
+
+    CompareDate compareDate;
 
     /*Data*/
 //    private String datalist;
@@ -90,6 +93,11 @@ public class Historique extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        compareDate = new CompareDate();
+        compareDate.getCompareDate(visite);
+
+        Log.d(TAG, "Test: " + compareDate);
 
     }
 

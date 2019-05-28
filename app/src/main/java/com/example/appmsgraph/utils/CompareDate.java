@@ -1,5 +1,7 @@
 package com.example.appmsgraph.utils;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,18 +12,28 @@ import java.util.Locale;
 
 public class CompareDate {
 
+    /*Debug*/
+    private String TAG = "";
+
+
+    public CompareDate() {
+
+    }
+
     /**
      *
-     * @param string rprésente la chaîne de la liste sharepoint visite au format 'dd/MM/yyyy'
+     * @param stringDate rprésente la chaîne de la liste sharepoint visite au format 'dd/MM/yyyy'
      * @return le nombres de jours qui sépare la date du jour avec celle entré en paramètre
      */
-    public Long getCompareDate(String string) {
+    public String getCompareDate(String stringDate) {
+
+
         // date system
         DateFormat current = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
         Calendar calendar = Calendar.getInstance();
 
         try {
-            Date formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).parse(string);
+            Date formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE).parse(stringDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -33,6 +45,11 @@ public class CompareDate {
         int nbMois = 0;
         int nbAnnees = 0;
         long nbJours = 0;
+        final int redIndicator = -30;
+        final int orangeIndicator = -20;
+        String red = "RED";
+        String orange = "ORANGE";
+        String green = "GREEN";
 
 
         try {
@@ -42,12 +59,12 @@ public class CompareDate {
         }
 
         try {
-            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(string);
+            date2 = new SimpleDateFormat("dd/MM/yyyy").parse(stringDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if(date1.equals(date2))
+//        if(date1.equals(date2))
 
         calStr2.setTime(date2);
         calStr0 = Calendar.getInstance();
@@ -56,7 +73,16 @@ public class CompareDate {
         calStr0.add(GregorianCalendar.MONTH, nbMois);
         nbJours = (calStr2.getTimeInMillis() - calStr0.getTimeInMillis()) / 86400000;
 
-        return nbJours;
+        if(redIndicator >= nbJours){
+            TAG = red;
+            return TAG;
+        }else if(orangeIndicator >= nbJours){
+            TAG = orange;
+            return TAG;
+        }else{
+            TAG = green;
+            return TAG;
+        }
     }
 
     // Récupère le nombre de jours entre deux dates
@@ -68,4 +94,11 @@ public class CompareDate {
 //        double deltaDay = Math.abs(deltaTime / oneDayTime);
 //        return deltaDay;
 //    }
+
+    @Override
+    public String toString() {
+        return "CompareDate{" +
+                "TAG='" + TAG + '\'' +
+                '}';
+    }
 }

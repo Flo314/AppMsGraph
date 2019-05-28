@@ -1,11 +1,7 @@
 package com.example.appmsgraph.screens;
 
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
+
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
@@ -42,17 +38,10 @@ import com.microsoft.identity.client.exception.MsalException;
 import com.microsoft.identity.client.exception.MsalServiceException;
 import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import java.util.List;
-import java.util.Locale;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
+//    final Drawable drawable = ContextCompat.getDrawable(this, R.drawable.cerclebackgroungred).mutate();
+
+    /*Utils*/
+    private CompareDate compareDate;
+    private String visite;
 
     /*UI*/
     Button btnSign;
@@ -253,6 +247,14 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 loadDataList(response.body().getValue());
                 datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
+//                visite = datalistObj.get(0).getFields().getVisite().toString();
+                compareDate = new CompareDate();
+                for(Value_ item: datalistObj){
+                    visite = item.getFields().getVisite();
+                    compareDate.getCompareDate(visite);
+                    Log.d(TAG, "DATE.....: " + compareDate.toString());
+                }
+
             }
 
             @Override
@@ -309,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     }
 
     // item du menu selectionné
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
