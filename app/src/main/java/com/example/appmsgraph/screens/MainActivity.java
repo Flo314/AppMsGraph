@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     Button btnSign;
     ActionBar actionBar;
     ImageView logo;
-    ImageView imageIndicator;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
@@ -248,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
 //                visite = datalistObj.get(0).getFields().getVisite().toString();
-                imageIndicator = findViewById(R.id.imageindicator);
+
+
                 // Traitement de l'icon rond pour la date
                 for (Value_ item : datalistObj) {
                     visite = item.getFields().getVisite();
@@ -256,11 +256,12 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                         compareDate.getCompareDate(visite);
                     }
                     if (compareDate.toString() == "RED") {
-                        imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
+
+
                     } else if (compareDate.toString() == "ORANGE") {
-                        imageIndicator.setImageResource(R.drawable.cerclebackgroundorange);
+
                     } else {
-                        imageIndicator.setImageResource(R.drawable.cerclebackgroundgreen);
+
                     }
                     Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
                 }

@@ -67,6 +67,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
         holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroungred);
+        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroundorange);
+        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroundgreen);
     }
 
     @Override
@@ -114,6 +116,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
 
     // récupère tous les item de la view
+    // stocke la référence aux vues de présentation de carte qui doivent être modifiées de façon dynamique
+    // lors de l'exécution du programme par une liste de données obtenues par un appel réseau
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public ImageView imageIndicator;
