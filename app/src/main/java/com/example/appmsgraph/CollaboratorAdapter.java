@@ -66,9 +66,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
-        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroungred);
-        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroundorange);
-        holder.imageIndicator.setBackgroundResource(R.drawable.cerclebackgroundgreen);
+        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_red);
+        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_orange);
+        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_green);
     }
 
     @Override
