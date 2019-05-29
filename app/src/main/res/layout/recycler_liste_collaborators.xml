@@ -27,11 +27,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/user" />
+
     <ImageView
         android:id="@+id/examPic2"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:tint="#808080"
         android:layout_marginStart="180dp"
         android:layout_marginTop="28dp"
         app:srcCompat="@drawable/ic_date_range_black_24dp"/>
@@ -58,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="205dp"
-            android:textColor="@color/black"
             android:layout_marginTop="28dp" />
+
 
         <ImageView
             android:id="@+id/imageindicator"

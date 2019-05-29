@@ -23,8 +23,6 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
-import com.example.appmsgraph.model.Fields;
-import com.example.appmsgraph.model.FieldsList;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -69,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
+    CollaboratorAdapter.CollaboratorViewHolder collaboratorViewHolder;
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         actionBar = getSupportActionBar();
         actionBar.hide();
         // getDrawable warning
@@ -223,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
-        compareDate = new CompareDate();
     }
 
     /* Helper methods gèrent les appels réseaux
@@ -246,25 +245,30 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 loadDataList(response.body().getValue());
                 datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
-//                visite = datalistObj.get(0).getFields().getVisite().toString();
 
 
-                // Traitement de l'icon rond pour la date
+                compareDate = new CompareDate();
+                // Traitement de l'icon pour la date
                 for (Value_ item : datalistObj) {
+                    // champ visite
                     visite = item.getFields().getVisite();
                     if(visite != null){
                         compareDate.getCompareDate(visite);
                     }
-                    if (compareDate.toString() == "RED") {
+                    if (compareDate.toString().equals("RED")) {
+                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_red);
 
+                    } else if (compareDate.toString().equals("ORANGE")) {
+                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_orange);
 
-                    } else if (compareDate.toString() == "ORANGE") {
-
-                    } else {
+                    } else if (compareDate.toString().equals("GREEN")){
+                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_green);
 
                     }
+
                     Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
                 }
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -320,17 +324,20 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         return true;
     }
 
-    // item du menu selectionné
+    // item du menu Filter
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // icon filter
-            case R.id.action_filtre:
-                Toast.makeText(this, "Filter", Toast.LENGTH_SHORT).show();
-                // icon search
-            case R.id.action_search:
-//                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
-//                return true;
+            case R.id.important:
+                Toast.makeText(this, "Important", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.moyen:
+                Toast.makeText(this, "Moyen", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.bon:
+                Toast.makeText(this, "Bon", Toast.LENGTH_SHORT).show();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -66,9 +66,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
-        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_red);
-        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_orange);
-        holder.imageIndicator.setBackgroundResource(R.drawable.ic_access_green);
+        holder.imageindicator.setBackgroundResource(R.drawable.ic_access_red);
+//        holder.imageindicator.setBackgroundResource(R.drawable.ic_access_orange);
+//        holder.imageindicator.setBackgroundResource(R.drawable.ic_access_green);
     }
 
     @Override
@@ -120,16 +120,15 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // lors de l'exécution du programme par une liste de données obtenues par un appel réseau
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public ImageView imageIndicator;
         TextView textnamecollab, textlastvisite, textdate;
-//        ImageView imageIndicator;
+        ImageView imageindicator;
 
         public CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);
             textnamecollab = itemView.findViewById(R.id.textnamecollab);
             textlastvisite = itemView.findViewById(R.id.textlastvisite);
             textdate = itemView.findViewById(R.id.textdate);
-            imageIndicator = itemView.findViewById(R.id.imageindicator);
+            imageindicator = itemView.findViewById(R.id.imageindicator);
 
             itemView.setOnClickListener(this);
 
