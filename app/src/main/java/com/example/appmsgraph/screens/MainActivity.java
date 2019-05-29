@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         actionBar.hide();
         // getDrawable warning
 //        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
-        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.toolbar_visibility));
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
         actionBar.setTitle("Team");
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     }
 
     /* Helper methods Authentification
-    * =================================
-    */
+     * =================================
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -150,10 +150,10 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
                 } else if (exception instanceof MsalClientException) {
                     // Exception dans MSAL, plus d'informations dans MsalError.java
-                    Log.e(TAG, "Client error authenticating: "+ exception.toString());
+                    Log.e(TAG, "Client error authenticating: " + exception.toString());
                 } else if (exception instanceof MsalServiceException) {
                     // Exception lors de la communication avec le serveur d'authentification
-                    Log.e(TAG, "Service error authenticating: "+ exception.toString());
+                    Log.e(TAG, "Service error authenticating: " + exception.toString());
                 }
                 hideProgressBar();
             }
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     }
 
     /* ProgressBar
-    * ============= */
+     * ============= */
 
     private void showProgressBar() {
         runOnUiThread(new Runnable() {
@@ -211,13 +211,13 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
      * loadDataList() - charge les données réseaux dans le recyclerview */
 
 
-    private void updateSuccessUI(){
+    private void updateSuccessUI() {
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);
         actionBar.show();
     }
 
-    private void loadDataList(ArrayList<Value_> datalist){
+    private void loadDataList(ArrayList<Value_> datalist) {
         recyclerView = findViewById(R.id.recyclerview);
         adapter = new CollaboratorAdapter(datalist, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     /* Helper methods gèrent les appels réseaux
      * ================================================================= */
 
-    private void network(){
+    private void network() {
         //Créer un identifiant pour l'interface RetrofitInstance
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
@@ -248,23 +248,22 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
 //                visite = datalistObj.get(0).getFields().getVisite().toString();
-
+                imageIndicator = findViewById(R.id.imageindicator);
                 // Traitement de l'icon rond pour la date
-
-                    for(Value_ item: datalistObj){
-                        visite = item.getFields().getVisite();
-//                        visite = datalistObj.get(1).getFields().getVisite();
+                for (Value_ item : datalistObj) {
+                    visite = item.getFields().getVisite();
+                    if(visite != null){
                         compareDate.getCompareDate(visite);
-                        if(compareDate.toString() == "RED"){
-
-                        }else if(compareDate.toString() == "ORANGE"){
-
-                        }else {
-
-                        }
-                        Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
                     }
-
+                    if (compareDate.toString() == "RED") {
+                        imageIndicator.setImageResource(R.drawable.cerclebackgroungred);
+                    } else if (compareDate.toString() == "ORANGE") {
+                        imageIndicator.setImageResource(R.drawable.cerclebackgroundorange);
+                    } else {
+                        imageIndicator.setImageResource(R.drawable.cerclebackgroundgreen);
+                    }
+                    Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
+                }
             }
 
             @Override
@@ -298,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         // icon search dans le menu
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -339,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
 
     /* Cycle de vie Activity
-    * =======================*/
+     * =======================*/
 
     @Override
     protected void onStart() {
