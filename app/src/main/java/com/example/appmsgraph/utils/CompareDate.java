@@ -98,7 +98,7 @@ public class CompareDate {
     @Override
     public String toString() {
         return "CompareDate{" +
-                "TAG='" + TAG + '\'' +
+                TAG + '\'' +
                 '}';
     }
 }

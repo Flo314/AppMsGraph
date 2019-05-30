@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:layout_marginTop="16dp" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="72dp"
             android:layout_marginTop="28dp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:paddingTop="8dp" />
 
         <TextView
@@ -62,13 +62,28 @@
 
 
         <ImageView
-            android:id="@+id/imageindicator"
+            android:id="@+id/imageindicator_red"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="end"
             android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_access_red" />
+            android:layout_marginEnd="16dp"/>
+
+        <ImageView
+            android:id="@+id/imageindicator_orange"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"/>
+
+        <ImageView
+            android:id="@+id/imageindicator_green"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"/>
 
     </android.support.v7.widget.CardView>
 

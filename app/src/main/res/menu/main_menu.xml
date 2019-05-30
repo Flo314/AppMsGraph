@@ -11,17 +11,17 @@
 
         <menu>
             <item
-                android:id="@+id/important"
+                android:id="@+id/action_important"
                 android:title="@string/important"
                 android:icon="@drawable/ic_access_red"
                 />
             <item
-                android:id="@+id/moyen"
+                android:id="@+id/action_moyen"
                 android:title="@string/moyen"
                 android:icon="@drawable/ic_access_orange"
                 />
             <item
-                android:id="@+id/bon"
+                android:id="@+id/action_bon"
                 android:title="@string/bon"
                 android:icon="@drawable/ic_access_green"
                 />
@@ -34,7 +34,7 @@
         app:showAsAction="ifRoom|collapseActionView"
         android:orderInCategory="2"
         android:icon="@drawable/ic_search_24dp"
-        android:title="@string/search"
+        android:title="@string/Search"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
 </menu>

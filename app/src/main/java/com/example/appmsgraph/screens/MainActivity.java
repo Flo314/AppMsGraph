@@ -40,11 +40,16 @@ import com.microsoft.identity.client.exception.MsalUiRequiredException;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Objects;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.appmsgraph.R.drawable.ic_access_green;
+import static com.example.appmsgraph.R.drawable.ic_access_orange;
+import static com.example.appmsgraph.R.drawable.ic_access_red;
 
 
 public class MainActivity extends AppCompatActivity implements CollaboratorAdapter.ListItemClickListener {
@@ -232,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         //Créer un identifiant pour l'interface RetrofitInstance
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
+        // en lui passant le token
         Call<Value> call = service.getCollaboratorsData(authHeader);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
@@ -241,34 +247,33 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
             public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
-                assert response.body() != null;
-                loadDataList(response.body().getValue());
-                datalistObj = response.body().getValue();
+                // si reponse ok et que les data ne sont pas null
+                if (response.isSuccessful() && response.body() != null) {
+
+                    loadDataList(response.body().getValue());
+                    datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
 
-
-                compareDate = new CompareDate();
-                // Traitement de l'icon pour la date
-                for (Value_ item : datalistObj) {
-                    // champ visite
-                    visite = item.getFields().getVisite();
-                    if(visite != null){
-                        compareDate.getCompareDate(visite);
-                    }
-                    if (compareDate.toString().equals("RED")) {
-                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_red);
-
-                    } else if (compareDate.toString().equals("ORANGE")) {
-                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_orange);
-
-                    } else if (compareDate.toString().equals("GREEN")){
-                        collaboratorViewHolder.itemView.findViewById(R.id.imageindicator).setBackgroundResource(R.drawable.ic_access_green);
-
-                    }
-
-                    Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
+                    // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
+//                    compareDate = new CompareDate();
+//                    // Traitement de l'icon pour la date
+//                    for (Value_ item : datalistObj) {
+//                        // champ visite
+//                        visite = item.getFields().getVisite();
+//                        if (visite != null) {
+//                            compareDate.getCompareDate(visite);
+//                            if (compareDate.toString().equals("RED")) {
+//
+//                            } else if (compareDate.toString().equals("ORANGE")) {
+//
+//
+//                            } else if (compareDate.toString().equals("GREEN")) {
+//
+//                            }
+//                        }
+//                        Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
+//                    }
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -329,13 +334,13 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // icon filter
-            case R.id.important:
+            case R.id.action_important:
                 Toast.makeText(this, "Important", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.moyen:
+            case R.id.action_moyen:
                 Toast.makeText(this, "Moyen", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.bon:
+            case R.id.action_bon:
                 Toast.makeText(this, "Bon", Toast.LENGTH_SHORT).show();
                 return true;
         }

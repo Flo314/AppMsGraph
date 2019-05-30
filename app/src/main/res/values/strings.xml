@@ -7,11 +7,12 @@
     <string name="visite">Visite :</string>
     <string name="team">Team</string>
     <string name="date">Date</string>
+    <string name="filter">Filter</string>
     <string name="important">Important</string>
     <string name="moyen">Moyen</string>
     <string name="bon">Bon</string>
-    <string name="filter">filter</string>
-    <string name="search">search</string>
+    <string name="Search">search</string>
+
 
     <string-array name="team">
         <item>AA aa</item>

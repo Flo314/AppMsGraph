@@ -95,9 +95,7 @@ public class Fields {
         this.title = title;
     }
 
-    public String getVisite() {
-        return visite;
-    }
+    public String getVisite() { return visite; }
 
     public void setVisite(String visite) {
         this.visite = visite;
