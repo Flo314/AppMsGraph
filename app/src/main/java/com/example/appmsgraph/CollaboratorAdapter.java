@@ -30,8 +30,6 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
     Context context;
-    CompareDate compareDate;
-    String visite;
     final private ListItemClickListener onClickListener;
 
     // interface qui définit l'auditeur click recyclerview
@@ -58,28 +56,28 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     @Override
     public void onBindViewHolder(@NonNull final CollaboratorViewHolder holder, int position) {
 
+        holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
+        holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
+        holder.textdate.setText(dataList.get(position).getFields().getVisite());
+//        holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
+
         // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
-        compareDate = new CompareDate();
+        CompareDate compareDate = new CompareDate();
         // Traitement de l'icon pour la date
         for (Value_ value : dataList) {
             // champ visite
-            visite = value.getFields().getVisite();
+            String visite = value.getFields().getVisite();
             if (visite != null) {
                 compareDate.getCompareDate(visite);
-                if (compareDate.toString().equals("RED")) {
+                if (compareDate.equals("RED")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
-                } else if (compareDate.toString().equals("ORANGE")) {
+                } else if (compareDate.equals("ORANGE")) {
                     holder.imageindicatororange.setImageResource(R.drawable.ic_access_orange);
-                } else if (compareDate.toString().equals("GREEN")) {
+                } else {
                     holder.imageindicatorgreen.setImageResource(R.drawable.ic_access_green);
                 }
             }
         }
-
-        holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
-        holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
-        holder.textdate.setText(dataList.get(position).getFields().getVisite());
-
 
     }
 
