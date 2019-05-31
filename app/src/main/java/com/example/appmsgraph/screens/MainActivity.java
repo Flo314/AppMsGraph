@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
-    CollaboratorAdapter.CollaboratorViewHolder collaboratorViewHolder;
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();

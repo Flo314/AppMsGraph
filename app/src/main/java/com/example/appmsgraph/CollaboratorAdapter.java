@@ -2,10 +2,8 @@ package com.example.appmsgraph;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +55,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     @Override
     public void onBindViewHolder(@NonNull final CollaboratorViewHolder holder, int position) {
 
+        // position actuelle du premier item du recyclerview
         int i = 0;
 
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
@@ -81,8 +80,6 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             }
             i++;
         }
-
-
     }
 
     @Override
