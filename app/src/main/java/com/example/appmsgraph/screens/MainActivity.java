@@ -254,25 +254,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                     datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
 
-                    // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
-//                    compareDate = new CompareDate();
-//                    // Traitement de l'icon pour la date
-//                    for (Value_ item : datalistObj) {
-//                        // champ visite
-//                        visite = item.getFields().getVisite();
-//                        if (visite != null) {
-//                            compareDate.getCompareDate(visite);
-//                            if (compareDate.toString().equals("RED")) {
-//
-//                            } else if (compareDate.toString().equals("ORANGE")) {
-//
-//
-//                            } else if (compareDate.toString().equals("GREEN")) {
-//
-//                            }
-//                        }
-//                        Log.d(TAG, "DATE.....: " + visite + " " + compareDate.toString());
-//                    }
                 }
             }
 

@@ -41,7 +41,7 @@ Cela permet à MSAL d'utiliser un navigateur pour authentifier l'utilisateur
 
                 <data
                     android:host="auth"
-                    android:scheme="msal40a245ff-e9a1-42d4-9ff8-62d90675057e" />
+                    android:scheme="msal622816c7-17d9-47fa-8572-b742f2e55691" />
             </intent-filter>
         </activity>
     </application>

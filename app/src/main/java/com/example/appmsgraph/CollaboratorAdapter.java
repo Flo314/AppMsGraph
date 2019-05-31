@@ -2,6 +2,7 @@ package com.example.appmsgraph;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,10 +57,11 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     @Override
     public void onBindViewHolder(@NonNull final CollaboratorViewHolder holder, int position) {
 
+        int i = 0;
+
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
-//        holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
 
         // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
         CompareDate compareDate = new CompareDate();
@@ -67,17 +69,19 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         for (Value_ value : dataList) {
             // champ visite
             String visite = value.getFields().getVisite();
-            if (visite != null) {
+            if (visite != null && i <= position) {
                 compareDate.getCompareDate(visite);
-                if (compareDate.equals("RED")) {
+                if (compareDate.TAG.equals("RED")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
-                } else if (compareDate.equals("ORANGE")) {
-                    holder.imageindicatororange.setImageResource(R.drawable.ic_access_orange);
+                } else if (compareDate.TAG.equals("ORANGE")) {
+                    holder.imageindicatorred.setImageResource(R.drawable.ic_access_orange);
                 } else {
-                    holder.imageindicatorgreen.setImageResource(R.drawable.ic_access_green);
+                    holder.imageindicatorred.setImageResource(R.drawable.ic_access_green);
                 }
             }
+            i++;
         }
+
 
     }
 
