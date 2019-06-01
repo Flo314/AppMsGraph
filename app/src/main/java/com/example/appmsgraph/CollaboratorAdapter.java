@@ -166,5 +166,4 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             onClickListener.onListItemClick(clickedPosition);
         }
     }
-
 }

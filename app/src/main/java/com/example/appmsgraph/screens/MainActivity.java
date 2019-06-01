@@ -324,7 +324,16 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         return super.onOptionsItemSelected(item);
     }
 
-
+//    private List<CollaboratorAdapter.CollaboratorViewHolder> filterMyList(List<CollaboratorAdapter.CollaboratorViewHolder> list, String category) {
+//        List<CollaboratorAdapter.CollaboratorViewHolder> filterlist = new ArrayList<>();
+//        for (CollaboratorAdapter.CollaboratorViewHolder obj : list) {
+//             if (obj.itemView.findViewById(R.id.press).toString() == category){
+//                 filterlist.add(category.equals(TextView));
+//             }
+//        }
+//        //...
+//        return editedList;
+//    }
 
 
     /* Cycle de vie Activity
