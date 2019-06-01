@@ -2,6 +2,7 @@ package com.example.appmsgraph;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.utils.CompareDate;
+import com.nimbusds.jose.util.Resource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,11 +25,12 @@ import java.util.Collection;
  * permet de contenir l'ensemble des données à afficher dans le RecyclerView en gérant également ses mises à jour
  * adaptateur qui sera utilisé par RecyclerView pour afficher la liste des collaborateurs
  */
-public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> implements Filterable {
+public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapter.CollaboratorViewHolder> implements Filterable{
 
     private ArrayList<Value_> dataList;
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
+
     Context context;
     final private ListItemClickListener onClickListener;
 
@@ -64,14 +67,16 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
         // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
         CompareDate compareDate = new CompareDate();
-        // Traitement de l'icon pour la date
+        // Traitement de la couleur de l'icon pour la date
         for (Value_ value : dataList) {
             // champ visite
             String visite = value.getFields().getVisite();
             if (visite != null && i <= position) {
                 compareDate.getCompareDate(visite);
+                holder.textdate.setTextColor(Color.GRAY);
                 if (compareDate.TAG.equals("RED")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
+                    holder.textdate.setTextColor(Color.RED);
                 } else if (compareDate.TAG.equals("ORANGE")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_orange);
                 } else {
@@ -97,8 +102,10 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         return fiterName;
     }
 
+    // créer un nouveau filtre asynchrone
     private Filter fiterName = new Filter() {
         @Override
+        // crée un nouvel Arraylist avec des données filtrées
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Value_> filteredList = new ArrayList<>();
             if(constraint == null || constraint.length() == 0){
@@ -119,6 +126,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
         @SuppressWarnings("unchecked")
         @Override
+        // sert à notifier le fichier modifié
         protected void publishResults(CharSequence constraint, FilterResults results) {
             dataList.clear();
             dataList.addAll((Collection<? extends Value_>) results.values);
@@ -135,7 +143,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         TextView textnamecollab, textlastvisite, textdate;
         ImageView imageindicatorred, imageindicatororange, imageindicatorgreen;
 
-        public CollaboratorViewHolder(@NonNull View itemView) {
+        CollaboratorViewHolder(@NonNull View itemView) {
             super(itemView);
             textnamecollab = itemView.findViewById(R.id.textnamecollab);
             textlastvisite = itemView.findViewById(R.id.textlastvisite);

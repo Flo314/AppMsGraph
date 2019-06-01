@@ -252,7 +252,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                     loadDataList(response.body().getValue());
                     datalistObj = response.body().getValue();
 //                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
-
                 }
             }
 
@@ -316,13 +315,16 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
             // icon filter
             case R.id.action_important:
                 Toast.makeText(this, "Important", Toast.LENGTH_SHORT).show();
-                return true;
+
+                break;
             case R.id.action_moyen:
                 Toast.makeText(this, "Moyen", Toast.LENGTH_SHORT).show();
-                return true;
+
+                break;
             case R.id.action_bon:
                 Toast.makeText(this, "Bon", Toast.LENGTH_SHORT).show();
-                return true;
+
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

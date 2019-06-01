@@ -1,6 +1,5 @@
 package com.example.appmsgraph.utils;
 
-import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -15,14 +14,11 @@ public class CompareDate {
     /*Debug*/
     public String TAG = "";
 
-
-    public CompareDate() {
-
-    }
+    public CompareDate() {}
 
     /**
      *
-     * @param stringDate rprésente la chaîne de la liste sharepoint visite au format 'dd/MM/yyyy'
+     * @param stringDate représente la chaîne de la liste sharepoint visite au format 'dd/MM/yyyy'
      * @return le nombres de jours qui sépare la date du jour avec celle entré en paramètre
      */
     public String getCompareDate(String stringDate) {
