@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.CollaboratorAdapter;
@@ -82,9 +83,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         setContentView(R.layout.activity_main);
 
         actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.hide();
-        // getDrawable warning
-//        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.toolbar_visibility));
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
         actionBar.setTitle("Team");
 
@@ -248,10 +248,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 Log.d(TAG, "Response: " + response.toString());
                 // si reponse ok et que les data ne sont pas null
                 if (response.isSuccessful() && response.body() != null) {
-
                     loadDataList(response.body().getValue());
                     datalistObj = response.body().getValue();
-//                Log.d(TAG, "Objet datalistObj: " + datalistObj.toString());
                 }
             }
 
@@ -315,15 +313,12 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
             // icon filter
             case R.id.action_important:
                 Toast.makeText(this, "Important", Toast.LENGTH_SHORT).show();
-
                 break;
             case R.id.action_moyen:
                 Toast.makeText(this, "Moyen", Toast.LENGTH_SHORT).show();
-
                 break;
             case R.id.action_bon:
                 Toast.makeText(this, "Bon", Toast.LENGTH_SHORT).show();
-
                 break;
         }
         return super.onOptionsItemSelected(item);
