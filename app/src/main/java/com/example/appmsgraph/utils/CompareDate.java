@@ -1,6 +1,7 @@
 package com.example.appmsgraph.utils;
 
 
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,7 @@ public class CompareDate {
     /*Debug*/
     public String TAG = "";
 
-    public CompareDate() {}
+    public CompareDate(int size) {}
 
     /**
      *
@@ -97,4 +98,5 @@ public class CompareDate {
                 TAG + '\'' +
                 '}';
     }
+
 }

@@ -12,6 +12,7 @@
     <string name="moyen">Moyen</string>
     <string name="bon">Bon</string>
     <string name="Search">search</string>
+    <string name="colorfilter">colorfilter</string>
 
 
     <string-array name="team">

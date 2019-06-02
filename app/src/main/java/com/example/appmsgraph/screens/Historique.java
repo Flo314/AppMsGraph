@@ -94,7 +94,7 @@ public class Historique extends AppCompatActivity {
             }
         });
 
-        compareDate = new CompareDate();
+//        compareDate = new CompareDate(datalistObj.size());
         compareDate.getCompareDate(visite);
 
         Log.d(TAG, "Test: " + compareDate);

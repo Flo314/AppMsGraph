@@ -1,7 +1,6 @@
 package com.example.appmsgraph;
 
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +28,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     private ArrayList<Value_> dataList;
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
+    private ArrayList<Value_> dataListRed;
+    private ArrayList<Value_> dataListOrange;
+    private ArrayList<Value_> dataListGreen;
     CompareDate compareDate;
 
     final private ListItemClickListener onClickListener;
@@ -63,10 +65,9 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textnamecollab.setText(dataList.get(position).getFields().getTitle());
         holder.textlastvisite.setText(dataList.get(position).getFields().getPrenom());
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
-        holder.press.setTextColor(Color.BLUE);
 
         // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
-        compareDate = new CompareDate();
+        compareDate = new CompareDate(dataList.size());
         // Traitement de la couleur de l'icon pour la date
         for (Value_ value : dataList) {
             // champ visite
@@ -77,16 +78,10 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
                 if (compareDate.TAG.equals("RED")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_red);
                     holder.textdate.setTextColor(Color.RED);
-                    holder.press.setText("important");
-//                    holder.press.setVisibility(View.GONE);
                 } else if (compareDate.TAG.equals("ORANGE")) {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_orange);
-                    holder.press.setText("medium");
-//                    holder.press.setVisibility(View.GONE);
                 } else {
                     holder.imageindicatorred.setImageResource(R.drawable.ic_access_green);
-                    holder.press.setText("good");
-//                    holder.press.setVisibility(View.GONE);
                 }
             }
             i++;
@@ -99,6 +94,102 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             return dataList.size();
         }
         return 0;
+    }
+
+    // filtre sur les item par couleur (rouge, orange, vert)
+    public void updateListFilterColor() {
+        String visite;
+        int position = 0;
+        int i = dataList.size();
+        dataListRed = new ArrayList<>();
+        dataListOrange = new ArrayList<>();
+        dataListGreen = new ArrayList<>();
+        compareDate = new CompareDate(dataList.size());
+        for (Value_ item : dataList){
+            visite = item.getFields().getVisite();
+            if(visite != null && position <= i){
+                compareDate.getCompareDate(visite);
+                if (compareDate.TAG.equals("RED")){
+                      dataListRed.add(item);
+                }else if(compareDate.TAG.equals("ORANGE")){
+                    dataListOrange.add(item);
+                }else{
+                    dataListGreen.add(item);
+                }
+            }
+            position++;
+        }
+        dataList.clear();
+        dataList.addAll(dataListRed);
+        dataList.addAll(dataListOrange);
+        dataList.addAll(dataListGreen);
+        notifyDataSetChanged();
+    }
+
+    // filtre sur les item medium (orange)
+    public void updateListRed() {
+        String visite;
+        int position = 0;
+        int i = dataList.size();
+        dataListRed = new ArrayList<>();
+        compareDate = new CompareDate(dataList.size());
+        for (Value_ item : dataList){
+            visite = item.getFields().getVisite();
+            if(visite != null && position <= i){
+                compareDate.getCompareDate(visite);
+                if (compareDate.TAG.equals("ORANGE")){
+                    dataListRed.add(item);
+                }
+            }
+            position++;
+        }
+        dataList.clear();
+        dataList.addAll(dataListRed);
+        notifyDataSetChanged();
+    }
+
+    // filtre sur les item medium (orange)
+    public void updateListOrange() {
+        String visite;
+        int position = 0;
+        int i = dataList.size();
+        dataListOrange = new ArrayList<>();
+        compareDate = new CompareDate(dataList.size());
+        for (Value_ item : dataList){
+            visite = item.getFields().getVisite();
+            if(visite != null && position <= i){
+                compareDate.getCompareDate(visite);
+                if (compareDate.TAG.equals("ORANGE")){
+                    dataListOrange.add(item);
+                }
+            }
+            position++;
+        }
+        dataList.clear();
+        dataList.addAll(dataListOrange);
+        notifyDataSetChanged();
+    }
+
+    // filtre sur les item good (vert)
+    public void updateListGreen() {
+        String visite;
+        int position = 0;
+        int i = dataList.size();
+        dataListGreen = new ArrayList<>();
+        compareDate = new CompareDate(dataList.size());
+        for (Value_ item : dataList){
+            visite = item.getFields().getVisite();
+            if(visite != null && position <= i){
+                compareDate.getCompareDate(visite);
+                if (compareDate.TAG.equals("GREEN")){
+                    dataListGreen.add(item);
+                }
+            }
+            position++;
+        }
+        dataList.clear();
+        dataList.addAll(dataListGreen);
+        notifyDataSetChanged();
     }
 
      // Filtre sur le nom
@@ -144,7 +235,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // lors de l'exécution du programme par une liste de données obtenues par un appel réseau
     public class CollaboratorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView textnamecollab, textlastvisite, textdate, press;
+        TextView textnamecollab, textlastvisite, textdate;
         ImageView imageindicatorred, imageindicatororange, imageindicatorgreen;
 
         CollaboratorViewHolder(@NonNull View itemView) {
@@ -155,7 +246,6 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             imageindicatorred = itemView.findViewById(R.id.imageindicator_red);
             imageindicatororange = itemView.findViewById(R.id.imageindicator_orange);
             imageindicatorgreen= itemView.findViewById(R.id.imageindicator_green);
-            press = itemView.findViewById(R.id.press);
 
             itemView.setOnClickListener(this);
         }

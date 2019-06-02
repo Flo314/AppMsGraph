@@ -40,6 +40,8 @@ import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     /*Utils*/
     private CompareDate compareDate;
-    private String visite;
 
     /*UI*/
     Button btnSign;
@@ -311,29 +312,21 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // icon filter
+            case R.id.action_filtercolor:
+                adapter.updateListFilterColor();
+                return true;
             case R.id.action_important:
-                Toast.makeText(this, "Important", Toast.LENGTH_SHORT).show();
-                break;
+                adapter.updateListRed();
+                return true;
             case R.id.action_moyen:
-                Toast.makeText(this, "Moyen", Toast.LENGTH_SHORT).show();
-                break;
+                adapter.updateListOrange();
+                return true;
             case R.id.action_bon:
-                Toast.makeText(this, "Bon", Toast.LENGTH_SHORT).show();
-                break;
+                adapter.updateListGreen();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    private List<CollaboratorAdapter.CollaboratorViewHolder> filterMyList(List<CollaboratorAdapter.CollaboratorViewHolder> list, String category) {
-//        List<CollaboratorAdapter.CollaboratorViewHolder> filterlist = new ArrayList<>();
-//        for (CollaboratorAdapter.CollaboratorViewHolder obj : list) {
-//             if (obj.itemView.findViewById(R.id.press).toString() == category){
-//                 filterlist.add(category.equals(TextView));
-//             }
-//        }
-//        //...
-//        return editedList;
-//    }
 
 
     /* Cycle de vie Activity
