@@ -2,6 +2,7 @@ package com.example.appmsgraph.screens;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +34,7 @@ public class CreateVisite extends AppCompatActivity {
     private RatingBar note;
     private TextView editDate;
     private EditText commentaire;
+    private FloatingActionButton save;
 
     /*intent*/
     private String datalist;
@@ -74,9 +76,20 @@ public class CreateVisite extends AppCompatActivity {
 //        Log.d(TAG, "Datalist: " + datalist.toString());
 
         // editText fomulaire
+        save = findViewById(R.id.save_visite);
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Data Form: " + "\n" + collab.getSelectedItem().toString() + "\n"
+                +  editDate.getText().toString() + "\n"
+                + type_visite.getSelectedItem().toString() + "\n"
+                + commentaire.getText().toString() + "\n"
+                + note.getRating());
+            }
+        });
         collab = findViewById(R.id.collab);
         type_visite = findViewById(R.id.type_visite);
-//        note = findViewById(R.id.note);
+        note = findViewById(R.id.note);
         commentaire = findViewById(R.id.commentaire);
 
         // picker date formulaire
@@ -110,6 +123,15 @@ public class CreateVisite extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
         dpd.getDatePicker().setMinDate(System.currentTimeMillis());
         dpd.show();
+    }
+
+    // récupération des entré clavier
+    private void retrieveForm(){
+        collab.getSelectedItem().toString();
+        editDate.getText().toString();
+        type_visite.getSelectedItem().toString();
+        commentaire.getText().toString();
+        note.getRating();
     }
 
 }

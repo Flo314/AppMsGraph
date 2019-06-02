@@ -68,9 +68,9 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private CompareDate compareDate;
 
     /*UI*/
-    Button btnSign;
-    ActionBar actionBar;
-    ImageView logo;
+    private Button btnSign;
+    private ActionBar actionBar;
+    private ImageView logo;
     private ProgressBar mProgress = null;
     private CollaboratorAdapter adapter;
     private RecyclerView recyclerView;
