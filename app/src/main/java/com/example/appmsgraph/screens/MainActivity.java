@@ -267,15 +267,14 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     public void onListItemClick(int clickedItemIndex) {
         Log.d(TAG, "clickItem: " + clickedItemIndex);
         // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
-        Intent intent = new Intent(this, Historique.class);
+        Intent intent = new Intent(getApplicationContext(), Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
-//        intent.putExtra("datalist", datalistObj.toString());
         intent.putExtra("title", clickItem.getFields().getTitle());
         intent.putExtra("prenom", clickItem.getFields().getPrenom());
         intent.putExtra("tok", authHeader);
         intent.putExtra("id", clickItem.getId());
         intent.putExtra("visite", clickItem.getFields().getVisite());
-        intent.putExtra("histo", clickItem.getFields().getHistoriquevisite());
+//        intent.putExtra("histo", clickItem.getFields().getHistoriquevisite());
         startActivity(intent);
         Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
     }
@@ -313,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         switch (item.getItemId()) {
             // icon filter
             case R.id.action_filtercolor:
-                adapter.updateListFilterColor();
+                originalList();
                 return true;
             case R.id.action_important:
                 adapter.updateListRed();
@@ -326,6 +325,11 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // filtre sur les item par couleur (rouge, orange, vert)
+    public void originalList() {
+        network();
     }
 
 

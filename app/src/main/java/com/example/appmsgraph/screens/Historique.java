@@ -28,16 +28,12 @@ public class Historique extends AppCompatActivity {
     /*Debug*/
     private final String TAG = Historique.class.getSimpleName();
 
-    CompareDate compareDate;
-
     /*Data*/
-//    private String datalist;
     private String nameTitle;
     private String prenom;
     private String tok;
     private String id;
     private String visite;
-    private String histo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,15 +42,12 @@ public class Historique extends AppCompatActivity {
 
         // Data qui vient de MainActivity
         Intent intents = getIntent();
-//        datalist = intents.getStringExtra("datalist");
         nameTitle = intents.getStringExtra("title");
         prenom = intents.getStringExtra("prenom");
         tok = intents.getStringExtra("tok");
         id = intents.getStringExtra("id");
         visite = intents.getStringExtra("visite");
-        histo = intents.getStringExtra("histo");
 //        Toast.makeText(this, "token: " + tok , Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "histo: "  + " " +histo , Toast.LENGTH_SHORT).show();
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -75,7 +68,6 @@ public class Historique extends AppCompatActivity {
 
         // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
         historique = findViewById(R.id.historique);
-        historique.setText(histo);
 
         cardView = findViewById(R.id.clickedCardHistorique);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -89,15 +81,9 @@ public class Historique extends AppCompatActivity {
                 intent.putExtra("tok", tok);
                 intent.putExtra("id", id);
                 intent.putExtra("visite", visite);
-                intent.putExtra("histo", histo);
                 startActivity(intent);
             }
         });
-
-//        compareDate = new CompareDate(datalistObj.size());
-        compareDate.getCompareDate(visite);
-
-        Log.d(TAG, "Test: " + compareDate);
 
     }
 

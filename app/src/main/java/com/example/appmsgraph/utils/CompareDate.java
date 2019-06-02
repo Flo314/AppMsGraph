@@ -15,7 +15,7 @@ public class CompareDate {
     /*Debug*/
     public String TAG = "";
 
-    public CompareDate(int size) {}
+    public CompareDate() {}
 
     /**
      *

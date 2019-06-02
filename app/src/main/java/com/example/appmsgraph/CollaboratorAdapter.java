@@ -28,10 +28,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     private ArrayList<Value_> dataList;
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
-    private ArrayList<Value_> dataListRed;
-    private ArrayList<Value_> dataListOrange;
-    private ArrayList<Value_> dataListGreen;
-    CompareDate compareDate;
+    private CompareDate compareDate;
 
     final private ListItemClickListener onClickListener;
 
@@ -67,7 +64,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         holder.textdate.setText(dataList.get(position).getFields().getVisite());
 
         // compareDate instance permettant de comparer la date du jour avec une string au format dd/MM/yyyy
-        compareDate = new CompareDate(dataList.size());
+        compareDate = new CompareDate();
         // Traitement de la couleur de l'icon pour la date
         for (Value_ value : dataList) {
             // champ visite
@@ -96,48 +93,18 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         return 0;
     }
 
-    // filtre sur les item par couleur (rouge, orange, vert)
-    public void updateListFilterColor() {
-        String visite;
-        int position = 0;
-        int i = dataList.size();
-        dataListRed = new ArrayList<>();
-        dataListOrange = new ArrayList<>();
-        dataListGreen = new ArrayList<>();
-        compareDate = new CompareDate(dataList.size());
-        for (Value_ item : dataList){
-            visite = item.getFields().getVisite();
-            if(visite != null && position <= i){
-                compareDate.getCompareDate(visite);
-                if (compareDate.TAG.equals("RED")){
-                      dataListRed.add(item);
-                }else if(compareDate.TAG.equals("ORANGE")){
-                    dataListOrange.add(item);
-                }else{
-                    dataListGreen.add(item);
-                }
-            }
-            position++;
-        }
-        dataList.clear();
-        dataList.addAll(dataListRed);
-        dataList.addAll(dataListOrange);
-        dataList.addAll(dataListGreen);
-        notifyDataSetChanged();
-    }
-
     // filtre sur les item medium (orange)
     public void updateListRed() {
         String visite;
         int position = 0;
         int i = dataList.size();
-        dataListRed = new ArrayList<>();
-        compareDate = new CompareDate(dataList.size());
+        ArrayList<Value_> dataListRed = new ArrayList<>();
+        compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();
             if(visite != null && position <= i){
                 compareDate.getCompareDate(visite);
-                if (compareDate.TAG.equals("ORANGE")){
+                if (compareDate.TAG.equals("RED")){
                     dataListRed.add(item);
                 }
             }
@@ -153,8 +120,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         String visite;
         int position = 0;
         int i = dataList.size();
-        dataListOrange = new ArrayList<>();
-        compareDate = new CompareDate(dataList.size());
+        ArrayList<Value_> dataListOrange = new ArrayList<>();
+        compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();
             if(visite != null && position <= i){
@@ -175,8 +142,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         String visite;
         int position = 0;
         int i = dataList.size();
-        dataListGreen = new ArrayList<>();
-        compareDate = new CompareDate(dataList.size());
+        ArrayList<Value_> dataListGreen = new ArrayList<>();
+        compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();
             if(visite != null && position <= i){
