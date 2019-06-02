@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         switch (item.getItemId()) {
             // icon filter
             case R.id.action_filtercolor:
-                originalList();
+                network();
                 return true;
             case R.id.action_important:
                 adapter.updateListRed();
@@ -325,11 +325,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    // filtre sur les item par couleur (rouge, orange, vert)
-    public void originalList() {
-        network();
     }
 
 
