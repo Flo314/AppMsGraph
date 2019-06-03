@@ -2,6 +2,7 @@ package com.example.appmsgraph.screens;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -9,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -17,27 +20,38 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.network.GetDataService;
+import com.example.appmsgraph.network.RetrofitInstance;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CreateVisite extends AppCompatActivity {
 
     /* UI */
     private ActionBar actionBar;
-    private Spinner collab;
+    private Spinner spinnercollab;
     private Spinner type_visite;
     private RatingBar note;
     private TextView editDate;
     private EditText commentaire;
     private FloatingActionButton save;
 
+    /*Data*/
+    private static ArrayList<Value_> datalistObj = new ArrayList<>();
+    private List<String> spinnerDataName = new ArrayList<>();
+
     /*intent*/
-    private String datalist;
     private String nameTitle;
     private String prenom;
     private String authHeader;
@@ -66,28 +80,46 @@ public class CreateVisite extends AppCompatActivity {
         Intent intent = getIntent();
         // true = cardView
         Uniqid = intent.getBooleanExtra("Uniqid", true);
-//        datalist = intent.getStringExtra("datalist");
         nameTitle = intent.getStringExtra("title");
         prenom = intent.getStringExtra("prenom");
         authHeader = intent.getStringExtra("Tok");
         id = intent.getStringExtra("id");
         visite = intent.getStringExtra("visite");
         histo = intent.getStringExtra("histo");
-        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "token: " + authHeader, Toast.LENGTH_SHORT).show();
 
-        // editText fomulaire
+        spinnercollab = findViewById(R.id.spinnercollab);
+        // appel reseau pour obtenir les données
+        networkGet();
+
+        // remplir le spinner avec les data reçu
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerDataName);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnercollab.setAdapter(adapterSpinner);
+
+        spinnercollab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "Selected: " + item);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // FloatingActionButton pour faire un Post des data
         save = findViewById(R.id.save_visite);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Data Form: " + "\n" + collab.getSelectedItem().toString() + "\n"
-                +  editDate.getText().toString() + "\n"
-                + type_visite.getSelectedItem().toString() + "\n"
-                + commentaire.getText().toString() + "\n"
-                + note.getRating());
+                retrieveForm();
             }
         });
-        collab = findViewById(R.id.collab);
+
         type_visite = findViewById(R.id.type_visite);
         note = findViewById(R.id.note);
         commentaire = findViewById(R.id.commentaire);
@@ -126,12 +158,53 @@ public class CreateVisite extends AppCompatActivity {
     }
 
     // récupération des entré clavier
-    private void retrieveForm(){
-        collab.getSelectedItem().toString();
+    private void retrieveForm() {
+        spinnercollab.getSelectedItem().toString();
         editDate.getText().toString();
         type_visite.getSelectedItem().toString();
-        commentaire.getText().toString();
         note.getRating();
+        commentaire.getText().toString();
+//
+//        Log.d(TAG, "Data Form: " + "\n" + spinnercollab.getSelectedItem() + "\n"
+//                + editDate.getText().toString() + "\n"
+//                + type_visite.getSelectedItem().toString() + "\n"
+//                + commentaire.getText().toString() + "\n"
+//                + note.getRating());
+    }
+
+    private void networkGet() {
+        //Créer un identifiant pour l'interface RetrofitInstance
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
+        // en lui passant le token
+        Call<Value> call = service.getNameCollab(authHeader);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<Value>() {
+            @Override
+            public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                // si reponse ok et que les data ne sont pas null
+                if (response.isSuccessful() && response.body() != null) {
+                    datalistObj = response.body().getValue();
+                    // remplir le champ collab avec le nom et prenom
+                    for (Value_ value : datalistObj) {
+                        if(value.getFields().getTitle() != null && value.getFields().getPrenom() != null ){
+                            spinnerDataName.add(value.getFields().getTitle().toString() + " " + value.getFields().getPrenom().toString());
+                        }
+                    }
+                    Log.d(TAG, "Data: " + spinnerDataName.toString() + "\n" + "Size: " + spinnerDataName.size());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+            }
+        });
     }
 
 }

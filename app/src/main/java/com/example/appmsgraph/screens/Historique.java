@@ -47,7 +47,7 @@ public class Historique extends AppCompatActivity {
         authHeader = intents.getStringExtra("Tok");
         id = intents.getStringExtra("id");
         visite = intents.getStringExtra("visite");
-        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
         // actionBar
         actionBar = getSupportActionBar();

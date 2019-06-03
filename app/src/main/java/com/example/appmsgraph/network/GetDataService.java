@@ -15,7 +15,7 @@ public interface GetDataService {
     // Spécifier le type de requête et transmettre l'URL relative
     @GET("items?expand=fields")
     Call<Value> getCollaboratorsData(@Header("Authorization") String authHeader);
-    @GET("items?expand=fields(select=Title,prenom")
+    @GET("items?expand=fields(select=Title,prenom)")
     Call<Value> getNameCollab(@Header("Authorization") String authHeader);
 
 }

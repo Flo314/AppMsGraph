@@ -22,12 +22,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
-            android:id="@+id/collab"
+            android:id="@+id/spinnercollab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_input_form"
-            android:entries="@array/team"
             android:padding="12dp" />
+
+        <!--android:entries="@array/team"-->
 
         <TextView
             android:id="@+id/date_visite"
