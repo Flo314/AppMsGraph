@@ -31,7 +31,7 @@ public class Historique extends AppCompatActivity {
     /*Data*/
     private String nameTitle;
     private String prenom;
-    private String tok;
+    private String authHeader;
     private String id;
     private String visite;
 
@@ -44,10 +44,10 @@ public class Historique extends AppCompatActivity {
         Intent intents = getIntent();
         nameTitle = intents.getStringExtra("title");
         prenom = intents.getStringExtra("prenom");
-        tok = intents.getStringExtra("tok");
+        authHeader = intents.getStringExtra("Tok");
         id = intents.getStringExtra("id");
         visite = intents.getStringExtra("visite");
-//        Toast.makeText(this, "token: " + tok , Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -61,6 +61,7 @@ public class Historique extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
                 intent.putExtra("Uniqid",false);
+                intent.putExtra("Tok", authHeader);
                 startActivity(intent);
                 Log.d(TAG, "Lance CreateVisite...");
             }
@@ -78,7 +79,7 @@ public class Historique extends AppCompatActivity {
 //                intent.putExtra("datalist",datalist);
                 intent.putExtra("title", nameTitle);
                 intent.putExtra("prenom", prenom);
-                intent.putExtra("tok", tok);
+                intent.putExtra("Tok", authHeader);
                 intent.putExtra("id", id);
                 intent.putExtra("visite", visite);
                 startActivity(intent);

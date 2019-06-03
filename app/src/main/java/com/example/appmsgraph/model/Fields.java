@@ -23,9 +23,9 @@ public class Fields {
     @SerializedName("BusinessManager")
     @Expose
     private String businessManager;
-    @SerializedName("Historiquevisite")
+    @SerializedName("Historique")
     @Expose
-    private String historiquevisite;
+    private String historique;
     @SerializedName("id")
     @Expose
     private String id;
@@ -117,12 +117,12 @@ public class Fields {
         this.businessManager = businessManager;
     }
 
-    public String getHistoriquevisite() {
-        return historiquevisite;
+    public String getHistorique() {
+        return historique;
     }
 
-    public void setHistoriquevisite(String historiquevisite) {
-        this.historiquevisite = historiquevisite;
+    public void setHistorique(String historique) {
+        this.historique = historique;
     }
 
     public String getId() {
@@ -269,7 +269,7 @@ public class Fields {
                 ", visite='" + visite + '\'' +"\n"+
                 ", prenom='" + prenom + '\'' +"\n"+
                 ", businessManager='" + businessManager + '\'' +"\n"+
-                ", historiquevisite='" + historiquevisite + '\'' +"\n"+
+                ", historiquevisite='" + historique + '\'' +"\n"+
                 ", id='" + id + '\'' +"\n"+
                 ", contentType='" + contentType + '\'' +"\n"+
                 ", modified='" + modified + '\'' +"\n"+

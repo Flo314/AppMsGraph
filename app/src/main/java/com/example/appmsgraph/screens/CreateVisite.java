@@ -40,7 +40,7 @@ public class CreateVisite extends AppCompatActivity {
     private String datalist;
     private String nameTitle;
     private String prenom;
-    private String tok;
+    private String authHeader;
     private String id;
     private String histo;
     private String visite;
@@ -69,11 +69,11 @@ public class CreateVisite extends AppCompatActivity {
 //        datalist = intent.getStringExtra("datalist");
         nameTitle = intent.getStringExtra("title");
         prenom = intent.getStringExtra("prenom");
-        tok = intent.getStringExtra("tok");
+        authHeader = intent.getStringExtra("Tok");
         id = intent.getStringExtra("id");
         visite = intent.getStringExtra("visite");
         histo = intent.getStringExtra("histo");
-//        Log.d(TAG, "Datalist: " + datalist.toString());
+        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
         // editText fomulaire
         save = findViewById(R.id.save_visite);

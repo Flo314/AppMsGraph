@@ -271,7 +271,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         Value_ clickItem = datalistObj.get(clickedItemIndex);
         intent.putExtra("title", clickItem.getFields().getTitle());
         intent.putExtra("prenom", clickItem.getFields().getPrenom());
-        intent.putExtra("tok", authHeader);
+        intent.putExtra("Tok", authHeader);
         intent.putExtra("id", clickItem.getId());
         intent.putExtra("visite", clickItem.getFields().getVisite());
 //        intent.putExtra("histo", clickItem.getFields().getHistoriquevisite());
