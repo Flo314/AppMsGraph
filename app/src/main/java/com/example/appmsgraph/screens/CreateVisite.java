@@ -74,11 +74,6 @@ public class CreateVisite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_visite);
 
-        // actionBar
-        actionBar = getSupportActionBar();
-        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
-        actionBar.setTitle("Visite");
-
         // Data qui vient de Historique
         Intent intent = getIntent();
         // true = cardView
@@ -90,6 +85,11 @@ public class CreateVisite extends AppCompatActivity {
         visite = intent.getStringExtra("visite");
         histo = intent.getStringExtra("histo");
 //        Toast.makeText(getApplicationContext(), "token: " + authHeader, Toast.LENGTH_SHORT).show();
+
+        // actionBar
+        actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
+        actionBar.setTitle("Créer une Visite");
 
         spinnercollab = (Spinner) findViewById(R.id.spinnercollab);
         // appel reseau pour obtenir les données
@@ -128,6 +128,7 @@ public class CreateVisite extends AppCompatActivity {
         // picker date formulaire
         editDate = findViewById(R.id.date_visite);
         if (Uniqid) {
+            actionBar.setTitle("Visite: " + nameTitle + " " + prenom);
             save.setVisibility(View.GONE);
             update.setVisibility(View.VISIBLE);
             editDate.setText(visite);
