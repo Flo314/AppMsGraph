@@ -88,15 +88,9 @@ public class CreateVisite extends AppCompatActivity {
         histo = intent.getStringExtra("histo");
 //        Toast.makeText(getApplicationContext(), "token: " + authHeader, Toast.LENGTH_SHORT).show();
 
-        spinnercollab = findViewById(R.id.spinnercollab);
+        spinnercollab = (Spinner) findViewById(R.id.spinnercollab);
         // appel reseau pour obtenir les données
         networkGet();
-
-        // remplir le spinner avec les data reçu
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerDataName);
-        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnercollab.setAdapter(adapterSpinner);
 
         spinnercollab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -164,12 +158,13 @@ public class CreateVisite extends AppCompatActivity {
         type_visite.getSelectedItem().toString();
         note.getRating();
         commentaire.getText().toString();
-//
-//        Log.d(TAG, "Data Form: " + "\n" + spinnercollab.getSelectedItem() + "\n"
-//                + editDate.getText().toString() + "\n"
-//                + type_visite.getSelectedItem().toString() + "\n"
-//                + commentaire.getText().toString() + "\n"
-//                + note.getRating());
+
+        Log.d(TAG, "Data Form: " + "\n" + spinnercollab.getSelectedItem().toString() + "\n"
+                + editDate.getText().toString() + "\n"
+                + type_visite.getSelectedItem().toString() + "\n"
+                + note.getRating() + "\n"
+                + commentaire.getText().toString());
+
     }
 
     private void networkGet() {
@@ -189,13 +184,18 @@ public class CreateVisite extends AppCompatActivity {
                 // si reponse ok et que les data ne sont pas null
                 if (response.isSuccessful() && response.body() != null) {
                     datalistObj = response.body().getValue();
-                    // remplir le champ collab avec le nom et prenom
+                     // remplir le champ collab avec le nom et prenom
                     for (Value_ value : datalistObj) {
                         if(value.getFields().getTitle() != null && value.getFields().getPrenom() != null ){
                             spinnerDataName.add(value.getFields().getTitle().toString() + " " + value.getFields().getPrenom().toString());
                         }
                     }
                     Log.d(TAG, "Data: " + spinnerDataName.toString() + "\n" + "Size: " + spinnerDataName.size());
+                    // remplir le spinner avec les data reçu
+                    ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(
+                            CreateVisite.this, android.R.layout.simple_spinner_item, spinnerDataName);
+                    adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinnercollab.setAdapter(adapterSpinner);
                 }
             }
 
