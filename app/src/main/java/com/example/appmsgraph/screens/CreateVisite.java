@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -25,6 +26,7 @@ import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
+import com.example.appmsgraph.utils.CustomDialogSuccess;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -168,6 +170,9 @@ public class CreateVisite extends AppCompatActivity {
         type_visite.getSelectedItem().toString();
         note.getRating();
         commentaire.getText().toString();
+
+        CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
+        customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
 
         Log.d(TAG, "Data Form: " + "\n" + spinnercollab.getSelectedItem().toString() + "\n"
                 + editDate.getText().toString() + "\n"
