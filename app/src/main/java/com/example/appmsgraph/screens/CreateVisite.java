@@ -1,5 +1,6 @@
 package com.example.appmsgraph.screens;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -46,6 +47,7 @@ public class CreateVisite extends AppCompatActivity {
     private TextView editDate;
     private EditText commentaire;
     private FloatingActionButton save;
+    private FloatingActionButton update;
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
@@ -66,6 +68,7 @@ public class CreateVisite extends AppCompatActivity {
     /*Debug*/
     private final String TAG = CreateVisite.class.getSimpleName();
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +108,9 @@ public class CreateVisite extends AppCompatActivity {
             }
         });
 
+        // FloatingActionButton pour faire un Update des data
+        update = findViewById(R.id.update_visite);
+
         // FloatingActionButton pour faire un Post des data
         save = findViewById(R.id.save_visite);
         save.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +120,7 @@ public class CreateVisite extends AppCompatActivity {
             }
         });
 
+        // formulaire
         type_visite = findViewById(R.id.type_visite);
         note = findViewById(R.id.note);
         commentaire = findViewById(R.id.commentaire);
@@ -121,6 +128,8 @@ public class CreateVisite extends AppCompatActivity {
         // picker date formulaire
         editDate = findViewById(R.id.date_visite);
         if (Uniqid) {
+            save.setVisibility(View.GONE);
+            update.setVisibility(View.VISIBLE);
             editDate.setText(visite);
             commentaire.setText(histo);
         }
