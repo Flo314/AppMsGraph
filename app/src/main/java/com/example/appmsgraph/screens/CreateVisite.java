@@ -171,6 +171,7 @@ public class CreateVisite extends AppCompatActivity {
         note.getRating();
         commentaire.getText().toString();
 
+        // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
         customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
 
@@ -181,6 +182,9 @@ public class CreateVisite extends AppCompatActivity {
                 + commentaire.getText().toString());
 
     }
+
+    /* Helper methods gèrent les appels réseaux
+     * ================================================================= */
 
     private void networkGet() {
         //Créer un identifiant pour l'interface RetrofitInstance
@@ -218,6 +222,7 @@ public class CreateVisite extends AppCompatActivity {
             public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
                 Toast.makeText(getApplicationContext(), "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
             }
         });
     }

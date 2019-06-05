@@ -258,6 +258,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
             public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
             }
         });
     }

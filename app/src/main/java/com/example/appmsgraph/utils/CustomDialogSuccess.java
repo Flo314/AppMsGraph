@@ -1,14 +1,14 @@
 package com.example.appmsgraph.utils;
 
-import android.annotation.SuppressLint;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 
 import com.example.appmsgraph.R;
 
@@ -37,6 +37,5 @@ public class CustomDialogSuccess extends AppCompatDialogFragment {
     public void onStart() {
         super.onStart();
         ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundResource(R.drawable.button_ok_dialog);
-
     }
 }
