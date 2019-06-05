@@ -25,7 +25,7 @@ public class CustomDialogSuccess extends AppCompatDialogFragment {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
+                // TODO Appel network for POST data
 
             }
         });

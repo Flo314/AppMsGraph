@@ -22,11 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.model.Fields;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.CustomDialogSuccess;
+import com.example.appmsgraph.utils.JsonFormat;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +60,7 @@ public class CreateVisite extends AppCompatActivity {
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
     private List<String> spinnerDataName = new ArrayList<>();
+    private String idField;
 
     /*intent*/
     private String nameTitle;
@@ -165,21 +172,49 @@ public class CreateVisite extends AppCompatActivity {
 
     // récupération des entré clavier
     private void retrieveForm() {
-        spinnercollab.getSelectedItem().toString();
-        editDate.getText().toString();
-        type_visite.getSelectedItem().toString();
-        note.getRating();
-        commentaire.getText().toString();
+
+        String iD = spinnercollab.getSelectedItem().toString();
+        String field = idField;
+        String date = editDate.getText().toString();
+        String type = type_visite.getSelectedItem().toString();
+        String not = String.valueOf(note.getRating());
+        String comment = commentaire.getText().toString();
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+            jsonObject.put("id", field );
+            jsonObject.put("date", date );
+            jsonObject.put("type", type );
+            jsonObject.put("note", not );
+            jsonObject.put("comment", comment );
+
+            JSONArray jsonArray = new JSONArray();
+            jsonArray.put(jsonObject);
+            if(jsonArray.getJSONObject(jsonObject.length()).getString("id").equals(iD)){
+                JSONObject jsonObject1 = new JSONObject();
+                jsonArray.put(jsonObject1);
+            }
+            Log.d(TAG,"JSONFORMAT: " + jsonArray.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+//        // transforme les date du formulaire en un tableau d'ogjets JSON
+//        JsonFormat.jsonToFormat(iD,date,type,not,comment);
+
+
 
         // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
         customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
 
-        Log.d(TAG, "Data Form: " + "\n" + spinnercollab.getSelectedItem().toString() + "\n"
-                + editDate.getText().toString() + "\n"
-                + type_visite.getSelectedItem().toString() + "\n"
-                + note.getRating() + "\n"
-                + commentaire.getText().toString());
+//        Log.d(TAG, "Data Form: " + "\n" + iD + "\n"
+//                + editDate.getText().toString() + "\n"
+//                + type_visite.getSelectedItem().toString() + "\n"
+//                + note.getRating() + "\n"
+//                + commentaire.getText().toString());
 
     }
 
@@ -205,11 +240,14 @@ public class CreateVisite extends AppCompatActivity {
                     datalistObj = response.body().getValue();
                      // remplir le champ collab avec le nom et prenom
                     for (Value_ value : datalistObj) {
-                        if(value.getFields().getTitle() != null && value.getFields().getPrenom() != null ){
-                            spinnerDataName.add(value.getFields().getTitle().toString() + " " + value.getFields().getPrenom().toString());
+                        idField = value.getFields().getId().toString();
+                        if(value.getFields().getTitle() != null && value.getFields().getPrenom() != null){
+                            spinnerDataName.add(value.getFields().getTitle().toString()
+                                    + " " + value.getFields().getPrenom().toString());
                         }
                     }
-                    Log.d(TAG, "Data: " + spinnerDataName.toString() + "\n" + "Size: " + spinnerDataName.size());
+                    Log.d(TAG, "Data: " + spinnerDataName.toString() + "\n"
+                            + "Size: " + spinnerDataName.size());
                     // remplir le spinner avec les data reçu
                     ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(
                             CreateVisite.this, android.R.layout.simple_spinner_item, spinnerDataName);
