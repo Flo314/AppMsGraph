@@ -1,6 +1,8 @@
 package com.example.appmsgraph.screens;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
@@ -215,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
      * loadDataList() - charge les données réseaux dans le recyclerview */
 
 
+    @SuppressLint("RestrictedApi")
     private void updateSuccessUI() {
         btnSign.setVisibility(View.INVISIBLE);
         logo.setVisibility(View.INVISIBLE);

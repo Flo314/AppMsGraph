@@ -171,40 +171,16 @@ public class CreateVisite extends AppCompatActivity {
     }
 
     // récupération des entré clavier
-    private void retrieveForm() {
+    private void retrieveForm(){
 
         String iD = spinnercollab.getSelectedItem().toString();
-        String field = idField;
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating());
         String comment = commentaire.getText().toString();
 
-        JSONObject jsonObject = new JSONObject();
-
-        try {
-            jsonObject.put("id", field );
-            jsonObject.put("date", date );
-            jsonObject.put("type", type );
-            jsonObject.put("note", not );
-            jsonObject.put("comment", comment );
-
-            JSONArray jsonArray = new JSONArray();
-            jsonArray.put(jsonObject);
-            if(jsonArray.getJSONObject(jsonObject.length()).getString("id").equals(iD)){
-                JSONObject jsonObject1 = new JSONObject();
-                jsonArray.put(jsonObject1);
-            }
-            Log.d(TAG,"JSONFORMAT: " + jsonArray.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-//        // transforme les date du formulaire en un tableau d'ogjets JSON
-//        JsonFormat.jsonToFormat(iD,date,type,not,comment);
-
-
+        JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD,date,type,not,comment);
+        Log.d(TAG, "JSONOBJECT: " + jsonObject);
 
         // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
