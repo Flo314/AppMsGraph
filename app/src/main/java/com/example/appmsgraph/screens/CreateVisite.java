@@ -3,6 +3,7 @@ package com.example.appmsgraph.screens;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +30,7 @@ import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.CustomDialogSuccess;
 import com.example.appmsgraph.utils.JsonFormat;
+import com.example.appmsgraph.utils.Validator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +46,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.appmsgraph.R.color.red;
+
 
 public class CreateVisite extends AppCompatActivity {
 
@@ -56,6 +60,10 @@ public class CreateVisite extends AppCompatActivity {
     private EditText commentaire;
     private FloatingActionButton save;
     private FloatingActionButton update;
+
+    /*Validator*/
+    private TextView validator;
+    private TextView validatorDate;
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
@@ -130,6 +138,8 @@ public class CreateVisite extends AppCompatActivity {
         });
 
         // formulaire
+        validatorDate = findViewById(R.id.validatorDate);
+        validator = findViewById(R.id.validator);
         type_visite = findViewById(R.id.type_visite);
         note = findViewById(R.id.note);
         commentaire = findViewById(R.id.commentaire);
@@ -179,19 +189,25 @@ public class CreateVisite extends AppCompatActivity {
         String not = String.valueOf(note.getRating());
         String comment = commentaire.getText().toString();
 
-        JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD,date,type,not,comment);
-        Log.d(TAG, "JSONOBJECT: " + jsonObject);
+        if(date.equals("") && !Validator.validator(date)){
+            validatorDate.setText("Erreur:la date ne doit pas être vide");
+            validatorDate.setVisibility(View.VISIBLE);
+        }
+        Validator.validator(comment);
+        if(!Validator.validator(comment)){
+            validator.setText("Erreur:la limite du commentaire doit faire 150 caractères maximum");
+            validator.setVisibility(View.VISIBLE);
+        }else{
+            JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD,date,type,not,comment);
+            Log.d(TAG, "JSONOBJECT: " + jsonObject);
+            validator.setVisibility(View.GONE);
+            note.setRating(0F);
+            commentaire.getText().clear();
 
-        // CustomDialog en cas de succes de POST
-        CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
-        customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
-
-//        Log.d(TAG, "Data Form: " + "\n" + iD + "\n"
-//                + editDate.getText().toString() + "\n"
-//                + type_visite.getSelectedItem().toString() + "\n"
-//                + note.getRating() + "\n"
-//                + commentaire.getText().toString());
-
+            // CustomDialog en cas de succes de POST
+            CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
+            customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
+        }
     }
 
     /* Helper methods gèrent les appels réseaux
