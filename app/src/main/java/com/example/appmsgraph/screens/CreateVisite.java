@@ -138,7 +138,7 @@ public class CreateVisite extends AppCompatActivity {
         });
 
         // formulaire
-        validatorDate = findViewById(R.id.validatorDate);
+//        validatorDate = findViewById(R.id.validatorDate);
         validator = findViewById(R.id.validator);
         type_visite = findViewById(R.id.type_visite);
         note = findViewById(R.id.note);
@@ -181,32 +181,31 @@ public class CreateVisite extends AppCompatActivity {
     }
 
     // récupération des entré clavier
-    private void retrieveForm(){
+    private void retrieveForm() {
 
         String iD = spinnercollab.getSelectedItem().toString();
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating());
         String comment = commentaire.getText().toString();
-
-        if(date.equals("") && !Validator.validator(date)){
-            validatorDate.setText("Erreur:la date ne doit pas être vide");
-            validatorDate.setVisibility(View.VISIBLE);
-        }
+//
+//        if(date.equals("") && !Validator.validator(date)){
+//            validatorDate.setText("Erreur:veuillez entrer une date");
+//            validatorDate.setVisibility(View.VISIBLE);
+//        }
         Validator.validator(comment);
-        if(!Validator.validator(comment)){
+        if (!Validator.validator(comment)) {
             validator.setText("Erreur:la limite du commentaire doit faire 150 caractères maximum");
             validator.setVisibility(View.VISIBLE);
         }else{
-            JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD,date,type,not,comment);
+            JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD, date, type, not, comment);
             Log.d(TAG, "JSONOBJECT: " + jsonObject);
+            // CustomDialog en cas de succes de POST
+            CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
+            customdialogsuccess.show(getSupportFragmentManager(), "example simple dialog");
             validator.setVisibility(View.GONE);
             note.setRating(0F);
             commentaire.getText().clear();
-
-            // CustomDialog en cas de succes de POST
-            CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
-            customdialogsuccess.show(getSupportFragmentManager(),"example simple dialog" );
         }
     }
 
@@ -230,10 +229,10 @@ public class CreateVisite extends AppCompatActivity {
                 // si reponse ok et que les data ne sont pas null
                 if (response.isSuccessful() && response.body() != null) {
                     datalistObj = response.body().getValue();
-                     // remplir le champ collab avec le nom et prenom
+                    // remplir le champ collab avec le nom et prenom
                     for (Value_ value : datalistObj) {
                         idField = value.getFields().getId().toString();
-                        if(value.getFields().getTitle() != null && value.getFields().getPrenom() != null){
+                        if (value.getFields().getTitle() != null && value.getFields().getPrenom() != null) {
                             spinnerDataName.add(value.getFields().getTitle().toString()
                                     + " " + value.getFields().getPrenom().toString());
                         }
