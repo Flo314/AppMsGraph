@@ -12,7 +12,6 @@ import java.util.Locale;
 
 public class CompareDate {
 
-    /*Debug*/
     public String TAG = "";
 
     public CompareDate() {}

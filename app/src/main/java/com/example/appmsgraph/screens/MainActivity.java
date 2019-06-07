@@ -278,7 +278,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         intent.putExtra("Tok", authHeader);
         intent.putExtra("id", clickItem.getId());
         intent.putExtra("visite", clickItem.getFields().getVisite());
-//        intent.putExtra("histo", clickItem.getFields().getHistoriquevisite());
+        intent.putExtra("histo", clickItem.getFields().getHistorique());
         startActivity(intent);
         Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
     }

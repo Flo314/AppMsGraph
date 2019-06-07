@@ -180,7 +180,7 @@ public class CreateVisite extends AppCompatActivity {
         dpd.show();
     }
 
-    // récupération des entré clavier
+    // récupération des entré clavier et traitement du formulaire
     private void retrieveForm() {
 
         String iD = spinnercollab.getSelectedItem().toString();
@@ -189,6 +189,7 @@ public class CreateVisite extends AppCompatActivity {
         String not = String.valueOf(note.getRating());
         String comment = commentaire.getText().toString();
 
+        // Control formulaire
         Validator.validatorDate(date);
         if (!Validator.validatorDate(date)) {
             validatorDate.setText("Erreur:veuillez entrer une date");
@@ -198,8 +199,10 @@ public class CreateVisite extends AppCompatActivity {
             validator.setText("Erreur:le commentaire ne doit pas dépasser 150 caractères maximum");
             validator.setVisibility(View.VISIBLE);
         }else {
+        // création de l'objet JSON si tout est bon
         JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD, date, type, not, comment);
         Log.d(TAG, "JSONOBJECT: " + jsonObject);
+
         // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
         customdialogsuccess.show(getSupportFragmentManager(), "example simple dialog");

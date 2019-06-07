@@ -33,6 +33,7 @@ public class Historique extends AppCompatActivity {
     private String prenom;
     private String authHeader;
     private String id;
+    private String histo;
     private String visite;
 
     @Override
@@ -46,6 +47,7 @@ public class Historique extends AppCompatActivity {
         prenom = intents.getStringExtra("prenom");
         authHeader = intents.getStringExtra("Tok");
         id = intents.getStringExtra("id");
+        histo = intents.getStringExtra("histo");
         visite = intents.getStringExtra("visite");
 //        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
@@ -69,6 +71,7 @@ public class Historique extends AppCompatActivity {
 
         // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
         historique = findViewById(R.id.historique);
+        historique.setText(histo);
 
         cardView = findViewById(R.id.clickedCardHistorique);
         cardView.setOnClickListener(new View.OnClickListener() {
