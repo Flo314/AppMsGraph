@@ -29,6 +29,7 @@ import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.CustomDialogSuccess;
+import com.example.appmsgraph.utils.CustomDialogUpdate;
 import com.example.appmsgraph.utils.JsonFormat;
 import com.example.appmsgraph.utils.Validator;
 
@@ -127,6 +128,12 @@ public class CreateVisite extends AppCompatActivity {
 
         // FloatingActionButton pour faire un Update des data
         update = findViewById(R.id.update_visite);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                warningDialog();
+            }
+        });
 
         // FloatingActionButton pour faire un Post des data
         save = findViewById(R.id.save_visite);
@@ -205,15 +212,21 @@ public class CreateVisite extends AppCompatActivity {
 
         // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
-        customdialogsuccess.show(getSupportFragmentManager(), "example simple dialog");
+        customdialogsuccess.show(getSupportFragmentManager(), "success simple dialog");
         validator.setVisibility(View.GONE);
         validatorDate.setVisibility(View.GONE);
         editDate.setText("Date");
         note.setRating(0F);
         commentaire.getText().clear();
     }
-
 }
+
+
+    public void warningDialog(){
+        // CustomDialog en cas de update
+        CustomDialogUpdate customDialogUpdate = new CustomDialogUpdate();
+        customDialogUpdate.show(getSupportFragmentManager(), "update simple dialog");
+    }
 
     /* Helper methods gèrent les appels réseaux
      * ================================================================= */

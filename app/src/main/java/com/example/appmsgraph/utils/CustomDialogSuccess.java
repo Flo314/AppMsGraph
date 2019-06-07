@@ -36,6 +36,6 @@ public class CustomDialogSuccess extends AppCompatDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundResource(R.drawable.button_ok_dialog);
+//        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundResource(R.drawable.button_ok_dialog);
     }
 }
