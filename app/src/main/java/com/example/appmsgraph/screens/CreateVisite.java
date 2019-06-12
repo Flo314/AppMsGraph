@@ -3,8 +3,6 @@ package com.example.appmsgraph.screens;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -15,7 +13,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -24,20 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
-import com.example.appmsgraph.model.Fields;
-import com.example.appmsgraph.model.ListHistorique;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.CustomDialogSuccess;
 import com.example.appmsgraph.utils.CustomDialogUpdate;
-import com.example.appmsgraph.utils.JsonFormat;
 import com.example.appmsgraph.utils.Validator;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,8 +38,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.appmsgraph.R.color.red;
 
 
 public class CreateVisite extends AppCompatActivity {

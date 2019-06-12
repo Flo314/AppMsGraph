@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.AddVisite"
+    >
+
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/spinnercollab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_form"
+            android:padding="12dp" />
+
+        <!--android:entries="@array/team"-->
+
+        <TextView
+            android:id="@+id/datevisite"
+            android:onClick="getDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_input_form"
+            android:ems="10"
+            android:hint="@string/date"
+            android:padding="12dp"
+            android:focusable="true"
+            android:clickable="true"/>
+
+        <TextView
+            android:id="@+id/validatorDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Validatordate"
+            android:visibility="gone"
+            android:textColor="@color/red"
+            android:layout_gravity="center_horizontal"/>
+
+
+
+        <Spinner
+            android:id="@+id/typevisite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input_form"
+            android:entries="@array/type_visite"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <RatingBar
+            android:id="@+id/notevisite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="3"
+            android:layout_gravity="center"/>
+
+        <EditText
+            android:id="@+id/commentairevisite"
+            android:layout_width="match_parent"
+            android:layout_height="116dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_input_form"
+            android:gravity="start|top"
+            android:hint="Commentaire"
+            android:paddingTop="8dp"
+            android:paddingLeft="8dp"
+            android:ems="10"
+            android:inputType="textMultiLine"/>
+
+        <TextView
+            android:id="@+id/validator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Validator"
+            android:visibility="gone"
+            android:textColor="@color/red"
+            android:layout_gravity="center_horizontal"/>
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/update_visite"
+        android:onClick="addVisitlClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:elevation="2dp"
+        android:focusable="true"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_done_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

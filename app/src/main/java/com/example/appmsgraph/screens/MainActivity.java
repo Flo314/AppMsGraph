@@ -2,7 +2,6 @@ package com.example.appmsgraph.screens;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
@@ -20,13 +19,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
-import com.example.appmsgraph.model.ListHistorique;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -43,19 +40,12 @@ import com.microsoft.identity.client.exception.MsalUiRequiredException;
 
 import java.util.ArrayList;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
 
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.appmsgraph.R.drawable.ic_access_green;
-import static com.example.appmsgraph.R.drawable.ic_access_orange;
-import static com.example.appmsgraph.R.drawable.ic_access_red;
 
 
 public class MainActivity extends AppCompatActivity implements CollaboratorAdapter.ListItemClickListener {
