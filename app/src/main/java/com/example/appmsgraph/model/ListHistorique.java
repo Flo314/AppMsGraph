@@ -80,4 +80,15 @@ public class ListHistorique {
             historiqueList.add( visite );
         }
     }
+
+    @Override
+    public String toString() {
+        return "ListHistorique{" +
+                "value='" + value + '\'' +
+                ", date='" + date + '\'' +
+                ", type='" + type + '\'' +
+                ", note='" + note + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

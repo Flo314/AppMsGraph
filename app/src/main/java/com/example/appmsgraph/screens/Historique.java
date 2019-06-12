@@ -46,7 +46,7 @@ public class Historique extends AppCompatActivity {
     private String visite;
     private HistoriqueAdapter adapter;
     private RecyclerView recyclerView;
-    ArrayList<ListHistorique> list;
+    String[] listHisto = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +60,21 @@ public class Historique extends AppCompatActivity {
         authHeader = intents.getStringExtra("Tok");
         id = intents.getStringExtra("id");
         histo = intents.getStringExtra("histo");
-        Log.d(TAG, "Histo = " + histo);
+        Log.d(TAG, "Histo de MainActivity = " + histo);
         visite = intents.getStringExtra("visite");
 //        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
-        ListHistorique.addVisiteHistorique(histo);
+        listHisto = histo.split(",");
+        for(int i = 0; i < listHisto.length; i++){
+            Log.d(TAG, "List = " + listHisto[i]);
+        }
 
-        recyclerView = findViewById(R.id.recyclerviewHistorique);
-        adapter = new HistoriqueAdapter(list);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+
+//        recyclerView = findViewById(R.id.recyclerviewHistorique);
+//        adapter = new HistoriqueAdapter(list);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
 
         // actionBar
         actionBar = getSupportActionBar();

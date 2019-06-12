@@ -1,5 +1,6 @@
 package com.example.appmsgraph;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,17 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.appmsgraph.model.ListHistorique;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class HistoriqueAdapter extends RecyclerView.Adapter<HistoriqueAdapter.HistoriqueViewHolder> {
 
-    ArrayList<ListHistorique> list;
+    ArrayList<String> listHisto;
 
-    public HistoriqueAdapter(ArrayList<ListHistorique> list) {
-        this.list = list;
+    public HistoriqueAdapter(ArrayList<String> listHisto) {
+        this.listHisto = listHisto;
     }
 
     @NonNull
@@ -32,21 +30,13 @@ public class HistoriqueAdapter extends RecyclerView.Adapter<HistoriqueAdapter.Hi
     @Override
     // cette méthode , permet d'afficher les données de l'article (l'item) dans la sous-vue courante
     public void onBindViewHolder(@NonNull HistoriqueViewHolder historiqueViewHolder, int position) {
-        ListHistorique listHistorique = list.get(position);
-        historiqueViewHolder.dateHisto.setText(listHistorique.getDate());
-        historiqueViewHolder.typeHisto.setText(listHistorique.getType());
-        historiqueViewHolder.noteHisto.setText(listHistorique.getNote());
-        historiqueViewHolder.commentHisto.setText(listHistorique.getComment());
 
-        for(ListHistorique item : list){
-
-        }
     }
 
     @Override
     public int getItemCount() {
-        if(list != null){
-            return list.size();
+        if(listHisto != null){
+            return listHisto.size();
         }
         return 0;
     }
