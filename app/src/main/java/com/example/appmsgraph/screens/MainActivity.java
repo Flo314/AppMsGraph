@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
+import com.example.appmsgraph.model.ListHistorique;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -269,7 +270,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     // implementation interface adapter pour la gestion des click sur les items du recyclerview
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        Log.d(TAG, "clickItem: " + clickedItemIndex);
+//        Log.d(TAG, "clickItem: " + clickedItemIndex);
+
         // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
         Intent intent = new Intent(getApplicationContext(), Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
@@ -280,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         intent.putExtra("visite", clickItem.getFields().getVisite());
         intent.putExtra("histo", clickItem.getFields().getHistorique());
         startActivity(intent);
-        Log.d(TAG, "clickItem: " + clickItem.getFields().getTitle());
+        Log.d(TAG, "clickItem: " + clickItem.getFields().getId() + " - " + clickItem.getFields().getTitle());
     }
 
     /* Menu ActionBar Team

@@ -78,7 +78,6 @@ public class Fields {
     @Expose
     private String complianceTagUserId;
 
-
     public String getOdataEtag() {
         return odataEtag;
     }

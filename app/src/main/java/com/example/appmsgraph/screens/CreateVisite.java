@@ -3,6 +3,7 @@ package com.example.appmsgraph.screens;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.model.Fields;
+import com.example.appmsgraph.model.ListHistorique;
 import com.example.appmsgraph.model.Value;
 import com.example.appmsgraph.model.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -69,9 +71,9 @@ public class CreateVisite extends AppCompatActivity {
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
     private List<String> spinnerDataName = new ArrayList<>();
-    private String idField;
+    public static final String MY_PREFS = "MyPrefsFile";
 
-    /*intent*/
+    /*Intent*/
     private String nameTitle;
     private String prenom;
     private String authHeader;
@@ -193,22 +195,22 @@ public class CreateVisite extends AppCompatActivity {
         String iD = spinnercollab.getSelectedItem().toString();
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
-        String not = String.valueOf(note.getRating());
+        String not = String.valueOf(note.getRating()).toString();
         String comment = commentaire.getText().toString();
 
         // Control formulaire
         Validator.validatorDate(date);
         if (!Validator.validatorDate(date)) {
-            validatorDate.setText("Erreur:veuillez entrer une date");
+            validatorDate.setText("Erreur: veuillez entrer une date");
             validatorDate.setVisibility(View.VISIBLE);
             Validator.validator(comment);
         } else if (!Validator.validator(comment)) {
-            validator.setText("Erreur:le commentaire ne doit pas dépasser 150 caractères maximum");
+            validator.setText("Erreur: le commentaire ne doit pas dépasser 150 caractères maximum");
             validator.setVisibility(View.VISIBLE);
         }else {
-        // création de l'objet JSON si tout est bon
-        JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD, date, type, not, comment);
-        Log.d(TAG, "JSONOBJECT: " + jsonObject);
+//        // création de l'objet JSON si tout est bon
+//        JSONObject jsonObject = JsonFormat.jsonToFormatObject(iD, date, type, not, comment);
+//        Log.d(TAG, "JSONOBJECT: " + jsonObject);
 
         // CustomDialog en cas de succes de POST
         CustomDialogSuccess customdialogsuccess = new CustomDialogSuccess();
@@ -218,11 +220,11 @@ public class CreateVisite extends AppCompatActivity {
         editDate.setText("Date");
         note.setRating(0F);
         commentaire.getText().clear();
+
     }
 }
 
-
-    public void warningDialog(){
+    private void warningDialog(){
         // CustomDialog en cas de update
         CustomDialogUpdate customDialogUpdate = new CustomDialogUpdate();
         customDialogUpdate.show(getSupportFragmentManager(), "update simple dialog");
@@ -248,11 +250,11 @@ public class CreateVisite extends AppCompatActivity {
                 // si reponse ok et que les data ne sont pas null
                 if (response.isSuccessful() && response.body() != null) {
                     datalistObj = response.body().getValue();
-                    // remplir le champ collab avec le nom et prenom
+
+                    // remplir le champ collab du formulaire avec le nom et prenom
                     for (Value_ value : datalistObj) {
-                        idField = value.getFields().getId().toString();
                         if (value.getFields().getTitle() != null && value.getFields().getPrenom() != null) {
-                            spinnerDataName.add(value.getFields().getTitle().toString()
+                            spinnerDataName.add(value.getFields().getId().toString() + " - " + value.getFields().getTitle().toString()
                                     + " " + value.getFields().getPrenom().toString());
                         }
                     }
