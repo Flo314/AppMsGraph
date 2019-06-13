@@ -21,14 +21,16 @@ public class VisiteObject {
         List<VisiteObject> listAuBonFormat = new ArrayList<>();
         VisiteObject visiteObject = new VisiteObject();
         //data1!data2!data3£data1!data2!data3£data1!data2!data3
-        for(String visiteAsString : Arrays.asList(historique.split("£"))){
-            //data1!data2!data3
-            String[] res = visiteAsString.split("!");
+        if(historique != null) {
+            for (String visiteAsString : Arrays.asList(historique.split("£"))) {
+                //data1!data2!data3
+                String[] res = visiteAsString.split("!");
                 visiteObject.date = res[0];
                 visiteObject.type = res[1];
                 visiteObject.note = res[2];
                 visiteObject.comment = res[3];
                 listAuBonFormat.add(visiteObject);
+            }
         }
         return listAuBonFormat;
     }

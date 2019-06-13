@@ -70,11 +70,11 @@ public class Historique extends AppCompatActivity {
 //              Log.d(TAG, "Element ListHisto = " + " " + splitList[i] + "\n");
 //        }
 //        Log.d(TAG, "Element ListHisto = " + " " + Arrays.toString(splitList) + "\n");
-
-        for(VisiteObject visite : visiteObject.getListAuBonFormat(histo)){
-            VisiteObject.addVisite(visiteObject);
-        };
-
+        if(histo != null){
+            for(VisiteObject visite : visiteObject.getListAuBonFormat(histo)){
+                VisiteObject.addVisite(visiteObject);
+            };
+        }
 
 
         Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getListAuBonFormat(histo).toString() + "\n");
@@ -109,6 +109,7 @@ public class Historique extends AppCompatActivity {
                 // Ce listener nous permet de lancer l'activité d'ajout lorsqu'il est cliqué
                 Intent addIntent = new Intent(getApplicationContext(), AddVisite.class);
                 addIntent.putExtra("Tok", authHeader);
+                addIntent.putExtra("id", id);
                 startActivity(addIntent);
             }
         });

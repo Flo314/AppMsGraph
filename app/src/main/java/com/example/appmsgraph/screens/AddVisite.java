@@ -63,6 +63,7 @@ public class AddVisite extends AppCompatActivity {
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
     private List<String> spinnerDataName = new ArrayList<>();
     private String authHeader;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class AddVisite extends AppCompatActivity {
         // Data qui vient de Historique
         Intent intents = getIntent();
         authHeader = intents.getStringExtra("Tok");
+        id = intents.getStringExtra("id");
 
         // Je récupère mes vues
         validatordate = findViewById(R.id.validatorDateVisite);
