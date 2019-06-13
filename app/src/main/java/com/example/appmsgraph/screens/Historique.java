@@ -44,8 +44,9 @@ public class Historique extends AppCompatActivity {
     private String id;
     private String histo;
     private String visite;
-    List<VisiteObject> list;
-    String[] splitList;
+//    List<VisiteObject> list;
+//    String[] splitList;
+    VisiteObject visiteObject = new VisiteObject();
 
 
     @Override
@@ -70,9 +71,14 @@ public class Historique extends AppCompatActivity {
 //        }
 //        Log.d(TAG, "Element ListHisto = " + " " + Arrays.toString(splitList) + "\n");
 
-        VisiteObject visiteObject = new VisiteObject();
-        visiteObject.getListAuBonFormat(histo);
+        for(VisiteObject visite : visiteObject.getListAuBonFormat(histo)){
+            VisiteObject.addVisite(visiteObject);
+        };
+
+
+
         Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getListAuBonFormat(histo).toString() + "\n");
+        Log.d(TAG, "VisiteObject: " + visiteObject.toString());
 
            // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
             historique = findViewById(R.id.historique);
@@ -83,7 +89,7 @@ public class Historique extends AppCompatActivity {
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
             recyclerView.setVisibility(View.VISIBLE);
-            Log.d(TAG, "VisiteList: " + list);
+//            Log.d(TAG, "VisiteList: " + list);
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -129,14 +135,4 @@ public class Historique extends AppCompatActivity {
         super.onResume();
         recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getVisitList()));
     }
-
-    // test ajout object
-//    private void ajouterVilles() {
-//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
-//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
-//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
-//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
-//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
-//    }
-
 }
