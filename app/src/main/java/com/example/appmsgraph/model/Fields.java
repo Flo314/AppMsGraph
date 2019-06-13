@@ -1,6 +1,7 @@
 
 package com.example.appmsgraph.model;
 
+import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,6 +27,7 @@ public class Fields {
     @SerializedName("Historique")
     @Expose
     private String historique;
+
     @SerializedName("id")
     @Expose
     private String id;

@@ -12,12 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.VisiteAdapter;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Historique extends AppCompatActivity {
@@ -27,6 +30,7 @@ public class Historique extends AppCompatActivity {
     TextView historique;
     CardView cardView;
     FloatingActionButton addVisit;
+    private VisiteAdapter adapter;
     private RecyclerView recyclerView;
 
     /*Debug*/
@@ -39,12 +43,15 @@ public class Historique extends AppCompatActivity {
     private String id;
     private String histo;
     private String visite;
+    List<VisiteObject> list;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique_visite);
+
+        Log.d(TAG, "VisiteList: " + list);
 
         // Data qui vient de MainActivity
         Intent intents = getIntent();
@@ -62,14 +69,21 @@ public class Historique extends AppCompatActivity {
 //            Log.d(TAG, "Element ListHisto = " + " " + listHisto[j] + "\n");
 //        }
 
+           // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
+            historique = findViewById(R.id.historique);
+            historique.setText(histo);
+            recyclerView = findViewById(R.id.recyclerviewHistorique);
+            adapter = new VisiteAdapter(VisiteObject.getVisitList());
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            Log.d(TAG, "VisiteList: " + list);
+
         // actionBar
         actionBar = getSupportActionBar();
         Objects.requireNonNull(actionBar).setTitle(nameTitle);
-        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.toolbar_visibility));
-
-        // Je récupère mon RecyclerView pour pouvoir agir dessus
-        recyclerView = findViewById(R.id.recyclerviewHistorique);
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getVisitList()));
+        actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
 
         // Floating action button qui demarre l'activity CreateVisite (ajout)
         addVisit = findViewById(R.id.addVisit);
@@ -83,20 +97,17 @@ public class Historique extends AppCompatActivity {
 //                Log.d(TAG, "Lance CreateVisite...");
                 // Ce listener nous permet de lancer l'activité d'ajout lorsqu'il est cliqué
                 Intent addIntent = new Intent(getApplicationContext(), AddVisite.class);
+                addIntent.putExtra("Tok", authHeader);
                 startActivity(addIntent);
             }
         });
 
-        // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
-        historique = findViewById(R.id.historique);
-        historique.setText(histo);
-
-        cardView = findViewById(R.id.clickedCardHistorique);
+        cardView = findViewById(R.id.clickedCardHisto);
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
-                intent.putExtra("Uniqid",true);
+                intent.putExtra("Uniqid", true);
 //                intent.putExtra("datalist",datalist);
                 intent.putExtra("title", nameTitle);
                 intent.putExtra("prenom", prenom);
@@ -108,5 +119,19 @@ public class Historique extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getVisitList()));
+    }
+
+    // test ajout object
+//    private void ajouterVilles() {
+//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
+//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
+//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
+//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
+//        VisiteObject.addVisite(new VisiteObject("2","13/06/2019","DOP","2","cool"));
+//    }
 
 }

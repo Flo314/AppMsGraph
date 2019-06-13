@@ -10,40 +10,45 @@ public class VisiteObject {
     private String note;
     private String comment;
 
-    // Pour rappel :
-    // Une méthode de classe s'appelle avec : NomClasse.nomMéthode()
-    // Alors qu'une méthode d'instance (donc directement liée à une instance de l'objet) s'appelle avec
-    // nomInstance.nomMéthode().
-    // La différence est de taille puisque la méthode de classe n'a pas besoin d'instance d'objet pour être appelée!
-
-    // Déclaration d'une liste contenant des objets de type CapitalObject (cast de données)
-    // Déclarer cette liste en statique me permet de la préserver durant toute la durée de vie de l'application.
     public static List<VisiteObject> visitList;
 
-    // Getter pour ma liste de capitales.
-    // Déclaré en static pour pouvoir y accéder n'importe où dans mes activités, on appelle ca une méthode de classe,
-    // au lieu d'une méthode d'instance
-    // Le but de cette fonction est de retourner une liste contenant des objets CapitalObject. Pour cela, on donne un type
-    // bien particulier à notre List grâce au cast de données List<CapitalObject>
-
+    public List<VisiteObject> getListAuBonFormat(String historique) {
+        List<VisiteObject> listAuBonFormat = new ArrayList<>();
+        VisiteObject visiteObject = new VisiteObject();
+        //data1$data2$data3|data1$data2$data3|data1$data2$data3
+        for(int i = 0; i < historique.length(); i++){
+            historique.split("|");
+            //data1$data2$data3
+            for(int j = 0; j < historique.length(); j++){
+                historique.split("$");
+                visiteObject.date = [0];
+                visiteObject.type = [1];
+                visiteObject.note = [2];
+                visiteObject.comment = [3];
+                listAuBonFormat.add(visiteObject);
+            }
+        }
+        return listAuBonFormat;
+    }
 
     public static List<VisiteObject> getVisitList() {
+        if (visitList == null) {
+            visitList = new ArrayList<>();
+        }
         return visitList;
     }
 
-    // Fonction d'ajout de capitales.
-    // Déclarée en static (méthode de classe et non d'instance) pour pouvoir être appelée n'importe ou dans mes activités
     public static void addVisite(VisiteObject visite) {
         // Je teste d'abord si ma liste n'est pas null
         // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
         if (visitList != null) {
             // Ma liste n'est pas null, je peux ajouter!
-            visitList.add( visite);
+            visitList.add(visite);
         } else {
             // Sinon j'instancie ma liste
             visitList = new ArrayList<>();
             // Et j'ajoute ma visite
-            visitList.add( visite );
+            visitList.add(visite);
         }
     }
 
@@ -54,6 +59,11 @@ public class VisiteObject {
         this.type = type;
         this.note = note;
         this.comment = comment;
+    }
+
+    // Constructeur
+    public VisiteObject() {
+
     }
 
     public String getId() {
@@ -94,6 +104,17 @@ public class VisiteObject {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "VisiteObject{" +
+                "id='" + id + '\'' +
+                ", date='" + date + '\'' +
+                ", type='" + type + '\'' +
+                ", note='" + note + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }
 

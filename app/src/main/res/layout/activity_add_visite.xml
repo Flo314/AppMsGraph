@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Spinner
-            android:id="@+id/spinnercollab"
+            android:id="@+id/spinnercollaborator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_input_form"
@@ -32,7 +32,6 @@
 
         <TextView
             android:id="@+id/datevisite"
-            android:onClick="getDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -45,7 +44,7 @@
             android:clickable="true"/>
 
         <TextView
-            android:id="@+id/validatorDate"
+            android:id="@+id/validatorDateVisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Validatordate"
@@ -86,7 +85,7 @@
             android:inputType="textMultiLine"/>
 
         <TextView
-            android:id="@+id/validator"
+            android:id="@+id/validatorVisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Validator"
@@ -98,8 +97,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/update_visite"
-        android:onClick="addVisitlClicked"
+        android:id="@+id/ajoutvisite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

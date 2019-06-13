@@ -1,6 +1,7 @@
 package com.example.appmsgraph.screens;
 
 import android.annotation.SuppressLint;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 Log.d(TAG, "Connexion...");
             }
         });
+        recyclerView = findViewById(R.id.recyclerview);
 
     }
 
@@ -337,6 +339,11 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
+        recyclerView = findViewById(R.id.recyclerview);
+        adapter = new CollaboratorAdapter(datalistObj, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
