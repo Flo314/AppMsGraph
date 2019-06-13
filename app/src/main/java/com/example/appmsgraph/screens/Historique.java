@@ -20,6 +20,7 @@ import com.example.appmsgraph.VisiteAdapter;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +30,7 @@ public class Historique extends AppCompatActivity {
     ActionBar actionBar;
     TextView historique;
     CardView cardView;
-    FloatingActionButton addVisit;
+    FloatingActionButton createVisite;
     private VisiteAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -44,14 +45,13 @@ public class Historique extends AppCompatActivity {
     private String histo;
     private String visite;
     List<VisiteObject> list;
+    String[] splitList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historique_visite);
-
-        Log.d(TAG, "VisiteList: " + list);
 
         // Data qui vient de MainActivity
         Intent intents = getIntent();
@@ -64,10 +64,15 @@ public class Historique extends AppCompatActivity {
         visite = intents.getStringExtra("visite");
 //        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
-//        list = histo.split(",");
-//        for(int j = 0; j < listHisto.length; j++){
-//            Log.d(TAG, "Element ListHisto = " + " " + listHisto[j] + "\n");
+//        splitList = histo.split("!");
+//        for (int i = 0; i < splitList.length; i++) {
+//              Log.d(TAG, "Element ListHisto = " + " " + splitList[i] + "\n");
 //        }
+//        Log.d(TAG, "Element ListHisto = " + " " + Arrays.toString(splitList) + "\n");
+
+        VisiteObject visiteObject = new VisiteObject();
+        visiteObject.getListAuBonFormat(histo);
+        Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getListAuBonFormat(histo).toString() + "\n");
 
            // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
             historique = findViewById(R.id.historique);
@@ -86,8 +91,8 @@ public class Historique extends AppCompatActivity {
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
 
         // Floating action button qui demarre l'activity CreateVisite (ajout)
-        addVisit = findViewById(R.id.addVisit);
-        addVisit.setOnClickListener(new View.OnClickListener() {
+        createVisite = findViewById(R.id.createVisite);
+        createVisite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getApplicationContext(), CreateVisite.class);

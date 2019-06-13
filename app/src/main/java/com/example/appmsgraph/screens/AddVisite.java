@@ -103,7 +103,7 @@ public class AddVisite extends AppCompatActivity {
         });
 
         // FloatingActionButton pour faire un Update des data
-        ajoutVisite = findViewById(R.id.ajoutvisite);
+        ajoutVisite = findViewById(R.id.addVisit);
         ajoutVisite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

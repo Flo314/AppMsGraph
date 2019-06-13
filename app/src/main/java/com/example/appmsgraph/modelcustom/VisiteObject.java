@@ -1,6 +1,11 @@
 package com.example.appmsgraph.modelcustom;
 
+import android.util.Log;
+
+import com.example.appmsgraph.screens.MainActivity;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VisiteObject {
@@ -15,18 +20,15 @@ public class VisiteObject {
     public List<VisiteObject> getListAuBonFormat(String historique) {
         List<VisiteObject> listAuBonFormat = new ArrayList<>();
         VisiteObject visiteObject = new VisiteObject();
-        //data1$data2$data3|data1$data2$data3|data1$data2$data3
-        for(int i = 0; i < historique.length(); i++){
-            historique.split("|");
-            //data1$data2$data3
-            for(int j = 0; j < historique.length(); j++){
-                historique.split("$");
-                visiteObject.date = [0];
-                visiteObject.type = [1];
-                visiteObject.note = [2];
-                visiteObject.comment = [3];
+        //data1!data2!data3£data1!data2!data3£data1!data2!data3
+        for(String visiteAsString : Arrays.asList(historique.split("£"))){
+            //data1!data2!data3
+            String[] res = visiteAsString.split("!");
+                visiteObject.date = res[0];
+                visiteObject.type = res[1];
+                visiteObject.note = res[2];
+                visiteObject.comment = res[3];
                 listAuBonFormat.add(visiteObject);
-            }
         }
         return listAuBonFormat;
     }
