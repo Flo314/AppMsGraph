@@ -48,7 +48,7 @@ public class AddVisite extends AppCompatActivity {
 
     /*UI*/
     ActionBar actionBar;
-    private Spinner spinnercollab;
+    private TextView collab;
     private FloatingActionButton ajoutVisite;
     private Spinner type_visite;
     private RatingBar note;
@@ -88,27 +88,12 @@ public class AddVisite extends AppCompatActivity {
 
         // Je récupère mes vues
         validatordate = findViewById(R.id.validatorDateVisite);
-        spinnercollab = findViewById(R.id.spinnercollaborator);
+        collab = findViewById(R.id.collaborator);
+        collab.setText(nametitle + " " + prenom);
         type_visite = findViewById(R.id.typevisite);
         note = findViewById(R.id.notevisite);
         commentaire = findViewById(R.id.commentairevisite);
         validatorcomment = findViewById(R.id.validatorVisite);
-
-        // appel reseau pour obtenir les données afin de remplir les spinner
-        networkGet();
-
-        spinnercollab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Log.d(TAG, "Selected: " + item);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         // FloatingActionButton pour faire un Update des data
         ajoutVisite = findViewById(R.id.addVisit);
@@ -132,7 +117,6 @@ public class AddVisite extends AppCompatActivity {
     public void addVisitlClicked() {
 
         // Je récupère du coup la saisie utilisateur dans mes vues
-        String id = spinnercollab.getSelectedItem().toString();
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating()).toString();
@@ -153,20 +137,22 @@ public class AddVisite extends AppCompatActivity {
         } else if (!Validator.validator(comment)) {
             validatorcomment.setText("Erreur: le commentaire ne doit pas dépasser 150 caractères maximum");
             validatorcomment.setVisibility(View.VISIBLE);
+        }else {
+            /*ADD VISITE*/
+            //TODO MAJ HIST SHAREPOINT
+            String newHisto = "12/05/2021!DOP!2!hardcoded£";
+            if (Historique.histo == null) {
+                Historique.histo = newHisto;
+            } else {
+                Historique.histo = Historique.histo + newHisto;
+            }
+            /**/
+            //visiteObject.addVisite(new VisiteObject(id, date, type, not, comment));
+            // Et on ferme l'activité en cours
+            finish();
+            Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
         }
-        /*ADD VISITE*/
-        //TODO MAJ HIST SHAREPOINT
-        String newHisto = "12/05/2021!DOP!2!hardcoded£";
-        if (Historique.histo == null) {
-            Historique.histo = newHisto;
-        } else {
-            Historique.histo = Historique.histo + newHisto;
-        }
-        /**/
-        //visiteObject.addVisite(new VisiteObject(id, date, type, not, comment));
-        // Et on ferme l'activité en cours
-        finish();
-        Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
+
     }
 
     // Datepiker
@@ -186,50 +172,6 @@ public class AddVisite extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
         dpd.getDatePicker().setMinDate(System.currentTimeMillis());
         dpd.show();
-    }
-
-    private void networkGet() {
-        //Créer un identifiant pour l'interface RetrofitInstance
-        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
-        // en lui passant le token
-        Call<Value> call = service.getNameCollab(authHeader);
-        Log.d(TAG, "starting retrofit request to graph");
-        Log.d(TAG, call.request().url() + "");
-        // Exécute la requête asynchrone
-        call.enqueue(new Callback<Value>() {
-            @Override
-            public void onResponse(@NonNull Call<Value> call, @NonNull Response<Value> response) {
-                Log.d(TAG, "Response: " + response.message());
-                Log.d(TAG, "Response: " + response.toString());
-                // si reponse ok et que les data ne sont pas null
-                if (response.isSuccessful() && response.body() != null) {
-                    datalistObj = response.body().getValue();
-
-                    // remplir le champ collab du formulaire avec le nom et prenom
-                    for (Value_ value : datalistObj) {
-                        if (value.getFields().getTitle() != null && value.getFields().getPrenom() != null) {
-                            spinnerDataName.add(value.getFields().getId().toString() + " - " + value.getFields().getTitle().toString()
-                                    + " " + value.getFields().getPrenom().toString());
-                        }
-                    }
-                    Log.d(TAG, "Data: " + spinnerDataName.toString() + "\n"
-                            + "Size: " + spinnerDataName.size());
-                    // remplir le spinner avec les data reçu
-                    ArrayAdapter<String> adapterSpinner = new ArrayAdapter<String>(
-                            AddVisite.this, android.R.layout.simple_spinner_item, spinnerDataName);
-                    adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinnercollab.setAdapter(adapterSpinner);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
-                Toast.makeText(getApplicationContext(), "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "Failure: " + t.toString());
-                t.printStackTrace();
-            }
-        });
     }
 
     /* Cycle de vie Activity
