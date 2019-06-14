@@ -2,11 +2,17 @@ package com.example.appmsgraph.network;
 
 
 import com.example.appmsgraph.modelSharepoint.Value;
+import com.example.appmsgraph.modelcustom.VisiteObject;
+import com.google.gson.JsonObject;
 
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface GetDataService {
 
@@ -15,8 +21,9 @@ public interface GetDataService {
     // Spécifier le type de requête et transmettre l'URL relative
     @GET("items?expand=fields")
     Call<Value> getCollaboratorsData(@Header("Authorization") String authHeader);
-    @GET("items?expand=fields(select=id,Title,prenom)")
-    Call<Value> getNameCollab(@Header("Authorization") String authHeader);
+
+    @PATCH("items/{id}/fields")
+    Call<Value> updateData(@Header("Authorization") String authHeader, @Path("id") String id, @Body String histo);
 
 }
 

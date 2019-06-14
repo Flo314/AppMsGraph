@@ -7,10 +7,9 @@ import org.json.JSONObject;
 public class JsonFormat {
 
     // transforme les champ du formulaire en objet JSON
-    public static JSONObject jsonToFormatObject(String s0, String s1, String s2, String s3, String s4) {
+    public static JSONObject jsonToFormatObject(String s1, String s2, String s3, String s4) {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", s0);
             jsonObject.put("date", s1);
             jsonObject.put("type", s2);
             jsonObject.put("note", s3);

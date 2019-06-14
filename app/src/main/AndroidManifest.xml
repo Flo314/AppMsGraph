@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.AddVisite"></activity>
+        <activity android:name=".screens.UpdateVisite"></activity>
+        <activity android:name=".screens.AddVisite" />
         <activity android:name=".screens.Historique">
 
             <!-- android:parentActivityName=".MainActivity"> -->

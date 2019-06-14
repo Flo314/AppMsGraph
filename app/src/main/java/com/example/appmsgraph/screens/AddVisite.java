@@ -141,7 +141,6 @@ public class AddVisite extends AppCompatActivity {
             /*ADD VISITE*/
             //TODO MAJ HIST SHAREPOINT
             String newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
-
             if (Historique.histo == null) {
                 Historique.histo = newHisto;
                 Log.d(TAG, "NEWHISTO " + newHisto);

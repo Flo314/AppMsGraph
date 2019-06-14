@@ -16,8 +16,16 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
 
     List<VisiteObject> list;
 
-    public VisiteAdapter(List<VisiteObject> list) {
+    final private VisiteAdapter.ListItemClickListenerVisite onClickListener;
+
+    // interface qui définit l'auditeur click recyclerview
+    public interface ListItemClickListenerVisite{
+        void onListItemClickVisite(int clickedItemIndex);
+    }
+
+    public VisiteAdapter(List<VisiteObject> list, VisiteAdapter.ListItemClickListenerVisite listener) {
         this.list = list;
+        this.onClickListener = listener;
     }
 
     @NonNull
@@ -45,7 +53,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
     }
 
     // ViewHolder
-    class VisiteViewHolder extends RecyclerView.ViewHolder {
+    class VisiteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView typevisite, datevisite,notevisite,commentvisite;
 
@@ -56,6 +64,14 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
             typevisite = itemView.findViewById(R.id.texttype);
             notevisite = itemView.findViewById(R.id.textnote);
             commentvisite = itemView.findViewById(R.id.textcomment);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            onClickListener.onListItemClickVisite(clickedPosition);
         }
     }
 }

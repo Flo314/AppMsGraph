@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.VisiteAdapter;
+import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Historique extends AppCompatActivity {
+public class Historique extends AppCompatActivity implements VisiteAdapter.ListItemClickListenerVisite{
 
     /* UI */
     ActionBar actionBar;
@@ -69,7 +70,7 @@ public class Historique extends AppCompatActivity {
 //        historique = findViewById(R.id.historique);
 //        historique.setText(histo);
         recyclerView = findViewById(R.id.recyclerviewHistorique);
-        adapter = new VisiteAdapter(visiteObjectList);
+        adapter = new VisiteAdapter(visiteObjectList,this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -113,10 +114,29 @@ public class Historique extends AppCompatActivity {
     }
 
     @Override
+    public void onListItemClickVisite(int clickedItemIndex) {
+        Intent updateintent = new Intent(getApplicationContext(), UpdateVisite.class);
+        VisiteObject clickItem = visiteObjectList.get(clickedItemIndex);
+        updateintent.putExtra("title", nameTitle);
+        updateintent.putExtra("prenom", prenom);
+        updateintent.putExtra("Tok", authHeader);
+        updateintent.putExtra("id", id);
+        updateintent.putExtra("date", visiteObjectList.get(clickedItemIndex).getDate());
+        updateintent.putExtra("comment", visiteObjectList.get(clickedItemIndex).getComment());
+        updateintent.putExtra("note", visiteObjectList.get(clickedItemIndex).getNote());
+        updateintent.putExtra("type", visiteObjectList.get(clickedItemIndex).getType());
+
+        startActivity(updateintent);
+    }
+
+    /* Cycle de vie Activity
+     * =======================*/
+
+    @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo)));
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo),this));
     }
 
     @Override
@@ -136,4 +156,6 @@ public class Historique extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "OnDestroy called ");
     }
+
+
 }
