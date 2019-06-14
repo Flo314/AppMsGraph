@@ -4,27 +4,36 @@ import android.util.Log;
 
 import com.example.appmsgraph.screens.MainActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class VisiteObject {
+public class VisiteObject implements Comparable<VisiteObject> {
     private String id;
     private String date;
     private String type;
     private String note;
     private String comment;
 
-    public static List<VisiteObject> visitList;
+    public List<VisiteObject> visitList;
 
-    public List<VisiteObject> getListAuBonFormat(String historique) {
+    public static List<VisiteObject> getListAuBonFormat(String historique) {
         List<VisiteObject> listAuBonFormat = new ArrayList<>();
-        VisiteObject visiteObject = new VisiteObject();
+
         //data1!data2!data3£data1!data2!data3£data1!data2!data3
-        if(historique != null) {
+        if(historique != null && !historique.isEmpty()) {
             for (String visiteAsString : Arrays.asList(historique.split("£"))) {
                 //data1!data2!data3
                 String[] res = visiteAsString.split("!");
+                VisiteObject visiteObject = new VisiteObject();
                 visiteObject.date = res[0];
                 visiteObject.type = res[1];
                 visiteObject.note = res[2];
@@ -32,17 +41,19 @@ public class VisiteObject {
                 listAuBonFormat.add(visiteObject);
             }
         }
+        Collections.sort(listAuBonFormat);
+        Collections.reverse(listAuBonFormat);
         return listAuBonFormat;
     }
 
-    public static List<VisiteObject> getVisitList() {
+    public List<VisiteObject> getVisitList() {
         if (visitList == null) {
             visitList = new ArrayList<>();
         }
         return visitList;
     }
 
-    public static void addVisite(VisiteObject visite) {
+    public void addVisite(VisiteObject visite) {
         // Je teste d'abord si ma liste n'est pas null
         // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
         if (visitList != null) {
@@ -119,6 +130,27 @@ public class VisiteObject {
                 ", note='" + note + '\'' +
                 ", comment='" + comment + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(VisiteObject o) {
+        if(this == o) {
+            return 0;
+        }else{
+            String myFormat = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.FRANCE);
+            Date date1 =null;
+            Date date2 =null;
+
+            try {
+                date1 = simpleDateFormat.parse(this.getDate());
+                date2 = simpleDateFormat.parse(o.getDate());
+                return date1.compareTo(date2);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return 0;
+            }
+        }
     }
 }
 

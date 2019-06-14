@@ -1,7 +1,6 @@
 package com.example.appmsgraph.screens;
 
 import android.annotation.SuppressLint;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -25,8 +24,8 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
-import com.example.appmsgraph.model.Value;
-import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.modelSharepoint.Value;
+import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.CompareDate;

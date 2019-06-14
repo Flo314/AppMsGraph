@@ -20,9 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
-import com.example.appmsgraph.VisiteAdapter;
-import com.example.appmsgraph.model.Value;
-import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.modelSharepoint.Value;
+import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
@@ -64,6 +63,10 @@ public class AddVisite extends AppCompatActivity {
     private List<String> spinnerDataName = new ArrayList<>();
     private String authHeader;
     private String id;
+    private String nametitle;
+    private String prenom;
+
+    VisiteObject visiteObject = new VisiteObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,9 @@ public class AddVisite extends AppCompatActivity {
         Intent intents = getIntent();
         authHeader = intents.getStringExtra("Tok");
         id = intents.getStringExtra("id");
+        nametitle = intents.getStringExtra("title");
+        prenom = intents.getStringExtra("prenom");
+
 
         // Je récupère mes vues
         validatordate = findViewById(R.id.validatorDateVisite);
@@ -148,10 +154,19 @@ public class AddVisite extends AppCompatActivity {
             validatorcomment.setText("Erreur: le commentaire ne doit pas dépasser 150 caractères maximum");
             validatorcomment.setVisibility(View.VISIBLE);
         }
-        VisiteObject.addVisite(new VisiteObject(id, date, type, not, comment));
+        /*ADD VISITE*/
+        //TODO MAJ HIST SHAREPOINT
+        String newHisto = "12/05/2021!DOP!2!hardcoded£";
+        if (Historique.histo == null) {
+            Historique.histo = newHisto;
+        } else {
+            Historique.histo = Historique.histo + newHisto;
+        }
+        /**/
+        //visiteObject.addVisite(new VisiteObject(id, date, type, not, comment));
         // Et on ferme l'activité en cours
         finish();
-        Log.d(TAG, "ListVisite: " + VisiteObject.getVisitList());
+        Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
     }
 
     // Datepiker

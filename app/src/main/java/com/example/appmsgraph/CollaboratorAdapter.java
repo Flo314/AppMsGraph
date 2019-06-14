@@ -12,7 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.appmsgraph.model.Value_;
+import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.utils.CompareDate;
 
 import java.util.ArrayList;

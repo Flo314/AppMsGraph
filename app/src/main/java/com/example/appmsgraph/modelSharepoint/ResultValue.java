@@ -1,5 +1,5 @@
 
-package com.example.appmsgraph.model;
+package com.example.appmsgraph.modelSharepoint;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

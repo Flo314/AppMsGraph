@@ -1,4 +1,4 @@
-package com.example.appmsgraph.model;
+package com.example.appmsgraph.modelSharepoint;
 
 import com.google.gson.annotations.SerializedName;
 

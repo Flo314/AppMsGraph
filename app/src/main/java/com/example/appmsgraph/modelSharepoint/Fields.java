@@ -1,11 +1,8 @@
 
-package com.example.appmsgraph.model;
+package com.example.appmsgraph.modelSharepoint;
 
-import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class Fields {
 

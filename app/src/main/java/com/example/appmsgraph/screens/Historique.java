@@ -42,12 +42,9 @@ public class Historique extends AppCompatActivity {
     private String prenom;
     private String authHeader;
     private String id;
-    private String histo;
+    public static String histo;
     private String visite;
-//    List<VisiteObject> list;
-//    String[] splitList;
-    VisiteObject visiteObject = new VisiteObject();
-
+    private List<VisiteObject> visiteObjectList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,32 +60,20 @@ public class Historique extends AppCompatActivity {
         histo = intents.getStringExtra("histo");
         Log.d(TAG, "Histo de MainActivity = " + histo + "\n");
         visite = intents.getStringExtra("visite");
-//        Toast.makeText(getApplicationContext(), "token: " + authHeader , Toast.LENGTH_SHORT).show();
 
-//        splitList = histo.split("!");
-//        for (int i = 0; i < splitList.length; i++) {
-//              Log.d(TAG, "Element ListHisto = " + " " + splitList[i] + "\n");
-//        }
-//        Log.d(TAG, "Element ListHisto = " + " " + Arrays.toString(splitList) + "\n");
-        if(histo != null){
-            for(VisiteObject visite : visiteObject.getListAuBonFormat(histo)){
-                VisiteObject.addVisite(visiteObject);
-            };
-        }
+        visiteObjectList = VisiteObject.getListAuBonFormat(histo);
 
+        Log.d(TAG, "Element ListHisto = " + " " + VisiteObject.getListAuBonFormat(histo).toString() + "\n");
 
-        Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getListAuBonFormat(histo).toString() + "\n");
-        Log.d(TAG, "VisiteObject: " + visiteObject.toString());
-
-           // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
-            historique = findViewById(R.id.historique);
-            historique.setText(histo);
-            recyclerView = findViewById(R.id.recyclerviewHistorique);
-            adapter = new VisiteAdapter(VisiteObject.getVisitList());
-            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setVisibility(View.VISIBLE);
+        // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
+//        historique = findViewById(R.id.historique);
+//        historique.setText(histo);
+        recyclerView = findViewById(R.id.recyclerviewHistorique);
+        adapter = new VisiteAdapter(visiteObjectList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setVisibility(View.VISIBLE);
 //            Log.d(TAG, "VisiteList: " + list);
 
         // actionBar
@@ -101,39 +86,54 @@ public class Historique extends AppCompatActivity {
         createVisite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
-//                intent.putExtra("Uniqid",false);
-//                intent.putExtra("Tok", authHeader);
-//                startActivity(intent);
-//                Log.d(TAG, "Lance CreateVisite...");
-                // Ce listener nous permet de lancer l'activité d'ajout lorsqu'il est cliqué
                 Intent addIntent = new Intent(getApplicationContext(), AddVisite.class);
                 addIntent.putExtra("Tok", authHeader);
                 addIntent.putExtra("id", id);
+                addIntent.putExtra("title", nameTitle);
+                addIntent.putExtra("prenom", prenom);
                 startActivity(addIntent);
             }
         });
 
-        cardView = findViewById(R.id.clickedCardHisto);
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
-                intent.putExtra("Uniqid", true);
-//                intent.putExtra("datalist",datalist);
-                intent.putExtra("title", nameTitle);
-                intent.putExtra("prenom", prenom);
-                intent.putExtra("Tok", authHeader);
-                intent.putExtra("id", id);
-                intent.putExtra("visite", visite);
-                startActivity(intent);
-            }
-        });
+//        cardView = findViewById(R.id.clickedCardHisto);
+//        cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
+//                intent.putExtra("Uniqid", true);
+////                intent.putExtra("datalist",datalist);
+//                intent.putExtra("title", nameTitle);
+//                intent.putExtra("prenom", prenom);
+//                intent.putExtra("Tok", authHeader);
+//                intent.putExtra("id", id);
+//                intent.putExtra("visite", visite);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getVisitList()));
+        Log.d(TAG, "OnResume called ");
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo)));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "OnPause called ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "OnStop called ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "OnDestroy called ");
     }
 }

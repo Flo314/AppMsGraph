@@ -44,7 +44,6 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         return 0;
     }
 
-
     // ViewHolder
     class VisiteViewHolder extends RecyclerView.ViewHolder {
 

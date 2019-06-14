@@ -1,7 +1,7 @@
 package com.example.appmsgraph.network;
 
 
-import com.example.appmsgraph.model.Value;
+import com.example.appmsgraph.modelSharepoint.Value;
 
 
 import retrofit2.Call;
