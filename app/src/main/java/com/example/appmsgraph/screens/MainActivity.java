@@ -343,12 +343,14 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        network();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "OnPause called ");
+
     }
 
     @Override

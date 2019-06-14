@@ -140,15 +140,16 @@ public class AddVisite extends AppCompatActivity {
         }else {
             /*ADD VISITE*/
             //TODO MAJ HIST SHAREPOINT
-            String newHisto = "12/05/2021!DOP!2!hardcoded£";
+            String newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
+
             if (Historique.histo == null) {
                 Historique.histo = newHisto;
+                Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
                 Historique.histo = Historique.histo + newHisto;
+                Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
             }
             /**/
-            //visiteObject.addVisite(new VisiteObject(id, date, type, not, comment));
-            // Et on ferme l'activité en cours
             finish();
             Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
         }
