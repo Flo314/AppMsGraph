@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,12 +29,13 @@ import java.util.Objects;
 public class Historique extends AppCompatActivity implements VisiteAdapter.ListItemClickListenerVisite{
 
     /* UI */
-    ActionBar actionBar;
-    TextView historique;
-    CardView cardView;
-    FloatingActionButton createVisite;
+    private ActionBar actionBar;
+    private TextView historique;
+    private CardView cardView;
+    private FloatingActionButton createVisite;
     private VisiteAdapter adapter;
     private RecyclerView recyclerView;
+    private ImageView deleteItem;
 
     /*Debug*/
     private final String TAG = Historique.class.getSimpleName();
@@ -96,27 +98,14 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
             }
         });
 
-//        cardView = findViewById(R.id.clickedCardHisto);
-//        cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), CreateVisite.class);
-//                intent.putExtra("Uniqid", true);
-////                intent.putExtra("datalist",datalist);
-//                intent.putExtra("title", nameTitle);
-//                intent.putExtra("prenom", prenom);
-//                intent.putExtra("Tok", authHeader);
-//                intent.putExtra("id", id);
-//                intent.putExtra("visite", visite);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
     public void onListItemClickVisite(int clickedItemIndex) {
         Intent updateintent = new Intent(getApplicationContext(), UpdateVisite.class);
         VisiteObject clickItem = visiteObjectList.get(clickedItemIndex);
+        Log.d(TAG, "Item clicked: " + clickItem);
+
         updateintent.putExtra("title", nameTitle);
         updateintent.putExtra("prenom", prenom);
         updateintent.putExtra("Tok", authHeader);
@@ -128,6 +117,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
         startActivity(updateintent);
     }
+
 
     /* Cycle de vie Activity
      * =======================*/

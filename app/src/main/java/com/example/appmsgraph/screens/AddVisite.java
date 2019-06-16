@@ -151,6 +151,7 @@ public class AddVisite extends AppCompatActivity {
             /**/
             finish();
             Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
+            Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_LONG).show();
         }
 
     }

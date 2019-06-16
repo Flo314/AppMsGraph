@@ -1,11 +1,14 @@
 package com.example.appmsgraph;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appmsgraph.modelcustom.VisiteObject;
 
@@ -15,6 +18,7 @@ import java.util.List;
 public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteViewHolder> {
 
     List<VisiteObject> list;
+    Context context;
 
     final private VisiteAdapter.ListItemClickListenerVisite onClickListener;
 
@@ -42,6 +46,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         holder.typevisite.setText(list.get(position).getType());
         holder.notevisite.setText(list.get(position).getNote());
         holder.commentvisite.setText(list.get(position).getComment());
+        holder.deleteItem.setImageResource(R.drawable.ic_delete_forever_black_24dp);
     }
 
     @Override
@@ -56,6 +61,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
     class VisiteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView typevisite, datevisite,notevisite,commentvisite;
+        ImageView deleteItem;
 
         VisiteViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +70,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
             typevisite = itemView.findViewById(R.id.texttype);
             notevisite = itemView.findViewById(R.id.textnote);
             commentvisite = itemView.findViewById(R.id.textcomment);
+            deleteItem = itemView.findViewById(R.id.deleteItem);
 
             itemView.setOnClickListener(this);
         }
