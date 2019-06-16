@@ -145,7 +145,7 @@ public class AddVisite extends AppCompatActivity {
                 Historique.histo = newHisto;
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
-                Historique.histo = Historique.histo + newHisto;
+                Historique.histo =  newHisto + Historique.histo;
                 Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
             }
             /**/

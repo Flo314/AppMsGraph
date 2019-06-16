@@ -111,4 +111,8 @@ public class UpdateVisite extends AppCompatActivity {
         dpd.getDatePicker().setMinDate(System.currentTimeMillis());
         dpd.show();
     }
+
+    public void updateVisitlClicked(){
+        // update network
+    }
 }

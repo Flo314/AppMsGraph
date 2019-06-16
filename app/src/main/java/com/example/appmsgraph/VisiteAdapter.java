@@ -3,6 +3,7 @@ package com.example.appmsgraph;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.modelcustom.VisiteObject;
+import com.example.appmsgraph.screens.Historique;
+import com.example.appmsgraph.screens.UpdateVisite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +30,10 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         void onListItemClickVisite(int clickedItemIndex);
     }
 
-    public VisiteAdapter(List<VisiteObject> list, VisiteAdapter.ListItemClickListenerVisite listener) {
+    public VisiteAdapter(List<VisiteObject> list, VisiteAdapter.ListItemClickListenerVisite listener, Context context) {
         this.list = list;
         this.onClickListener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -41,12 +45,21 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VisiteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull VisiteViewHolder holder, final int position) {
         holder.datevisite.setText(list.get(position).getDate());
         holder.typevisite.setText(list.get(position).getType());
         holder.notevisite.setText(list.get(position).getNote());
         holder.commentvisite.setText(list.get(position).getComment());
         holder.deleteItem.setImageResource(R.drawable.ic_delete_forever_black_24dp);
+
+        holder.deleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeAt(position);
+                Toast.makeText(context,"Visite supprimée", Toast.LENGTH_LONG).show();
+                Log.d("TEST DELETE", "TEST DELETE " + position);
+            }
+        });
     }
 
     @Override
@@ -55,6 +68,12 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
             return list.size();
         }
         return 0;
+    }
+
+    public void removeAt(int position) {
+        list.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, list.size());
     }
 
     // ViewHolder

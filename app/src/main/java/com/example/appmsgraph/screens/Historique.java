@@ -72,7 +72,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 //        historique = findViewById(R.id.historique);
 //        historique.setText(histo);
         recyclerView = findViewById(R.id.recyclerviewHistorique);
-        adapter = new VisiteAdapter(visiteObjectList,this);
+        adapter = new VisiteAdapter(visiteObjectList,this, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -97,7 +97,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
                 startActivity(addIntent);
             }
         });
-
     }
 
     @Override
@@ -111,13 +110,12 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         updateintent.putExtra("Tok", authHeader);
         updateintent.putExtra("id", id);
         updateintent.putExtra("date", visiteObjectList.get(clickedItemIndex).getDate());
-        updateintent.putExtra("comment", visiteObjectList.get(clickedItemIndex).getComment());
-        updateintent.putExtra("note", visiteObjectList.get(clickedItemIndex).getNote());
         updateintent.putExtra("type", visiteObjectList.get(clickedItemIndex).getType());
+        updateintent.putExtra("note", visiteObjectList.get(clickedItemIndex).getNote());
+        updateintent.putExtra("comment", visiteObjectList.get(clickedItemIndex).getComment());
 
         startActivity(updateintent);
     }
-
 
     /* Cycle de vie Activity
      * =======================*/
@@ -126,7 +124,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo),this));
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo),this, this));
     }
 
     @Override
