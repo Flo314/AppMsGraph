@@ -12,13 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".screens.UpdateVisite"></activity>
-        <activity android:name=".screens.AddVisite" />
-        <activity android:name=".screens.Historique">
+        <activity android:name=".screens.UpdateVisite"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".screens.AddVisite"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.Historique"
+            android:screenOrientation="portrait">
 
             <!-- android:parentActivityName=".MainActivity"> -->
         </activity>
-        <activity android:name=".screens.MainActivity">
+        <activity android:name=".screens.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

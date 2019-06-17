@@ -84,7 +84,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         Objects.requireNonNull(actionBar).setTitle(nameTitle);
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
 
-        // Floating action button qui demarre l'activity CreateVisite (ajout)
+        // Floating action button qui demarre l'activity AddVisite (ajout)
         createVisite = findViewById(R.id.createVisite);
         createVisite.setOnClickListener(new View.OnClickListener() {
             @Override

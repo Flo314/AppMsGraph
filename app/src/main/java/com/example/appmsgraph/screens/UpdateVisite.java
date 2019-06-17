@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import com.example.appmsgraph.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class UpdateVisite extends AppCompatActivity {
@@ -71,7 +74,13 @@ public class UpdateVisite extends AppCompatActivity {
         dateupdate = findViewById(R.id.updatedatevisite);
         dateupdate.setText(date);
         typeupdate = findViewById(R.id.updatetypevisite);
-        typeupdate.setEnabled(true);
+//        List<String> list = Arrays.asList(getResources().getStringArray(R.array.type_visite));
+//
+//        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(UpdateVisite.this, android.R.layout.simple_spinner_item, list);
+//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        typeupdate.setAdapter(spinnerAdapter);
+//        spinnerAdapter.add(type);
+//        spinnerAdapter.notifyDataSetChanged();
         noteupdate = findViewById(R.id.updatenotevisite);
         noteupdate.setRating(Float.parseFloat(note));
         commentupdate = findViewById(R.id.updatecommentairevisite);
