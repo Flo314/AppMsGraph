@@ -116,7 +116,7 @@ public class AddVisite extends AppCompatActivity {
 
     public void addVisitlClicked() {
 
-        // Je récupère du coup la saisie utilisateur dans mes vues
+        // Je récupère la saisie utilisateur dans mes vues
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating()).toString();
@@ -151,7 +151,7 @@ public class AddVisite extends AppCompatActivity {
             /**/
             finish();
             Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
-            Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
 
     }

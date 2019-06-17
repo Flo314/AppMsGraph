@@ -40,7 +40,7 @@ public class CustomDialogUpdate extends AppCompatDialogFragment {
         super.onStart();
 //        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundResource(R.drawable.button_ok_update_dialog);
 //        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE).setBackgroundResource(R.drawable.button_ok_update_dialog);
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
-        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+//        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+//        ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
     }
 }

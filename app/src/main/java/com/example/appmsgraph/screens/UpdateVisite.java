@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -17,8 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.modelcustom.VisiteObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -34,6 +37,9 @@ public class UpdateVisite extends AppCompatActivity {
     private RatingBar noteupdate;
     private FloatingActionButton updatevisite;
 
+    /*Debug*/
+    private final String TAG = UpdateVisite.class.getSimpleName();
+
     /*DATA*/
     private String date;
     private String name;
@@ -43,6 +49,8 @@ public class UpdateVisite extends AppCompatActivity {
     private String comment;
     private String authHeader;
     private String id;
+
+    VisiteObject visiteObject = new VisiteObject();
 
     /*DatePicker*/
     private int mYear, mMonth, mDay;
@@ -74,13 +82,8 @@ public class UpdateVisite extends AppCompatActivity {
         dateupdate = findViewById(R.id.updatedatevisite);
         dateupdate.setText(date);
         typeupdate = findViewById(R.id.updatetypevisite);
-//        List<String> list = Arrays.asList(getResources().getStringArray(R.array.type_visite));
-//
-//        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(UpdateVisite.this, android.R.layout.simple_spinner_item, list);
-//        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        typeupdate.setAdapter(spinnerAdapter);
-//        spinnerAdapter.add(type);
-//        spinnerAdapter.notifyDataSetChanged();
+        // todo récup value du spinner
+
         noteupdate = findViewById(R.id.updatenotevisite);
         noteupdate.setRating(Float.parseFloat(note));
         commentupdate = findViewById(R.id.updatecommentairevisite);
@@ -97,7 +100,8 @@ public class UpdateVisite extends AppCompatActivity {
         updatevisite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(UpdateVisite.this,"Visite modifié avec succès", Toast.LENGTH_LONG).show();
+                updateVisitlClicked();
+                Toast.makeText(UpdateVisite.this, "Visite modifié avec succès", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -121,7 +125,24 @@ public class UpdateVisite extends AppCompatActivity {
         dpd.show();
     }
 
-    public void updateVisitlClicked(){
-        // update network
+    public void updateVisitlClicked() {
+        // récup des valeurs du formulaire
+        String date = dateupdate.getText().toString();
+        String type = typeupdate.getSelectedItem().toString();
+        String not = String.valueOf(noteupdate.getRating()).toString();
+        String comment = commentupdate.getText().toString();
+        Log.d(TAG, "UPDATEVISITE: " + date + "\n"
+                + type + "\n"
+                + not + "\n"
+                + comment);
+
+        /*UPDATE VISITE*/
+        String newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
+        Historique.histo = newHisto;
+        Log.d(TAG, "HISTO " + Historique.histo);
+        Log.d(TAG, "NEWHISTO " + newHisto);
+
+        finish();
+        Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
     }
 }

@@ -56,7 +56,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
             @Override
             public void onClick(View v) {
                 removeAt(position);
-                Toast.makeText(context,"Visite supprimée", Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Visite supprimée", Toast.LENGTH_SHORT).show();
                 Log.d("TEST DELETE", "TEST DELETE " + position);
             }
         });
