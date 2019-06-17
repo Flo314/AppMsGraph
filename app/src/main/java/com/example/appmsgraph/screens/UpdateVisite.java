@@ -2,6 +2,8 @@ package com.example.appmsgraph.screens;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -55,6 +57,7 @@ public class UpdateVisite extends AppCompatActivity {
     /*DatePicker*/
     private int mYear, mMonth, mDay;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +86,14 @@ public class UpdateVisite extends AppCompatActivity {
         dateupdate.setText(date);
         typeupdate = findViewById(R.id.updatetypevisite);
         // todo récup value du spinner
+        String compareValue = type;
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_visite, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeupdate.setAdapter(adapter);
+        if (compareValue != null) {
+            int spinnerPosition = adapter.getPosition(compareValue);
+            typeupdate.setSelection(spinnerPosition);
+        }
 
         noteupdate = findViewById(R.id.updatenotevisite);
         noteupdate.setRating(Float.parseFloat(note));
