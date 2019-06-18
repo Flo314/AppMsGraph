@@ -26,5 +26,8 @@ public interface GetDataService {
     @PATCH("items/{id}/fields")
     Call<Value> updateData(@Header("Authorization") String authHeader, @Path("id") String id, @Body Fields histo);
 
+    @PATCH("items/{id}/fields")
+    Call<Value> updateDate(@Header("Authorization") String authHeader, @Path("id") String id, @Body Fields date);
+
 }
 

@@ -67,6 +67,7 @@ public class AddVisite extends AppCompatActivity {
     private String nametitle;
     private String prenom;
     private String newHisto;
+    private String newDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,13 +140,17 @@ public class AddVisite extends AppCompatActivity {
         }else {
             /*ADD VISITE*/
             //TODO MAJ HIST SHAREPOINT
-            String newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
+             newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
+             newDate = date;
+             Log.d(TAG, "DATE: " + date);
             if (Historique.histo == null) {
+                updateDate();
                 Historique.histo = newHisto;
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
-                Historique.histo =  Historique.histo + newHisto;
+                Historique.histo =  newHisto + Historique.histo;
                 Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
+                updateDate();
                 updateHisto();
             }
             finish();
@@ -178,6 +183,33 @@ public class AddVisite extends AppCompatActivity {
         fields.setHistorique(Historique.histo);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Value> call = service.updateData(authHeader,id,fields);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<Value>() {
+            @Override
+            public void onResponse(Call<Value> call, Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                if (!response.isSuccessful()){
+                    Log.d(TAG, "RESPONSE ADD: " + response.code());
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Value> call, Throwable t) {
+                Toast.makeText(AddVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+    public void updateDate(){
+        Fields fields = new Fields();
+        fields.setVisite(newDate);
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Value> call = service.updateDate(authHeader,id,fields);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
