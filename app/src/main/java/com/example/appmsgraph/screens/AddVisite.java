@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
@@ -59,14 +60,11 @@ public class AddVisite extends AppCompatActivity {
     private TextView validatordate;
 
     /*Data*/
-    private static ArrayList<Value_> datalistObj = new ArrayList<>();
-    private List<String> spinnerDataName = new ArrayList<>();
     private String authHeader;
     private String id;
     private String nametitle;
     private String prenom;
-
-    VisiteObject visiteObject = new VisiteObject();
+    private String newHisto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +82,6 @@ public class AddVisite extends AppCompatActivity {
         id = intents.getStringExtra("id");
         nametitle = intents.getStringExtra("title");
         prenom = intents.getStringExtra("prenom");
-
 
         // Je récupère mes vues
         validatordate = findViewById(R.id.validatorDateVisite);
@@ -145,12 +142,38 @@ public class AddVisite extends AppCompatActivity {
                 Historique.histo = newHisto;
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
-                Historique.histo =  newHisto + Historique.histo;
+                newHisto =  newHisto + Historique.histo;
                 Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
+
+                Fields fields = new Fields();
+                fields.setHistorique(newHisto);
+                GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+                Call<Value> call = service.updateData(authHeader,id,fields);
+                Log.d(TAG, "starting retrofit request to graph");
+                Log.d(TAG, call.request().url() + "");
+                // Exécute la requête asynchrone
+                call.enqueue(new Callback<Value>() {
+                    @Override
+                    public void onResponse(Call<Value> call, Response<Value> response) {
+                        Log.d(TAG, "Response: " + response.message());
+                        Log.d(TAG, "Response: " + response.toString());
+                        if (!response.isSuccessful()){
+                            Log.d(TAG, "RESPONSE ADD: " + response.code());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Value> call, Throwable t) {
+                        Toast.makeText(AddVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                        Log.e(TAG, "Failure: " + t.toString());
+                        t.printStackTrace();
+                    }
+                });
+                /**/
             }
-            /**/
+
             finish();
-            Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
             Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
 

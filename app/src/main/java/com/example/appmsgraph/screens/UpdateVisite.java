@@ -21,13 +21,16 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.modelcustom.VisiteObject;
+import com.example.appmsgraph.network.GetDataService;
+import com.example.appmsgraph.network.RetrofitInstance;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UpdateVisite extends AppCompatActivity {
 

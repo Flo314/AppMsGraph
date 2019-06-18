@@ -1,17 +1,12 @@
 package com.example.appmsgraph.modelcustom;
 
-import android.util.Log;
 
-import com.example.appmsgraph.screens.MainActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -22,6 +17,8 @@ public class VisiteObject implements Comparable<VisiteObject> {
     private String type;
     private String note;
     private String comment;
+    private String newHisto;
+
 
     public List<VisiteObject> visitList;
 
@@ -68,12 +65,16 @@ public class VisiteObject implements Comparable<VisiteObject> {
     }
 
     // Constructeur
-    public VisiteObject(String id, String date, String type, String note, String comment) {
-        this.id = id;
+    public VisiteObject(String date, String type, String note, String comment) {
         this.date = date;
         this.type = type;
         this.note = note;
         this.comment = comment;
+    }
+
+    // Constructeur
+    public VisiteObject(String newHisto) {
+        this.newHisto = newHisto;
     }
 
     // Constructeur

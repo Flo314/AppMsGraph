@@ -1,6 +1,7 @@
 package com.example.appmsgraph.network;
 
 
+import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.google.gson.JsonObject;
@@ -23,7 +24,7 @@ public interface GetDataService {
     Call<Value> getCollaboratorsData(@Header("Authorization") String authHeader);
 
     @PATCH("items/{id}/fields")
-    Call<Value> updateData(@Header("Authorization") String authHeader, @Path("id") String id, @Body String histo);
+    Call<Value> updateData(@Header("Authorization") String authHeader, @Path("id") String id, @Body Fields histo);
 
 }
 
