@@ -144,8 +144,8 @@ public class AddVisite extends AppCompatActivity {
              newDate = date;
              Log.d(TAG, "DATE: " + date);
             if (Historique.histo == null) {
-                updateDate();
                 Historique.histo = newHisto;
+                updateDate();
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
                 Historique.histo =  newHisto + Historique.histo;
