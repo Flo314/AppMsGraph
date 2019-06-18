@@ -70,8 +70,9 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         return 0;
     }
 
+
     // supprime l'item de la liste
-    private void removeAt(int position) {
+    public void removeAt(int position) {
         list.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, list.size());

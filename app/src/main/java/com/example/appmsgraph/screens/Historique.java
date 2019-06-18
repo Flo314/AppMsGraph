@@ -13,20 +13,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.VisiteAdapter;
-import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Objects;
 
-public class Historique extends AppCompatActivity implements VisiteAdapter.ListItemClickListenerVisite{
+
+public class Historique extends AppCompatActivity implements VisiteAdapter.ListItemClickListenerVisite {
 
     /* UI */
     private ActionBar actionBar;
@@ -71,13 +67,13 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
 //        historique = findViewById(R.id.historique);
 //        historique.setText(histo);
+
         recyclerView = findViewById(R.id.recyclerviewHistorique);
-        adapter = new VisiteAdapter(visiteObjectList,this, this);
+        adapter = new VisiteAdapter(visiteObjectList, this, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setVisibility(View.VISIBLE);
-//            Log.d(TAG, "VisiteList: " + list);
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -124,7 +120,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo),this, this));
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo), this, Historique.this));
     }
 
     @Override

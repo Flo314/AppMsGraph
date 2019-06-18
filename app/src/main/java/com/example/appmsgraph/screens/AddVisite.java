@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.VisiteAdapter;
 import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelSharepoint.Value_;
@@ -111,7 +113,7 @@ public class AddVisite extends AppCompatActivity {
         });
     }
 
-    public void addVisitlClicked() {
+    private void addVisitlClicked() {
 
         // Je récupère la saisie utilisateur dans mes vues
         String date = editDate.getText().toString();
@@ -142,37 +144,10 @@ public class AddVisite extends AppCompatActivity {
                 Historique.histo = newHisto;
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
-                newHisto =  newHisto + Historique.histo;
+                Historique.histo =  Historique.histo + newHisto;
                 Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
-
-                Fields fields = new Fields();
-                fields.setHistorique(newHisto);
-                GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-                Call<Value> call = service.updateData(authHeader,id,fields);
-                Log.d(TAG, "starting retrofit request to graph");
-                Log.d(TAG, call.request().url() + "");
-                // Exécute la requête asynchrone
-                call.enqueue(new Callback<Value>() {
-                    @Override
-                    public void onResponse(Call<Value> call, Response<Value> response) {
-                        Log.d(TAG, "Response: " + response.message());
-                        Log.d(TAG, "Response: " + response.toString());
-                        if (!response.isSuccessful()){
-                            Log.d(TAG, "RESPONSE ADD: " + response.code());
-                            return;
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Value> call, Throwable t) {
-                        Toast.makeText(AddVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
-                        Log.e(TAG, "Failure: " + t.toString());
-                        t.printStackTrace();
-                    }
-                });
-                /**/
+                updateHisto();
             }
-
             finish();
             Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
@@ -180,7 +155,7 @@ public class AddVisite extends AppCompatActivity {
     }
 
     // Datepiker
-    public void getDate(View v) {
+    private void getDate(View v) {
         DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
@@ -198,8 +173,42 @@ public class AddVisite extends AppCompatActivity {
         dpd.show();
     }
 
+    public void updateHisto(){
+        Fields fields = new Fields();
+        fields.setHistorique(Historique.histo);
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Value> call = service.updateData(authHeader,id,fields);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<Value>() {
+            @Override
+            public void onResponse(Call<Value> call, Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                if (!response.isSuccessful()){
+                    Log.d(TAG, "RESPONSE ADD: " + response.code());
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Value> call, Throwable t) {
+                Toast.makeText(AddVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
     /* Cycle de vie Activity
      * =======================*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "OnResume called ");
+    }
 
     @Override
     protected void onStart() {
