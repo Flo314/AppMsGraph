@@ -34,7 +34,10 @@ public class VisiteObject implements Comparable<VisiteObject> {
                 visiteObject.date = res[0];
                 visiteObject.type = res[1];
                 visiteObject.note = res[2];
-                visiteObject.comment = res[3];
+                if(visiteObject.comment != null && !visiteObject.comment.isEmpty()){
+                    visiteObject.comment = res[3];
+                }
+
                 listAuBonFormat.add(visiteObject);
             }
         }
@@ -50,19 +53,19 @@ public class VisiteObject implements Comparable<VisiteObject> {
         return visitList;
     }
 
-    public void addVisite(VisiteObject visite) {
-        // Je teste d'abord si ma liste n'est pas null
-        // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
-        if (visitList != null) {
-            // Ma liste n'est pas null, je peux ajouter!
-            visitList.add(visite);
-        } else {
-            // Sinon j'instancie ma liste
-            visitList = new ArrayList<>();
-            // Et j'ajoute ma visite
-            visitList.add(visite);
-        }
-    }
+//    public void addVisite(VisiteObject visite) {
+//        // Je teste d'abord si ma liste n'est pas null
+//        // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
+//        if (visitList != null) {
+//            // Ma liste n'est pas null, je peux ajouter!
+//            visitList.add(visite);
+//        } else {
+//            // Sinon j'instancie ma liste
+//            visitList = new ArrayList<>();
+//            // Et j'ajoute ma visite
+//            visitList.add(visite);
+//        }
+//    }
 
     // Constructeur
     public VisiteObject(String date, String type, String note, String comment) {

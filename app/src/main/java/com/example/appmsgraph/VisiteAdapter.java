@@ -12,10 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.modelcustom.VisiteObject;
-import com.example.appmsgraph.screens.Historique;
-import com.example.appmsgraph.screens.UpdateVisite;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteViewHolder> {
@@ -69,7 +66,6 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         }
         return 0;
     }
-
 
     // supprime l'item de la liste
     public void removeAt(int position) {

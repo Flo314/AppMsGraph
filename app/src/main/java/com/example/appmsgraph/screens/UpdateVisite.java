@@ -20,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
+import com.example.appmsgraph.VisiteAdapter;
+import com.example.appmsgraph.modelSharepoint.Fields;
+import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
@@ -54,13 +57,14 @@ public class UpdateVisite extends AppCompatActivity {
     private String comment;
     private String authHeader;
     private String id;
+    private String newDate;
+    private String oldHisto;
 
     VisiteObject visiteObject = new VisiteObject();
 
     /*DatePicker*/
     private int mYear, mMonth, mDay;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,41 +126,151 @@ public class UpdateVisite extends AppCompatActivity {
 
     // Datepiker
     public void getDate(View v) {
-        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+//        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+//                new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        Calendar myCalendar = Calendar.getInstance();
+//                        myCalendar.set(Calendar.YEAR, year);
+//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                        myCalendar.set(Calendar.MONTH, month);
+//                        String myFormat = "dd/MM/yyyy";
+//                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+//                        dateupdate.setText(sdf.format((myCalendar.getTime())));
+//                    }
+//                }, mYear, mMonth, mDay);
+//        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+//        dpd.show();
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateVisite.this,
                 new DatePickerDialog.OnDateSetListener() {
+
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        Calendar myCalendar = Calendar.getInstance();
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        myCalendar.set(Calendar.MONTH, month);
-                        String myFormat = "dd/MM/yyyy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-                        dateupdate.setText(sdf.format((myCalendar.getTime())));
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        dateupdate.setText(dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
+
                     }
                 }, mYear, mMonth, mDay);
-        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-        dpd.show();
+        datePickerDialog.show();
     }
 
     public void updateVisitlClicked() {
         // récup des valeurs du formulaire
-        String date = dateupdate.getText().toString();
-        String type = typeupdate.getSelectedItem().toString();
-        String not = String.valueOf(noteupdate.getRating()).toString();
-        String comment = commentupdate.getText().toString();
-        Log.d(TAG, "UPDATEVISITE: " + date + "\n"
-                + type + "\n"
-                + not + "\n"
-                + comment);
+        String dateFormulaire = dateupdate.getText().toString();
+        String typeFormulaire = typeupdate.getSelectedItem().toString();
+        String notFormulaire = String.valueOf(noteupdate.getRating()).toString();
+        String commentFormulaire = commentupdate.getText().toString();
 
         /*UPDATE VISITE*/
-        String newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
-        Historique.histo = newHisto;
+        String newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
+        Log.d(TAG, "NEWHISTO: " + newHisto);
+        Log.d(TAG, "HISTORIQUE: " + Historique.histo );
+        if (Historique.histo != null){
+            Historique.histo = newHisto;
+            Log.d(TAG, "HISTORIQUE: " + Historique.histo );
+        }
+
+
         Log.d(TAG, "HISTO " + Historique.histo);
         Log.d(TAG, "NEWHISTO " + newHisto);
+        updateHisto();
 
         finish();
         Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
+    }
+
+    public void updateHisto(){
+        Fields fields = new Fields();
+        fields.setHistorique(Historique.histo);
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Value> call = service.updateData(authHeader,id,fields);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<Value>() {
+            @Override
+            public void onResponse(Call<Value> call, Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                if (!response.isSuccessful()){
+                    Log.d(TAG, "RESPONSE ADD: " + response.code());
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Value> call, Throwable t) {
+                Toast.makeText(UpdateVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+    public void updateDate(){
+        Fields fields = new Fields();
+        fields.setVisite(newDate);
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        Call<Value> call = service.updateDate(authHeader,id,fields);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<Value>() {
+            @Override
+            public void onResponse(Call<Value> call, Response<Value> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                if (!response.isSuccessful()){
+                    Log.d(TAG, "RESPONSE ADD: " + response.code());
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Value> call, Throwable t) {
+                Toast.makeText(UpdateVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    /* Cycle de vie Activity
+     * =======================*/
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "OnResume called ");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "OnStart called ");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "OnPause called ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "OnStop called ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "OnDestroy called ");
     }
 }

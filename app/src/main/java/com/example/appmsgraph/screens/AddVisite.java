@@ -1,8 +1,11 @@
 package com.example.appmsgraph.screens;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -33,6 +36,7 @@ import com.example.appmsgraph.utils.Validator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,6 +49,8 @@ public class AddVisite extends AppCompatActivity {
     /*DatePicker*/
     private int mYear, mMonth, mDay;
     private TextView editDate;
+    private Calendar calendar;
+    private DatePickerDialog dpd;
 
     /*Debug*/
     private final String TAG = AddVisite.class.getSimpleName();
@@ -107,6 +113,7 @@ public class AddVisite extends AppCompatActivity {
         // Date du formulaire
         editDate = findViewById(R.id.datevisite);
         editDate.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 getDate(v);
@@ -135,11 +142,10 @@ public class AddVisite extends AppCompatActivity {
             validatordate.setVisibility(View.VISIBLE);
             Validator.validator(comment);
         } else if (!Validator.validator(comment)) {
-            validatorcomment.setText("Erreur: le commentaire ne doit pas dépasser 150 caractères maximum");
+            validatorcomment.setText("Erreur:Veuillez entrer au moins 2 caractères ou le commentaire ne doit pas dépasser 150 caractères maximum");
             validatorcomment.setVisibility(View.VISIBLE);
         }else {
             /*ADD VISITE*/
-            //TODO MAJ HIST SHAREPOINT
              newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
              newDate = date;
              Log.d(TAG, "DATE: " + date);
@@ -161,21 +167,53 @@ public class AddVisite extends AppCompatActivity {
 
     // Datepiker
     private void getDate(View v) {
-        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+//        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
+//                new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        Calendar myCalendar = Calendar.getInstance();
+//                        myCalendar.set(Calendar.YEAR, year);
+//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                        myCalendar.set(Calendar.MONTH, month);
+//                        String myFormat = "dd/MM/yyyy";
+//                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
+//                        editDate.setText(sdf.format((myCalendar.getTime())));
+//                    }
+//                }, mYear, mMonth, mDay);
+//        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
+//        dpd.show();
+
+        // Get Current Date
+        final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(AddVisite.this,
                 new DatePickerDialog.OnDateSetListener() {
+
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        Calendar myCalendar = Calendar.getInstance();
-                        myCalendar.set(Calendar.YEAR, year);
-                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        myCalendar.set(Calendar.MONTH, month);
-                        String myFormat = "dd/MM/yyyy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-                        editDate.setText(sdf.format((myCalendar.getTime())));
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+//                        editDate.setText(dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
+                        editDate.setText(formatDate(dayOfMonth,monthOfYear,year));
+
                     }
                 }, mYear, mMonth, mDay);
-        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-        dpd.show();
+        datePickerDialog.show();
+    }
+
+    private static String formatDate(int year, int month, int day) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day);
+        Date date = cal.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+
+        return sdf.format(date);
     }
 
     public void updateHisto(){
