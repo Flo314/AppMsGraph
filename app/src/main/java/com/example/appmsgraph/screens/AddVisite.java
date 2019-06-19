@@ -49,8 +49,6 @@ public class AddVisite extends AppCompatActivity {
     /*DatePicker*/
     private int mYear, mMonth, mDay;
     private TextView editDate;
-    private Calendar calendar;
-    private DatePickerDialog dpd;
 
     /*Debug*/
     private final String TAG = AddVisite.class.getSimpleName();
@@ -129,12 +127,6 @@ public class AddVisite extends AppCompatActivity {
         String not = String.valueOf(note.getRating()).toString();
         String comment = commentaire.getText().toString();
 
-        Log.d(TAG, "Data du formulaire: " + id + "\n"
-        + date + "\n"
-        + type + "\n"
-        +not + "\n"
-        + comment);
-
         // Control formulaire
         Validator.validatorDate(date);
         if (!Validator.validatorDate(date)) {
@@ -144,51 +136,35 @@ public class AddVisite extends AppCompatActivity {
         } else if (!Validator.validator(comment)) {
             validatorcomment.setText("Erreur:Veuillez entrer au moins 2 caractères ou le commentaire ne doit pas dépasser 150 caractères maximum");
             validatorcomment.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             /*ADD VISITE*/
-             newHisto = date+"!"+type+"!"+not+"!"+comment+"£";
-             newDate = date;
-             Log.d(TAG, "DATE: " + date);
+            newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
+            newDate = date;
+            Log.d(TAG, "DATE: " + date);
             if (Historique.histo == null) {
                 Historique.histo = newHisto;
                 updateDate();
                 Log.d(TAG, "NEWHISTO " + newHisto);
             } else {
-                Historique.histo =  newHisto + Historique.histo;
+                Historique.histo = newHisto + Historique.histo;
                 Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
                 updateDate();
                 updateHisto();
             }
+
             finish();
-            Toast.makeText(this,"Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     // Datepiker
     private void getDate(View v) {
-//        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
-//                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        Calendar myCalendar = Calendar.getInstance();
-//                        myCalendar.set(Calendar.YEAR, year);
-//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                        myCalendar.set(Calendar.MONTH, month);
-//                        String myFormat = "dd/MM/yyyy";
-//                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-//                        editDate.setText(sdf.format((myCalendar.getTime())));
-//                    }
-//                }, mYear, mMonth, mDay);
-//        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-//        dpd.show();
-
         // Get Current Date
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(AddVisite.this,
                 new DatePickerDialog.OnDateSetListener() {
@@ -197,8 +173,7 @@ public class AddVisite extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-//                        editDate.setText(dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
-                        editDate.setText(formatDate(dayOfMonth,monthOfYear,year));
+                        editDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -211,16 +186,16 @@ public class AddVisite extends AppCompatActivity {
         cal.setTimeInMillis(0);
         cal.set(year, month, day);
         Date date = cal.getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy",Locale.FRANCE);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
 
         return sdf.format(date);
     }
 
-    public void updateHisto(){
+    public void updateHisto() {
         Fields fields = new Fields();
         fields.setHistorique(Historique.histo);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Value> call = service.updateData(authHeader,id,fields);
+        Call<Value> call = service.updateData(authHeader, id, fields);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
@@ -229,7 +204,7 @@ public class AddVisite extends AppCompatActivity {
             public void onResponse(Call<Value> call, Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "RESPONSE ADD: " + response.code());
                     return;
                 }
@@ -243,11 +218,12 @@ public class AddVisite extends AppCompatActivity {
             }
         });
     }
-    public void updateDate(){
+
+    public void updateDate() {
         Fields fields = new Fields();
         fields.setVisite(newDate);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Value> call = service.updateDate(authHeader,id,fields);
+        Call<Value> call = service.updateDate(authHeader, id, fields);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
@@ -256,7 +232,7 @@ public class AddVisite extends AppCompatActivity {
             public void onResponse(Call<Value> call, Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "RESPONSE ADD: " + response.code());
                     return;
                 }

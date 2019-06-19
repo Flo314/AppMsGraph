@@ -17,7 +17,7 @@ import java.util.List;
 
 public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteViewHolder> {
 
-    List<VisiteObject> list;
+    private List<VisiteObject> list;
     Context context;
 
     final private VisiteAdapter.ListItemClickListenerVisite onClickListener;
@@ -72,6 +72,14 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         list.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, list.size());
+    }
+
+    // update l'item de la liste
+    public void UpdateData(int position, VisiteObject visiteObject){
+        list.remove(position);
+        list.add(visiteObject);
+        notifyItemChanged(position);
+        notifyDataSetChanged();
     }
 
     // ViewHolder

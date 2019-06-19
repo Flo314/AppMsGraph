@@ -28,6 +28,7 @@ import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -58,9 +59,8 @@ public class UpdateVisite extends AppCompatActivity {
     private String authHeader;
     private String id;
     private String newDate;
-    private String oldHisto;
 
-    VisiteObject visiteObject = new VisiteObject();
+    VisiteAdapter adapter;
 
     /*DatePicker*/
     private int mYear, mMonth, mDay;
@@ -146,7 +146,6 @@ public class UpdateVisite extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(UpdateVisite.this,
                 new DatePickerDialog.OnDateSetListener() {
 
@@ -154,7 +153,7 @@ public class UpdateVisite extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        dateupdate.setText(dayOfMonth + "/" + (monthOfYear +1) + "/" + year);
+                        dateupdate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
 
                     }
                 }, mYear, mMonth, mDay);
@@ -167,30 +166,18 @@ public class UpdateVisite extends AppCompatActivity {
         String typeFormulaire = typeupdate.getSelectedItem().toString();
         String notFormulaire = String.valueOf(noteupdate.getRating()).toString();
         String commentFormulaire = commentupdate.getText().toString();
-
+        Log.d(TAG, "HISTORIQUE: " + Historique.histo );
         /*UPDATE VISITE*/
         String newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
-        Log.d(TAG, "NEWHISTO: " + newHisto);
-        Log.d(TAG, "HISTORIQUE: " + Historique.histo );
-        if (Historique.histo != null){
-            Historique.histo = newHisto;
-            Log.d(TAG, "HISTORIQUE: " + Historique.histo );
-        }
 
-
-        Log.d(TAG, "HISTO " + Historique.histo);
-        Log.d(TAG, "NEWHISTO " + newHisto);
-        updateHisto();
-
-        finish();
-        Log.d(TAG, "ListVisite: " + visiteObject.getVisitList());
+//        finish();
     }
 
-    public void updateHisto(){
+    public void updateHisto() {
         Fields fields = new Fields();
         fields.setHistorique(Historique.histo);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Value> call = service.updateData(authHeader,id,fields);
+        Call<Value> call = service.updateData(authHeader, id, fields);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
@@ -199,7 +186,7 @@ public class UpdateVisite extends AppCompatActivity {
             public void onResponse(Call<Value> call, Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "RESPONSE ADD: " + response.code());
                     return;
                 }
@@ -213,11 +200,12 @@ public class UpdateVisite extends AppCompatActivity {
             }
         });
     }
-    public void updateDate(){
+
+    public void updateDate() {
         Fields fields = new Fields();
         fields.setVisite(newDate);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        Call<Value> call = service.updateDate(authHeader,id,fields);
+        Call<Value> call = service.updateDate(authHeader, id, fields);
         Log.d(TAG, "starting retrofit request to graph");
         Log.d(TAG, call.request().url() + "");
         // Exécute la requête asynchrone
@@ -226,7 +214,7 @@ public class UpdateVisite extends AppCompatActivity {
             public void onResponse(Call<Value> call, Response<Value> response) {
                 Log.d(TAG, "Response: " + response.message());
                 Log.d(TAG, "Response: " + response.toString());
-                if (!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     Log.d(TAG, "RESPONSE ADD: " + response.code());
                     return;
                 }

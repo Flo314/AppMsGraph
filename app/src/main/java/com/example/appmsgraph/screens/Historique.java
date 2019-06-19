@@ -61,8 +61,8 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         visite = intents.getStringExtra("visite");
 
         visiteObjectList = VisiteObject.getListAuBonFormat(histo);
-
         Log.d(TAG, "Element ListHisto = " + " " + VisiteObject.getListAuBonFormat(histo).toString() + "\n");
+
 
         // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
 //        historique = findViewById(R.id.historique);
@@ -97,6 +97,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
     @Override
     public void onListItemClickVisite(int clickedItemIndex) {
+
         Intent updateintent = new Intent(getApplicationContext(), UpdateVisite.class);
         VisiteObject clickItem = visiteObjectList.get(clickedItemIndex);
         Log.d(TAG, "Item clicked: " + clickItem);
@@ -120,7 +121,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo), this, Historique.this));
+        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo), this, this));
     }
 
     @Override
