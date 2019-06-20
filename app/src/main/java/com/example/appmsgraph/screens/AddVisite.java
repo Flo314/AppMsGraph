@@ -73,6 +73,8 @@ public class AddVisite extends AppCompatActivity {
     private String newHisto;
     private String newDate;
 
+    VisiteObject visiteObject = new VisiteObject();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class AddVisite extends AppCompatActivity {
         actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.toolbar_visibility));
         actionBar.setTitle("Ajouter une Visite");
+
+
 
         // Data qui vient de Historique
         Intent intents = getIntent();
@@ -126,6 +130,7 @@ public class AddVisite extends AppCompatActivity {
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating()).toString();
         String comment = commentaire.getText().toString();
+        if(comment.isEmpty()) comment = "pas de commentaire";
 
         // Control formulaire
         Validator.validatorDate(date);
@@ -141,17 +146,14 @@ public class AddVisite extends AppCompatActivity {
             newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
             newDate = date;
             Log.d(TAG, "DATE: " + date);
-            if (Historique.histo == null) {
-                Historique.histo = newHisto;
-                updateDate();
-                Log.d(TAG, "NEWHISTO " + newHisto);
-            } else {
-                Historique.histo = newHisto + Historique.histo;
-                Log.d(TAG, "Histo + NEWHISTO " + Historique.histo);
+            Historique.histo = newHisto + Historique.histo;
+
+            visiteObject.setListAuBonFormat(Historique.histo);
+            VisiteObject visiteObject = new VisiteObject(date,type,not,comment);
+            // ajout d'une nouvelle visite dans la liste
+            Historique.visiteObjectList.add(0,visiteObject);
                 updateDate();
                 updateHisto();
-            }
-
             finish();
             Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }

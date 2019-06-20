@@ -11,9 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
+import com.example.appmsgraph.screens.Historique;
+import com.example.appmsgraph.utils.CompareDate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteViewHolder> {
 
@@ -75,10 +80,18 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
     }
 
     // update l'item de la liste
-    public void UpdateData(int position, VisiteObject visiteObject){
-        list.remove(position);
-        list.add(visiteObject);
-        notifyItemChanged(position);
+    public void updateData(){
+        int position = 0;
+        int i = list.size();
+        ArrayList<VisiteObject> dataListHisto = new ArrayList<>();
+        for (VisiteObject item : list){
+            if(list != null && position <= i){
+                dataListHisto.add(item);
+            }
+            position++;
+        }
+        Objects.requireNonNull(list).clear();
+        list.addAll(dataListHisto);
         notifyDataSetChanged();
     }
 

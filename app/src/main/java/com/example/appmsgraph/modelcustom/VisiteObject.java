@@ -1,7 +1,6 @@
 package com.example.appmsgraph.modelcustom;
 
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,19 +16,40 @@ public class VisiteObject implements Comparable<VisiteObject> {
     private String type;
     private String note;
     private String comment;
-    private String newHisto;
+//    private String newHisto;
 
 
     public List<VisiteObject> visitList;
 
-    public static List<VisiteObject> getListAuBonFormat(String historique) {
+
+    // Constructeur
+    public VisiteObject(String date, String type, String note, String comment) {
+        this.date = date;
+        this.type = type;
+        this.note = note;
+        this.comment = comment;
+    }
+
+//    // Constructeur
+//    public VisiteObject(String newHisto) {
+//        this.newHisto = newHisto;
+//    }
+
+    // Constructeur
+    public VisiteObject() {
+
+    }
+
+    // transforme une string avec des séparateurs et retourne une liste d'objet
+    public List<VisiteObject> setListAuBonFormat(String historique) {
         List<VisiteObject> listAuBonFormat = new ArrayList<>();
 
         //data1!data2!data3£data1!data2!data3£data1!data2!data3
-        if(historique != null && !historique.isEmpty()) {
+        if (historique != null && !historique.isEmpty()) {
             for (String visiteAsString : Arrays.asList(historique.split("£"))) {
                 //data1!data2!data3
                 String[] res = visiteAsString.split("!");
+                // construit l'objet
                 VisiteObject visiteObject = new VisiteObject();
                 visiteObject.date = res[0];
                 visiteObject.type = res[1];
@@ -37,9 +57,11 @@ public class VisiteObject implements Comparable<VisiteObject> {
                 visiteObject.comment = res[3];
                 listAuBonFormat.add(visiteObject);
             }
+            visitList = listAuBonFormat;
         }
-        Collections.sort(listAuBonFormat);
-        Collections.reverse(listAuBonFormat);
+
+//        Collections.sort(visitList);
+//        Collections.reverse(visitList);
         return listAuBonFormat;
     }
 
@@ -50,37 +72,23 @@ public class VisiteObject implements Comparable<VisiteObject> {
         return visitList;
     }
 
-    public void addVisite(VisiteObject visite) {
-        // Je teste d'abord si ma liste n'est pas null
-        // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
-        if (visitList != null) {
-            // Ma liste n'est pas null, je peux ajouter!
-            visitList.add(visite);
-        } else {
-            // Sinon j'instancie ma liste
-            visitList = new ArrayList<>();
-            // Et j'ajoute ma visite
-            visitList.add(visite);
-        }
+    public void setVisitList(List<VisiteObject> visitList) {
+        this.visitList = visitList;
     }
 
-    // Constructeur
-    public VisiteObject(String date, String type, String note, String comment) {
-        this.date = date;
-        this.type = type;
-        this.note = note;
-        this.comment = comment;
-    }
-
-    // Constructeur
-    public VisiteObject(String newHisto) {
-        this.newHisto = newHisto;
-    }
-
-    // Constructeur
-    public VisiteObject() {
-
-    }
+//    public void addVisite(VisiteObject visite) {
+//        // Je teste d'abord si ma liste n'est pas null
+//        // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
+//        if (visitList != null) {
+//            // Ma liste n'est pas null, je peux ajouter!
+//            visitList.add(visite);
+//        } else {
+//            // Sinon j'instancie ma liste
+//            visitList = new ArrayList<>();
+//            // Et j'ajoute ma visite
+//            visitList.add(visite);
+//        }
+//    }
 
     public String getId() {
         return id;
@@ -135,13 +143,13 @@ public class VisiteObject implements Comparable<VisiteObject> {
 
     @Override
     public int compareTo(VisiteObject o) {
-        if(this == o) {
+        if (this == o) {
             return 0;
-        }else{
+        } else {
             String myFormat = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.FRANCE);
-            Date date1 =null;
-            Date date2 =null;
+            Date date1 = null;
+            Date date2 = null;
 
             try {
                 date1 = simpleDateFormat.parse(this.getDate());

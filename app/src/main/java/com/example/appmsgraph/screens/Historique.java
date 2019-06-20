@@ -1,6 +1,7 @@
 package com.example.appmsgraph.screens;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -13,13 +14,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.VisiteAdapter;
+import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelcustom.VisiteObject;
+import com.example.appmsgraph.network.GetDataService;
+import com.example.appmsgraph.network.RetrofitInstance;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Historique extends AppCompatActivity implements VisiteAdapter.ListItemClickListenerVisite {
@@ -43,7 +54,13 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     private String id;
     public static String histo;
     private String visite;
-    private List<VisiteObject> visiteObjectList;
+
+    public static List<VisiteObject> visiteObjectList;
+    public static int position;
+
+
+    VisiteObject visiteObject = new VisiteObject();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +77,19 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         Log.d(TAG, "Histo de MainActivity = " + histo + "\n");
         visite = intents.getStringExtra("visite");
 
-        visiteObjectList = VisiteObject.getListAuBonFormat(histo);
-        Log.d(TAG, "Element ListHisto = " + " " + VisiteObject.getListAuBonFormat(histo).toString() + "\n");
+        Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getVisitList() + "\n");
 
+        visiteObjectList = visiteObject.setListAuBonFormat(histo);
 
-        // affiche dans l'activity Historique le champ historique visite de la liste sharepoint
-//        historique = findViewById(R.id.historique);
-//        historique.setText(histo);
-
+        // mise en page du recyclerview
         recyclerView = findViewById(R.id.recyclerviewHistorique);
         adapter = new VisiteAdapter(visiteObjectList, this, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Historique.this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
         recyclerView.setVisibility(View.VISIBLE);
+
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -97,7 +113,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
     @Override
     public void onListItemClickVisite(int clickedItemIndex) {
-
         Intent updateintent = new Intent(getApplicationContext(), UpdateVisite.class);
         VisiteObject clickItem = visiteObjectList.get(clickedItemIndex);
         Log.d(TAG, "Item clicked: " + clickItem);
@@ -111,6 +126,9 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         updateintent.putExtra("note", visiteObjectList.get(clickedItemIndex).getNote());
         updateintent.putExtra("comment", visiteObjectList.get(clickedItemIndex).getComment());
 
+        // récupérer la position de l'élément cliqué
+        Historique.position = clickedItemIndex;
+
         startActivity(updateintent);
     }
 
@@ -121,7 +139,8 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView.setAdapter(new VisiteAdapter(VisiteObject.getListAuBonFormat(histo), this, this));
+        recyclerView.setAdapter(new VisiteAdapter(visiteObject.setListAuBonFormat(histo), this, this));
+        Log.d(TAG, "ACTIVITY HISTORIQUE VALUE HISTO: " + visiteObject.getVisitList().toString());
     }
 
     @Override

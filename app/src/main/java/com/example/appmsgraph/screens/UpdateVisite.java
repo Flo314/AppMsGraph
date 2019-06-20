@@ -169,8 +169,14 @@ public class UpdateVisite extends AppCompatActivity {
         Log.d(TAG, "HISTORIQUE: " + Historique.histo );
         /*UPDATE VISITE*/
         String newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
-
-//        finish();
+        Historique.histo = newHisto + Historique.histo;
+        VisiteObject visiteObject = new VisiteObject(dateFormulaire,typeFormulaire,notFormulaire,commentFormulaire);
+        Historique.visiteObjectList.set(Historique.position,visiteObject);
+        updateHisto();
+        if(Historique.position == 0){
+            updateDate();
+        }
+        finish();
     }
 
     public void updateHisto() {
