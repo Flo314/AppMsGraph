@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.VisiteAdapter;
+import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.example.appmsgraph.network.GetDataService;
@@ -37,12 +38,9 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
     /* UI */
     private ActionBar actionBar;
-    private TextView historique;
-    private CardView cardView;
     private FloatingActionButton createVisite;
     private VisiteAdapter adapter;
     private RecyclerView recyclerView;
-    private ImageView deleteItem;
 
     /*Debug*/
     private final String TAG = Historique.class.getSimpleName();
@@ -50,8 +48,8 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     /*Data*/
     private String nameTitle;
     private String prenom;
-    private String authHeader;
-    private String id;
+    public static String authHeader;
+    public static String id;
     public static String histo;
     private String visite;
 
@@ -125,7 +123,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         updateintent.putExtra("type", visiteObjectList.get(clickedItemIndex).getType());
         updateintent.putExtra("note", visiteObjectList.get(clickedItemIndex).getNote());
         updateintent.putExtra("comment", visiteObjectList.get(clickedItemIndex).getComment());
-
         // récupérer la position de l'élément cliqué
         Historique.position = clickedItemIndex;
         startActivity(updateintent);

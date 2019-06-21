@@ -57,10 +57,11 @@ public class UpdateVisite extends AppCompatActivity {
     private String note;
     private String type;
     private String comment;
-    private String authHeader;
-    private String id;
+    private  String authHeader;
+    private  String id;
     private String newDate;
     private String newHisto;
+    private String oldHisto;
 
     private VisiteObject visiteObject;
 
@@ -161,7 +162,7 @@ public class UpdateVisite extends AppCompatActivity {
          /*UPDATE VISITE*/
         // remplacement de l'ancienne chaine par la nouvelle
         newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
-        String oldHisto = date+"!"+type+"!"+note+"!"+comment+"£";
+        oldHisto = date+"!"+type+"!"+note+"!"+comment+"£";
         Historique.histo = Historique.histo.replace(oldHisto,newHisto);
 
         visiteObject = new VisiteObject(dateFormulaire,typeFormulaire,notFormulaire,commentFormulaire);
