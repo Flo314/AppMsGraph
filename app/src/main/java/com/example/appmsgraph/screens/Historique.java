@@ -128,7 +128,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
         // récupérer la position de l'élément cliqué
         Historique.position = clickedItemIndex;
-
         startActivity(updateintent);
     }
 

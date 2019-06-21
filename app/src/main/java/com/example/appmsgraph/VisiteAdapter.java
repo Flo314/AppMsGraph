@@ -79,22 +79,6 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         notifyItemRangeChanged(position, list.size());
     }
 
-    // update l'item de la liste
-    public void updateData(){
-        int position = 0;
-        int i = list.size();
-        ArrayList<VisiteObject> dataListHisto = new ArrayList<>();
-        for (VisiteObject item : list){
-            if(list != null && position <= i){
-                dataListHisto.add(item);
-            }
-            position++;
-        }
-        Objects.requireNonNull(list).clear();
-        list.addAll(dataListHisto);
-        notifyDataSetChanged();
-    }
-
     // ViewHolder
     class VisiteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

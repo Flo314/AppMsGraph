@@ -30,6 +30,7 @@ import com.example.appmsgraph.network.RetrofitInstance;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -59,8 +60,9 @@ public class UpdateVisite extends AppCompatActivity {
     private String authHeader;
     private String id;
     private String newDate;
+    private String newHisto;
 
-    VisiteAdapter adapter;
+    VisiteObject visiteObject;
 
     /*DatePicker*/
     private int mYear, mMonth, mDay;
@@ -126,21 +128,6 @@ public class UpdateVisite extends AppCompatActivity {
 
     // Datepiker
     public void getDate(View v) {
-//        DatePickerDialog dpd = new DatePickerDialog(v.getContext(),
-//                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        Calendar myCalendar = Calendar.getInstance();
-//                        myCalendar.set(Calendar.YEAR, year);
-//                        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-//                        myCalendar.set(Calendar.MONTH, month);
-//                        String myFormat = "dd/MM/yyyy";
-//                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.FRANCE);
-//                        dateupdate.setText(sdf.format((myCalendar.getTime())));
-//                    }
-//                }, mYear, mMonth, mDay);
-//        dpd.getDatePicker().setMinDate(System.currentTimeMillis());
-//        dpd.show();
         final Calendar c = Calendar.getInstance();
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
@@ -166,14 +153,22 @@ public class UpdateVisite extends AppCompatActivity {
         String typeFormulaire = typeupdate.getSelectedItem().toString();
         String notFormulaire = String.valueOf(noteupdate.getRating()).toString();
         String commentFormulaire = commentupdate.getText().toString();
-        Log.d(TAG, "HISTORIQUE: " + Historique.histo );
-        /*UPDATE VISITE*/
-        String newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
-        Historique.histo = newHisto + Historique.histo;
-        VisiteObject visiteObject = new VisiteObject(dateFormulaire,typeFormulaire,notFormulaire,commentFormulaire);
-        Historique.visiteObjectList.set(Historique.position,visiteObject);
+        if(commentFormulaire.isEmpty()) commentFormulaire = "pas de commentaire";
+        Log.d(TAG, "HISTORIQUE: " + Historique.histo);
+        Log.d(TAG, "HISTORIQUE: " + Historique.visiteObjectList.toString());
+
+         /*UPDATE VISITE*/
+        newDate = dateFormulaire;
+        newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
+        String oldHisto = date+"!"+type+"!"+note+"!"+comment+"£";
+        Historique.histo = Historique.histo.replace(oldHisto,newHisto);
+
+        visiteObject = new VisiteObject(dateFormulaire,typeFormulaire,notFormulaire,commentFormulaire);
+        visiteObject.setListAuBonFormat(newHisto);
+        Historique.visiteObjectList.set(Historique.position, visiteObject);
         updateHisto();
-        if(Historique.position == 0){
+        // si c'est la dernière visite qu'on modifie onmet à jour la date dans la colonne visite
+        if (Historique.position == 0) {
             updateDate();
         }
         finish();

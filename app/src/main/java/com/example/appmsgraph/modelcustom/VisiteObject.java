@@ -16,7 +16,7 @@ public class VisiteObject implements Comparable<VisiteObject> {
     private String type;
     private String note;
     private String comment;
-//    private String newHisto;
+    private String newHisto;
 
 
     public List<VisiteObject> visitList;
@@ -30,10 +30,10 @@ public class VisiteObject implements Comparable<VisiteObject> {
         this.comment = comment;
     }
 
-//    // Constructeur
-//    public VisiteObject(String newHisto) {
-//        this.newHisto = newHisto;
-//    }
+    // Constructeur
+    public VisiteObject(String newHisto) {
+        this.newHisto = newHisto;
+    }
 
     // Constructeur
     public VisiteObject() {
