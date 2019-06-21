@@ -159,6 +159,7 @@ public class UpdateVisite extends AppCompatActivity {
 
          /*UPDATE VISITE*/
         newDate = dateFormulaire;
+        // remplacement de l'ancienne chaine par la nouvelle
         newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
         String oldHisto = date+"!"+type+"!"+note+"!"+comment+"£";
         Historique.histo = Historique.histo.replace(oldHisto,newHisto);
@@ -167,7 +168,7 @@ public class UpdateVisite extends AppCompatActivity {
         visiteObject.setListAuBonFormat(newHisto);
         Historique.visiteObjectList.set(Historique.position, visiteObject);
         updateHisto();
-        // si c'est la dernière visite qu'on modifie onmet à jour la date dans la colonne visite
+        // si c'est la dernière visite qu'on modifie on met à jour la date dans la colonne visite(sharepoint)
         if (Historique.position == 0) {
             updateDate();
         }

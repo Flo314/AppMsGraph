@@ -59,7 +59,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
             public void onClick(View v) {
                 removeAt(position);
                 Toast.makeText(context,"Visite supprimée", Toast.LENGTH_SHORT).show();
-                Log.d("TEST DELETE", "TEST DELETE " + position);
+
             }
         });
     }

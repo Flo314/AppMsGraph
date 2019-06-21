@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -16,8 +15,6 @@ public class VisiteObject implements Comparable<VisiteObject> {
     private String type;
     private String note;
     private String comment;
-    private String newHisto;
-
 
     public List<VisiteObject> visitList;
 
@@ -28,11 +25,6 @@ public class VisiteObject implements Comparable<VisiteObject> {
         this.type = type;
         this.note = note;
         this.comment = comment;
-    }
-
-    // Constructeur
-    public VisiteObject(String newHisto) {
-        this.newHisto = newHisto;
     }
 
     // Constructeur
@@ -75,20 +67,6 @@ public class VisiteObject implements Comparable<VisiteObject> {
     public void setVisitList(List<VisiteObject> visitList) {
         this.visitList = visitList;
     }
-
-//    public void addVisite(VisiteObject visite) {
-//        // Je teste d'abord si ma liste n'est pas null
-//        // SINON JE RISQUE UNE ERREUR DE TYPE NullPointerException (affectation sur un objet inexistant ou dit null)
-//        if (visitList != null) {
-//            // Ma liste n'est pas null, je peux ajouter!
-//            visitList.add(visite);
-//        } else {
-//            // Sinon j'instancie ma liste
-//            visitList = new ArrayList<>();
-//            // Et j'ajoute ma visite
-//            visitList.add(visite);
-//        }
-//    }
 
     public String getId() {
         return id;
