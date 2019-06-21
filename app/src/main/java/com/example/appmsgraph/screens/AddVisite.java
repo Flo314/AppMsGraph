@@ -4,18 +4,13 @@ import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -24,20 +19,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appmsgraph.R;
-import com.example.appmsgraph.VisiteAdapter;
 import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
-import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.utils.Validator;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -73,7 +65,7 @@ public class AddVisite extends AppCompatActivity {
     private String newHisto;
     private String newDate;
 
-    VisiteObject visiteObject = new VisiteObject();
+    VisiteObject visiteObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,13 +139,16 @@ public class AddVisite extends AppCompatActivity {
             newDate = date;
             Log.d(TAG, "DATE: " + date);
             Historique.histo = newHisto + Historique.histo;
-
+            visiteObject = new VisiteObject(date,type,not,comment);
             visiteObject.setListAuBonFormat(Historique.histo);
-            VisiteObject visiteObject = new VisiteObject(date,type,not,comment);
+
             // ajout d'une nouvelle visite dans la liste
-            Historique.visiteObjectList.add(0,visiteObject);
+            compareStringDate();
+            if(compareStringDate()){
+                Historique.visiteObjectList.add(0,visiteObject);
                 updateDate();
                 updateHisto();
+            }
             finish();
             Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
@@ -247,6 +242,28 @@ public class AddVisite extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    // compare la différence entre 2 string converti en date pour l'ajout en tête de liste
+    // sinon insertion tout le temps àl'indice 0
+    public boolean compareStringDate(){
+        for(VisiteObject item : Historique.visiteObjectList){
+            String myFormat = "dd/MM/yyyy";
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.FRANCE);
+            Date datelist = null;
+            Date newdate = null;
+
+            try {
+                datelist = simpleDateFormat.parse(item.getDate());
+                newdate = simpleDateFormat.parse(visiteObject.getDate());
+                if(newdate.getTime() > datelist.getTime())
+                return true;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return false;
     }
 
     /* Cycle de vie Activity

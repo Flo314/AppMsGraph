@@ -251,7 +251,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
             @Override
             public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
-                Toast.makeText(MainActivity.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "\n" +
+                        "Une erreur s'est produite. Veuillez réessayer plus tard!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
                 t.printStackTrace();
             }
@@ -338,11 +339,11 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-        recyclerView = findViewById(R.id.recyclerview);
-        adapter = new CollaboratorAdapter(datalistObj, this);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+//        recyclerView = findViewById(R.id.recyclerview);
+//        adapter = new CollaboratorAdapter(datalistObj, this);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
         network();
     }
 

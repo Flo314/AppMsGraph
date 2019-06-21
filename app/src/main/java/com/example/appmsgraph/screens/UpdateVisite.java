@@ -62,7 +62,7 @@ public class UpdateVisite extends AppCompatActivity {
     private String newDate;
     private String newHisto;
 
-    VisiteObject visiteObject;
+    private VisiteObject visiteObject;
 
     /*DatePicker*/
     private int mYear, mMonth, mDay;
@@ -94,7 +94,8 @@ public class UpdateVisite extends AppCompatActivity {
         dateupdate = findViewById(R.id.updatedatevisite);
         dateupdate.setText(date);
         typeupdate = findViewById(R.id.updatetypevisite);
-        // todo récup value du spinner
+
+        // récup value du spinner
         String compareValue = type;
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.type_visite, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -158,7 +159,6 @@ public class UpdateVisite extends AppCompatActivity {
         Log.d(TAG, "HISTORIQUE: " + Historique.visiteObjectList.toString());
 
          /*UPDATE VISITE*/
-        newDate = dateFormulaire;
         // remplacement de l'ancienne chaine par la nouvelle
         newHisto = dateFormulaire + "!" + typeFormulaire + "!" + notFormulaire + "!" + commentFormulaire + "£";
         String oldHisto = date+"!"+type+"!"+note+"!"+comment+"£";
@@ -170,6 +170,7 @@ public class UpdateVisite extends AppCompatActivity {
         updateHisto();
         // si c'est la dernière visite qu'on modifie on met à jour la date dans la colonne visite(sharepoint)
         if (Historique.position == 0) {
+            newDate = dateFormulaire;
             updateDate();
         }
         finish();
@@ -196,7 +197,7 @@ public class UpdateVisite extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Value> call, Throwable t) {
-                Toast.makeText(UpdateVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Toast.makeText(UpdateVisite.this, "Une erreur s'est produite. Veuillez réessayer plus tard!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
                 t.printStackTrace();
             }
@@ -224,7 +225,7 @@ public class UpdateVisite extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Value> call, Throwable t) {
-                Toast.makeText(UpdateVisite.this, "Something went wrong...Please try later!", Toast.LENGTH_LONG).show();
+                Toast.makeText(UpdateVisite.this, "Une erreur s'est produite. Veuillez réessayer plus tard!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
                 t.printStackTrace();
             }
