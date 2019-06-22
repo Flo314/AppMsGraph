@@ -78,7 +78,6 @@ public class AddVisite extends AppCompatActivity {
         actionBar.setTitle("Ajouter une Visite");
 
 
-
         // Data qui vient de Historique
         Intent intents = getIntent();
         authHeader = intents.getStringExtra("Tok");
@@ -122,7 +121,7 @@ public class AddVisite extends AppCompatActivity {
         String type = type_visite.getSelectedItem().toString();
         String not = String.valueOf(note.getRating()).toString();
         String comment = commentaire.getText().toString();
-        if(comment.isEmpty()) comment = "pas de commentaire";
+        if (comment.isEmpty()) comment = "pas de commentaire";
 
         // Control formulaire
         Validator.validatorDate(date);
@@ -131,28 +130,37 @@ public class AddVisite extends AppCompatActivity {
             validatordate.setVisibility(View.VISIBLE);
             Validator.validator(comment);
         } else if (!Validator.validator(comment)) {
-            validatorcomment.setText("Erreur:Veuillez entrer au moins 2 caractères ou le commentaire ne doit pas dépasser 150 caractères maximum");
+            validatorcomment.setText("Erreur:Vous avez dépassé la limite de 150 caractères maximum");
             validatorcomment.setVisibility(View.VISIBLE);
         } else {
+            /*ADD VISITE*/
             /*ADD VISITE*/
             newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
             newDate = date;
             Log.d(TAG, "DATE: " + date);
-            Historique.histo = newHisto + Historique.histo;
-            visiteObject = new VisiteObject(date,type,not,comment);
-            visiteObject.setListAuBonFormat(Historique.histo);
-
-            // ajout d'une nouvelle visite dans la liste
-            compareStringDate();
-            if(compareStringDate()){
+            if(Historique.histo == null){
+                Historique.histo = newHisto;
+                visiteObject = new VisiteObject(date,type,not,comment);
+                visiteObject.setListAuBonFormat(Historique.histo);
                 Historique.visiteObjectList.add(0,visiteObject);
                 updateDate();
                 updateHisto();
+                Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
+            }else {
+                Historique.histo = newHisto + Historique.histo;
+                visiteObject = new VisiteObject(date,type,not,comment);
+                visiteObject.setListAuBonFormat(Historique.histo);
+                // ajout d'une nouvelle visite dans la liste
+                compareStringDate();
+                if(compareStringDate()){
+                    Historique.visiteObjectList.add(0,visiteObject);
+                    updateDate();
+                    updateHisto();
+                }
+                Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
             }
-            finish();
-            Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
         }
-
+        finish();
     }
 
     // Datepiker
@@ -245,9 +253,9 @@ public class AddVisite extends AppCompatActivity {
     }
 
     // compare la différence entre 2 string converti en date pour l'ajout en tête de liste
-    // sinon insertion tout le temps àl'indice 0
-    public boolean compareStringDate(){
-        for(VisiteObject item : Historique.visiteObjectList){
+    // sinon insertion à l'indice 0
+    public boolean compareStringDate() {
+        for (VisiteObject item : Historique.visiteObjectList) {
             String myFormat = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.FRANCE);
             Date datelist = null;
@@ -256,8 +264,8 @@ public class AddVisite extends AppCompatActivity {
             try {
                 datelist = simpleDateFormat.parse(item.getDate());
                 newdate = simpleDateFormat.parse(visiteObject.getDate());
-                if(newdate.getTime() > datelist.getTime())
-                return true;
+                if (newdate.getTime() > datelist.getTime())
+                    return true;
             } catch (ParseException e) {
                 e.printStackTrace();
                 return false;

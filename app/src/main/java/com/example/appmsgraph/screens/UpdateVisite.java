@@ -168,12 +168,12 @@ public class UpdateVisite extends AppCompatActivity {
         visiteObject = new VisiteObject(dateFormulaire,typeFormulaire,notFormulaire,commentFormulaire);
         visiteObject.setListAuBonFormat(newHisto);
         Historique.visiteObjectList.set(Historique.position, visiteObject);
-        updateHisto();
         // si c'est la dernière visite qu'on modifie on met à jour la date dans la colonne visite(sharepoint)
         if (Historique.position == 0) {
             newDate = dateFormulaire;
             updateDate();
         }
+        updateHisto();
         finish();
     }
 

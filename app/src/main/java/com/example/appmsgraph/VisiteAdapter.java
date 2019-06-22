@@ -73,15 +73,19 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
                 String oldTypeToDelete = Historique.visiteObjectList.get(position).getType().toString();
                 String oldNoteToDelete = Historique.visiteObjectList.get(position).getNote().toString();
                 String oldCommentToDelete = Historique.visiteObjectList.get(position).getComment().toString();
+                // construction de l'ancienne chaine de caractère
                 String oldHisto = oldDateToDelete+"!"+oldTypeToDelete+"!"+oldNoteToDelete+"!"+oldCommentToDelete+"£";
                 String newHisto="";
-                histoDelete = Historique.histo.replace(oldHisto,newHisto);
+                // remplacement par chaine vide
+                Historique.histo = Historique.histo.replace(oldHisto,newHisto);
 //                Log.d("HISTODELETE", "HISTODELETE" + oldDateToDelete
 //                +" "+ oldTypeToDelete +" "+ oldNoteToDelete +" "+ oldCommentToDelete);
 //                Log.d("HISTODELETE", "HISTODELETE" + oldHisto);
                 Log.d("HISTODELETE", "HISTODELETE" + histoDelete);
-                updateHisto();
+                // mise à jour liste sharepoint
                 removeAt(position);
+                updateHisto();
+
                 Toast.makeText(context,"Visite supprimée", Toast.LENGTH_SHORT).show();
 
             }
@@ -99,7 +103,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
     // appel réseau pour la suppression
     private void updateHisto() {
         Fields fields = new Fields();
-        fields.setHistorique(histoDelete);
+        fields.setHistorique(Historique.histo);
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
         Call<Value> call = service.updateData(Historique.authHeader, Historique.id, fields);
         // Exécute la requête asynchrone
