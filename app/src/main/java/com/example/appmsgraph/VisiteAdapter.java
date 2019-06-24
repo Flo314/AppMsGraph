@@ -13,32 +13,31 @@ import android.widget.Toast;
 
 import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value;
-import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.modelcustom.VisiteObject;
 import com.example.appmsgraph.network.GetDataService;
 import com.example.appmsgraph.network.RetrofitInstance;
 import com.example.appmsgraph.screens.Historique;
-import com.example.appmsgraph.screens.UpdateVisite;
-import com.example.appmsgraph.utils.CompareDate;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Objects;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * permet de contenir l'ensemble des données à afficher dans le RecyclerView en gérant également ses mises à jour
+ * adaptateur qui sera utilisé par RecyclerView pour afficher la liste des historiques
+ */
 public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteViewHolder> {
 
     private List<VisiteObject> list;
     Context context;
 
-    private String histoDelete;
-
     final private VisiteAdapter.ListItemClickListenerVisite onClickListener;
 
-    // interface qui définit l'auditeur click recyclerview
+    // interface qui définit l'auditeur click recyclerview pour chaque items
     public interface ListItemClickListenerVisite{
         void onListItemClickVisite(int clickedItemIndex);
     }
@@ -81,7 +80,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
 //                Log.d("HISTODELETE", "HISTODELETE" + oldDateToDelete
 //                +" "+ oldTypeToDelete +" "+ oldNoteToDelete +" "+ oldCommentToDelete);
 //                Log.d("HISTODELETE", "HISTODELETE" + oldHisto);
-                Log.d("HISTODELETE", "HISTODELETE" + histoDelete);
+                Log.d("HISTODELETE", "HISTODELETE" + Historique.histo);
                 // mise à jour liste sharepoint
                 removeAt(position);
                 updateHisto();
@@ -129,7 +128,9 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         notifyDataSetChanged();
     }
 
-    // ViewHolder
+     // récupère tous les item de la view
+     // stocke la référence aux vues de présentation de carte qui doivent être modifiées de façon dynamique
+     // lors de l'exécution du programme par une liste de données
     class VisiteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView typevisite, datevisite,notevisite,commentvisite;

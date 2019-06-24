@@ -20,6 +20,7 @@ public class CompareDate {
      *
      * @param stringDate représente la chaîne de la liste sharepoint visite au format 'dd/MM/yyyy'
      * @return le nombres de jours qui sépare la date du jour avec celle entré en paramètre
+     * @return le TAG = couleur correspondante aux nombres de jours de différence (-30, -20 ...)
      */
     public String getCompareDate(String stringDate) {
 
@@ -80,16 +81,6 @@ public class CompareDate {
             return TAG;
         }
     }
-
-    // Récupère le nombre de jours entre deux dates
-//    public static double getDaysBetweenTwoDate(Date srcDate, Date destDate) {
-//        long startTime = srcDate.getTime();
-//        long destTime = destDate.getTime();
-//        long deltaTime = destTime - startTime;
-//        long oneDayTime = 24 * 60 * 60 * 1000;
-//        double deltaDay = Math.abs(deltaTime / oneDayTime);
-//        return deltaDay;
-//    }
 
     @Override
     public String toString() {

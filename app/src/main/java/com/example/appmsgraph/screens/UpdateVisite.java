@@ -57,8 +57,8 @@ public class UpdateVisite extends AppCompatActivity {
     private String note;
     private String type;
     private String comment;
-    private  String authHeader;
-    private  String id;
+    private String authHeader;
+    private String id;
     private String newDate;
     private String newHisto;
     private String oldHisto;
@@ -149,6 +149,7 @@ public class UpdateVisite extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    // validation du formulaire pour l'update
     public void updateVisitlClicked() {
         // récup des valeurs du formulaire
         String dateFormulaire = dateupdate.getText().toString();
@@ -177,6 +178,7 @@ public class UpdateVisite extends AppCompatActivity {
         finish();
     }
 
+    // mise à jour de la liste shrarepoint (colonne Historique)
     public void updateHisto() {
         Fields fields = new Fields();
         fields.setHistorique(Historique.histo);
@@ -205,6 +207,7 @@ public class UpdateVisite extends AppCompatActivity {
         });
     }
 
+    // mise à jour de la liste sharepoint (colonne Visite)
     public void updateDate() {
         Fields fields = new Fields();
         fields.setVisite(newDate);

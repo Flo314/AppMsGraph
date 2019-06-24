@@ -11,7 +11,9 @@ import com.microsoft.identity.client.PublicClientApplication;
 
 import java.util.List;
 
-
+/**
+ * Authentification
+ */
 public class AuthenticationHelper {
 
     private static AuthenticationHelper INSTANCE = null;

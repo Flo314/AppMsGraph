@@ -56,7 +56,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     public static List<VisiteObject> visiteObjectList;
     public static int position;
 
-
     VisiteObject visiteObject = new VisiteObject();
 
 
@@ -77,6 +76,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
 
         Log.d(TAG, "Element ListHisto = " + " " + visiteObject.getVisitList() + "\n");
 
+        // construit la string Historique en objet
         visiteObjectList = visiteObject.setListAuBonFormat(histo);
 
         // mise en page du recyclerview
@@ -87,7 +87,6 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         recyclerView.setAdapter(adapter);
 
         recyclerView.setVisibility(View.VISIBLE);
-
 
         // actionBar
         actionBar = getSupportActionBar();
@@ -109,6 +108,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
         });
     }
 
+    // Lance l'activity UpdateVisite au click d'un item de la liste de l'historique
     @Override
     public void onListItemClickVisite(int clickedItemIndex) {
         Intent updateintent = new Intent(getApplicationContext(), UpdateVisite.class);
@@ -135,6 +135,7 @@ public class Historique extends AppCompatActivity implements VisiteAdapter.ListI
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
+        // mise à jour de l'adapter
         recyclerView.setAdapter(new VisiteAdapter(visiteObject.setListAuBonFormat(histo), this, this));
         Log.d(TAG, "ACTIVITY HISTORIQUE VALUE HISTO: " + visiteObject.getVisitList().toString());
     }

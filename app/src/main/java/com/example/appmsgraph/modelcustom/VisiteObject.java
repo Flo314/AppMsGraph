@@ -1,6 +1,8 @@
 package com.example.appmsgraph.modelcustom;
 
 
+import com.example.appmsgraph.screens.Historique;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,13 +50,14 @@ public class VisiteObject implements Comparable<VisiteObject> {
                 visiteObject.type = res[1];
                 visiteObject.note = res[2];
                 visiteObject.comment = res[3];
+
                 listAuBonFormat.add(visiteObject);
             }
             visitList = listAuBonFormat;
         }
-
-//        Collections.sort(visitList);
-//        Collections.reverse(visitList);
+// ne pas l'utiliser sinon problème de position des items dans l'adapter
+//        Collections.sort(listAuBonFormat);
+//        Collections.reverse(listAuBonFormat);
         return listAuBonFormat;
     }
 
@@ -120,6 +123,7 @@ public class VisiteObject implements Comparable<VisiteObject> {
                 '}';
     }
 
+    // Compare 2 string au format date
     @Override
     public int compareTo(VisiteObject o) {
         if (this == o) {

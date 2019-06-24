@@ -3,6 +3,9 @@ package com.example.appmsgraph.network;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Librairie Retrofit permettant l'utilisation d'API
+ */
 public class RetrofitInstance {
 
     private static Retrofit retrofit;

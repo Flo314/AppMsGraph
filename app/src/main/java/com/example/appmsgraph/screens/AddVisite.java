@@ -114,8 +114,8 @@ public class AddVisite extends AppCompatActivity {
         });
     }
 
+    // ajout d'une visite dans la liste sharepoint (clolonne Historique)
     private void addVisitlClicked() {
-
         // Je récupère la saisie utilisateur dans mes vues
         String date = editDate.getText().toString();
         String type = type_visite.getSelectedItem().toString();
@@ -134,10 +134,10 @@ public class AddVisite extends AppCompatActivity {
             validatorcomment.setVisibility(View.VISIBLE);
         } else {
             /*ADD VISITE*/
-            /*ADD VISITE*/
             newHisto = date + "!" + type + "!" + not + "!" + comment + "£";
             newDate = date;
             Log.d(TAG, "DATE: " + date);
+            // si colonne Historique est vide
             if(Historique.histo == null){
                 Historique.histo = newHisto;
                 visiteObject = new VisiteObject(date,type,not,comment);
@@ -146,21 +146,25 @@ public class AddVisite extends AppCompatActivity {
                 updateDate();
                 updateHisto();
                 Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
+                // colonne Historique non vide
             }else {
-                Historique.histo = newHisto + Historique.histo;
                 visiteObject = new VisiteObject(date,type,not,comment);
-                visiteObject.setListAuBonFormat(Historique.histo);
-                // ajout d'une nouvelle visite dans la liste
-                compareStringDate();
-                if(compareStringDate()){
+                // comparer la date pour ne pas l'ajouter si elle est inférieure à la date de la dernière visite
+                compareStringDate(visiteObject);
+                Log.d(TAG, "COMPARE STRING DATE:" + compareStringDate(visiteObject));
+                if(compareStringDate(visiteObject)){
+                    Historique.histo = newHisto + Historique.histo;
                     Historique.visiteObjectList.add(0,visiteObject);
                     updateDate();
                     updateHisto();
-                }
-                Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
+                }else Toast.makeText(this, "Erreur la date est inférieure à la dernière visite", Toast.LENGTH_LONG).show();
+
             }
             finish();
         }
+
+
 
     }
 
@@ -197,6 +201,7 @@ public class AddVisite extends AppCompatActivity {
         return sdf.format(date);
     }
 
+    // mise à jour de la liste shrarepoint (colonne Historique)
     public void updateHisto() {
         Fields fields = new Fields();
         fields.setHistorique(Historique.histo);
@@ -224,7 +229,7 @@ public class AddVisite extends AppCompatActivity {
             }
         });
     }
-
+    // mise à jour de la liste sharepoint (colonne Visite)
     public void updateDate() {
         Fields fields = new Fields();
         fields.setVisite(newDate);
@@ -255,7 +260,7 @@ public class AddVisite extends AppCompatActivity {
 
     // compare la différence entre 2 string converti en date pour l'ajout en tête de liste
     // sinon insertion à l'indice 0
-    public boolean compareStringDate() {
+    public boolean compareStringDate(VisiteObject visiteObject) {
         for (VisiteObject item : Historique.visiteObjectList) {
             String myFormat = "dd/MM/yyyy";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myFormat, Locale.FRANCE);

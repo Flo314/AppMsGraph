@@ -3,9 +3,14 @@ package com.example.appmsgraph.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Cette classe s'ocuppe unique de contrôler le formulaire
+ * qui représente L'activity AddVisite et UpdateVisite
+ */
 public class Validator {
 
 
+    // Imput commentaire
     public static Boolean validator(String comment) {
         boolean valid = true;
         if (comment != null && !comment.isEmpty()){
@@ -18,6 +23,7 @@ public class Validator {
         return valid;
     }
 
+    // Imput datepicker
     public static Boolean validatorDate(String date) {
         boolean valid = true;
         if (date.equals("")|| date.equals("Date")) {

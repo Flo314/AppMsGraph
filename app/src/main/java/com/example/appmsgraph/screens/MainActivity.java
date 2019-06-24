@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // actionbar
         actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.hide();
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
         btnSign = findViewById(R.id.btnSign);
+        // bouton Signin pour l'authentification
         btnSign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         recyclerView.setVisibility(View.VISIBLE);
     }
 
-    /* Helper methods gèrent les appels réseaux
-     * ================================================================= */
+    /* Helper methods gèrent les appels réseaux / récupère les données de la liste sharepoint
+     * ====================================================================================== */
 
     private void network() {
         //Créer un identifiant pour l'interface RetrofitInstance
@@ -245,6 +247,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 // si reponse ok et que les data ne sont pas null
                 if (response.isSuccessful() && response.body() != null) {
                     loadDataList(response.body().getValue());
+                    // les données sont stockées dans cette liste
                     datalistObj = response.body().getValue();
                 }
             }
@@ -265,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 //        Log.d(TAG, "clickItem: " + clickedItemIndex);
 
         // ouverture de HistoriqueActivity en lui passant le nom du collab pour le title de l'action bar
+        // ainsi que ses données
         Intent intent = new Intent(getApplicationContext(), Historique.class);
         Value_ clickItem = datalistObj.get(clickedItemIndex);
         intent.putExtra("title", clickItem.getFields().getTitle());
@@ -304,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         return true;
     }
 
-    // item du menu Filter
+    // item du menu Filter (filtrer les données)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -313,12 +317,15 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 network();
                 return true;
             case R.id.action_important:
+                // méthode de l'adapter CollaboratorAdapter
                 adapter.updateListRed();
                 return true;
             case R.id.action_moyen:
+                // méthode de l'adapter CollaboratorAdapter
                 adapter.updateListOrange();
                 return true;
             case R.id.action_bon:
+                // méthode de l'adapter CollaboratorAdapter
                 adapter.updateListGreen();
                 return true;
         }
@@ -339,11 +346,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "OnResume called ");
-//        recyclerView = findViewById(R.id.recyclerview);
-//        adapter = new CollaboratorAdapter(datalistObj, this);
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
         network();
     }
 

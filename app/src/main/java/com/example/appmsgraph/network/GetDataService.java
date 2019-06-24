@@ -15,6 +15,9 @@ import retrofit2.http.PATCH;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Mise en place des différents point de terminaison apellé dans l'app
+ */
 public interface GetDataService {
 
     // https://graph.microsoft.com/v1.0/
