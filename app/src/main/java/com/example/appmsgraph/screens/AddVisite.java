@@ -159,8 +159,9 @@ public class AddVisite extends AppCompatActivity {
                 }
                 Toast.makeText(this, "Visite ajouté avec succès", Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
-        finish();
+
     }
 
     // Datepiker

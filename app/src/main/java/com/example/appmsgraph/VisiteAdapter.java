@@ -126,6 +126,7 @@ public class VisiteAdapter extends RecyclerView.Adapter<VisiteAdapter.VisiteView
         list.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, list.size());
+        notifyDataSetChanged();
     }
 
     // ViewHolder
