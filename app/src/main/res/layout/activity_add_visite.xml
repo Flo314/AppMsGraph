@@ -2,24 +2,30 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".screens.AddVisite"
-    >
+    tools:context=".screens.AddVisite">
 
 
     <LinearLayout
         android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="48dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="30sp"
+            android:layout_marginRight="30sp">
 
         <TextView
             android:id="@+id/collaborator"
@@ -37,38 +43,37 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_input_form"
+            android:clickable="true"
             android:ems="10"
-            android:hint="@string/date"
-            android:padding="12dp"
             android:focusable="true"
-            android:clickable="true"/>
+            android:hint="@string/date"
+            android:padding="12dp" />
 
         <TextView
             android:id="@+id/validatorDateVisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Validatordate"
-            android:visibility="gone"
             android:textColor="@color/red"
-            android:layout_gravity="center_horizontal"/>
-
+            android:visibility="gone" />
 
 
         <Spinner
             android:id="@+id/typevisite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/bg_input_form"
             android:entries="@array/type_visite"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:padding="12dp" />
 
         <RatingBar
             android:id="@+id/notevisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="3"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:numStars="3" />
 
         <EditText
             android:id="@+id/commentairevisite"
@@ -77,21 +82,22 @@
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/bg_input_form"
+            android:ems="10"
             android:gravity="start|top"
             android:hint="Commentaire"
-            android:paddingTop="8dp"
+            android:inputType="textMultiLine"
             android:paddingLeft="8dp"
-            android:ems="10"
-            android:inputType="textMultiLine"/>
+            android:paddingTop="8dp" />
 
         <TextView
             android:id="@+id/validatorVisite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="Validator"
-            android:visibility="gone"
             android:textColor="@color/red"
-            android:layout_gravity="center_horizontal"/>
+            android:visibility="gone" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -107,6 +113,6 @@
         android:focusable="true"
         android:src="@drawable/ic_done_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

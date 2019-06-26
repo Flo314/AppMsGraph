@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.utils.CompareDate;
 
@@ -91,6 +92,19 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
             return dataList.size();
         }
         return 0;
+    }
+
+    // filtre sur les collab du BM
+    public void updateListBusinessManager(String userConnect) {
+        ArrayList<Value_> dataListBusinessManager = new ArrayList<>();
+        for (Value_ item : dataList){
+            if(item.getFields().getBusinessManager().equals(userConnect)){
+                dataListBusinessManager.add(item);
+            }
+        }
+        dataList.clear();
+        dataList.addAll(dataListBusinessManager);
+        notifyDataSetChanged();
     }
 
     // filtre sur les item medium (orange)

@@ -24,6 +24,9 @@ import android.widget.Toast;
 import com.example.appmsgraph.CollaboratorAdapter;
 import com.example.appmsgraph.R;
 import com.example.appmsgraph.auth.AuthenticationHelper;
+import com.example.appmsgraph.modelSharepoint.Fields;
+import com.example.appmsgraph.modelSharepoint.User;
+import com.example.appmsgraph.modelSharepoint.UserConnect;
 import com.example.appmsgraph.modelSharepoint.Value;
 import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.network.GetDataService;
@@ -70,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
     /*Data*/
     private static ArrayList<Value_> datalistObj = new ArrayList<>();
+    private static List<Value_> filterListBusinessManager = new ArrayList<>();
+    private String userConnectEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +142,9 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 authHeader = accessToken;
                 hideProgressBar();
                 updateSuccessUI();
+                getUser();
                 network();
+
             }
 
             @Override
@@ -249,11 +256,45 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                     loadDataList(response.body().getValue());
                     // les données sont stockées dans cette liste
                     datalistObj = response.body().getValue();
+                    adapter.updateListBusinessManager(userConnectEmail);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Value> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this, "\n" +
+                        "Une erreur s'est produite. Veuillez réessayer plus tard!", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failure: " + t.toString());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void getUser() {
+        //Créer un identifiant pour l'interface RetrofitInstance
+        GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
+        // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
+        // en lui passant le token
+        Call<UserConnect> call = service.getUsers(authHeader);
+        Log.d(TAG, "starting retrofit request to graph");
+        Log.d(TAG, call.request().url() + "");
+        // Exécute la requête asynchrone
+        call.enqueue(new Callback<UserConnect>() {
+            @Override
+            public void onResponse(@NonNull Call<UserConnect> call, @NonNull Response<UserConnect> response) {
+                Log.d(TAG, "Response: " + response.message());
+                Log.d(TAG, "Response: " + response.toString());
+                // si reponse ok et que les data ne sont pas null
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "RESPONSE USER CONNECT: " + response.code());
+                    userConnectEmail = response.body().getMail();
+                    Log.d(TAG, "USER EMAIL CONNECT: " + response.body().getUserPrincipalName());
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserConnect> call, @NonNull Throwable t) {
                 Toast.makeText(MainActivity.this, "\n" +
                         "Une erreur s'est produite. Veuillez réessayer plus tard!", Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failure: " + t.toString());
