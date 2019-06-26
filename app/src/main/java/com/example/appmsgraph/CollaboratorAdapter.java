@@ -33,7 +33,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     private ArrayList<Value_> dataListOrange = new ArrayList<>();
     private ArrayList<Value_> dataListRed = new ArrayList<>();
     private ArrayList<Value_> dataListGreen = new ArrayList<>();
-    ArrayList<Value_> dataListBusinessManager = new ArrayList<>();
+    private ArrayList<Value_> dataListBusinessManager = new ArrayList<>();
+    private ArrayList<Value_> datalistResponsableTechnique = new ArrayList<>();
 
     final private ListItemClickListener onClickListener;
 
@@ -101,12 +102,28 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // filtre sur les collab du BM à la connexion
     public void updateListBusinessManager(String userConnect) {
         for (Value_ item : dataList){
-            if(item.getFields().getBusinessManager().equals(userConnect)){
-                dataListBusinessManager.add(item);
+            if(item.getFields().getBusinessManager() != null){
+                if(item.getFields().getBusinessManager().equals(userConnect)){
+                    dataListBusinessManager.add(item);
+                }
             }
         }
         dataList.clear();
         dataList.addAll(dataListBusinessManager);
+        notifyDataSetChanged();
+    }
+
+    // filtre sur les collab du RTU à la connexion
+    public void updateListResponsableTechnique(String userConnect) {
+        for (Value_ item : dataList){
+            if(item.getFields().getRTU() != null){
+                if(item.getFields().getRTU().equals(userConnect)){
+                    datalistResponsableTechnique.add(item);
+                }
+            }
+        }
+        dataList.clear();
+        dataList.addAll(datalistResponsableTechnique);
         notifyDataSetChanged();
     }
 
@@ -189,10 +206,12 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         protected FilterResults performFiltering(CharSequence constraint) {
             ArrayList<Value_> filteredList = new ArrayList<>();
             if(constraint == null || constraint.length() == 0){
-                filteredList.addAll(dataListFull);
+                // avant il y avait datalistFull à la place de dataListBusinessManager
+                // car le filtre de recherche se faisait sur la liste de tous les collaborateurs
+                filteredList.addAll(dataListBusinessManager);
             }else{
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for(Value_ item : dataListFull){
+                for(Value_ item : dataListBusinessManager){
                     if(item.getFields().getTitle().toLowerCase().contains(filterPattern)){
                         filteredList.add(item);
                     }

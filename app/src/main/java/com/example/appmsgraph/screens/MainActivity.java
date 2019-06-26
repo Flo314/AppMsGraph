@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private static List<Value_> filterListBusinessManager = new ArrayList<>();
     private String userConnectEmail;
 
+    private Value_ businessManager;
+    private Value_ responsableTechnique;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,7 +144,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 updateSuccessUI();
                 getUser();
                 network();
-
             }
 
             @Override
@@ -253,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                     loadDataList(response.body().getValue());
                     // les données sont stockées dans cette liste
                     datalistObj = response.body().getValue();
+                    // connexion du BusinessManager
                     adapter.updateListBusinessManager(userConnectEmail);
                 }
             }
@@ -351,8 +354,12 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // icon filter
-            case R.id.action_filtercolor:
-//                network();
+            case R.id.action_mycollab:
+                adapter.updateListBusinessManager(userConnectEmail);
+                return true;
+            case R.id.action_myagence:
+                // todo filtre sur agence
+                Toast.makeText(this, "Afficher la liste des collab de l'agence", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_important:
                 // méthode de l'adapter CollaboratorAdapter

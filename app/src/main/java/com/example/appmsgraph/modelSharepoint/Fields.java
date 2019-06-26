@@ -25,6 +25,10 @@ public class Fields {
     @Expose
     private String historique;
 
+    @SerializedName("RTU")
+    @Expose
+    private String rTU;
+
     @SerializedName("id")
     @Expose
     private String id;
@@ -257,6 +261,14 @@ public class Fields {
 
     public void setComplianceTagUserId(String complianceTagUserId) {
         this.complianceTagUserId = complianceTagUserId;
+    }
+
+    public String getRTU() {
+        return rTU;
+    }
+
+    public void setRTU(String rTU) {
+        this.rTU = rTU;
     }
 
     @Override
