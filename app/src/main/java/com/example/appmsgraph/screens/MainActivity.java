@@ -353,8 +353,9 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // icon filter
+            // icon filter Menu
             case R.id.action_mycollab:
+                // affiche les collab du BusinessManager
                 adapter.updateListBusinessManager(userConnectEmail);
                 return true;
             case R.id.action_myagence:
@@ -363,14 +364,17 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                 return true;
             case R.id.action_important:
                 // méthode de l'adapter CollaboratorAdapter
+                // affiche les collab ou l'indicateur est rouge
                 adapter.updateListRed();
                 return true;
             case R.id.action_moyen:
                 // méthode de l'adapter CollaboratorAdapter
+                // affiche les collab ou l'indicateur est orange
                 adapter.updateListOrange();
                 return true;
             case R.id.action_bon:
                 // méthode de l'adapter CollaboratorAdapter
+                // affiche les collab ou l'indicateur est vert
                 adapter.updateListGreen();
                 return true;
         }
