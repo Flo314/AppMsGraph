@@ -60,9 +60,6 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     /*Debug*/
     private final String TAG = MainActivity.class.getSimpleName();
 
-    /*Utils*/
-    private CompareDate compareDate;
-
     /*UI*/
     private Button btnSign;
     private ActionBar actionBar;
@@ -355,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         switch (item.getItemId()) {
             // icon filter
             case R.id.action_filtercolor:
-                network();
+//                network();
                 return true;
             case R.id.action_important:
                 // méthode de l'adapter CollaboratorAdapter

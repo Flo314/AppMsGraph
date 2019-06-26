@@ -12,7 +12,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.appmsgraph.modelSharepoint.Fields;
 import com.example.appmsgraph.modelSharepoint.Value_;
 import com.example.appmsgraph.utils.CompareDate;
 
@@ -30,6 +29,11 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
     // list pour filtrer
     private ArrayList<Value_> dataListFull;
     private CompareDate compareDate;
+
+    private ArrayList<Value_> dataListOrange = new ArrayList<>();
+    private ArrayList<Value_> dataListRed = new ArrayList<>();
+    private ArrayList<Value_> dataListGreen = new ArrayList<>();
+    ArrayList<Value_> dataListBusinessManager = new ArrayList<>();
 
     final private ListItemClickListener onClickListener;
 
@@ -94,9 +98,8 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         return 0;
     }
 
-    // filtre sur les collab du BM
+    // filtre sur les collab du BM à la connexion
     public void updateListBusinessManager(String userConnect) {
-        ArrayList<Value_> dataListBusinessManager = new ArrayList<>();
         for (Value_ item : dataList){
             if(item.getFields().getBusinessManager().equals(userConnect)){
                 dataListBusinessManager.add(item);
@@ -107,12 +110,12 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         notifyDataSetChanged();
     }
 
-    // filtre sur les item medium (orange)
+    // filtre sur les item red (rouge)
     public void updateListRed() {
+        dataList.addAll(dataListBusinessManager);
         String visite;
         int position = 0;
         int i = dataList.size();
-        ArrayList<Value_> dataListRed = new ArrayList<>();
         compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();
@@ -131,10 +134,10 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
     // filtre sur les item medium (orange)
     public void updateListOrange() {
+        dataList.addAll(dataListBusinessManager);
         String visite;
         int position = 0;
         int i = dataList.size();
-        ArrayList<Value_> dataListOrange = new ArrayList<>();
         compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();
@@ -153,10 +156,10 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
 
     // filtre sur les item good (vert)
     public void updateListGreen() {
+        dataList.addAll(dataListBusinessManager);
         String visite;
         int position = 0;
         int i = dataList.size();
-        ArrayList<Value_> dataListGreen = new ArrayList<>();
         compareDate = new CompareDate();
         for (Value_ item : dataList){
             visite = item.getFields().getVisite();

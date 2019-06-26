@@ -13,6 +13,8 @@
     <string name="bon">Bon</string>
     <string name="Search">search</string>
     <string name="colorfilter">colorfilter</string>
+    <string name="mes_collaborateurs">Mes collaborateurs</string>
+    <string name="mon_agence">Mon agence</string>
 
 
     <string-array name="type_visite">

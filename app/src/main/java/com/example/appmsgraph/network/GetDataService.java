@@ -21,7 +21,7 @@ import retrofit2.http.Query;
  * Mise en place des différents point de terminaison apellé dans l'app
  */
 public interface GetDataService {
-
+    // base URL dans retrofit Instance
     // https://graph.microsoft.com/v1.0/
     @GET("me")
     Call<UserConnect> getUsers(@Header("Authorization") String authHeader);
