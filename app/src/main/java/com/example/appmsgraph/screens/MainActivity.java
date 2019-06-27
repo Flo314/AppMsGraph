@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
 
         authenticationHelper = AuthenticationHelper.getInstance(getApplicationContext());
 
+        // progressbar
         mProgress = findViewById(R.id.progressbar);
         logo = findViewById(R.id.logo);
         btnSign = findViewById(R.id.btnSign);
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
         authenticationHelper.handleRedirect(requestCode, resultCode, data);
     }
 
-    /* Connexion silencieuse - utilisée s'il y a déjà un compte d'utilisateur dans le cache MSAL */
+    /* Connexion silencieuse - utilisée s'il y a déjà un compte d'utilisateur dans le cache MSAL
+    * permet de ne pas retaper son email et mot de passe */
     private void doSilentSignIn() {
         authenticationHelper.acquireTokenSilently(getAuthCallback());
         Log.d(TAG, "Auth silent...");
@@ -180,10 +182,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
             @Override
             public void onAccountsLoaded(List<IAccount> accounts) {
                 if (accounts != null && accounts.size() == 1) {
-                    /* 1 user */
                     doSilentSignIn();
                 } else {
-                    /* 0 user */
                     doInteractiveSignIn();
                 }
             }
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
     private void network() {
         //Créer un identifiant pour l'interface RetrofitInstance
         GetDataService service = RetrofitInstance.getRetrofitInstance().create(GetDataService.class);
-        // Appelez la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
+        // Appel la méthode avec paramètre dans l'interface pour obtenir les données sur l'employé
         // en lui passant le token
         Call<Value> call = service.getCollaboratorsData(authHeader);
         Log.d(TAG, "starting retrofit request to graph");
@@ -257,6 +257,8 @@ public class MainActivity extends AppCompatActivity implements CollaboratorAdapt
                     datalistObj = response.body().getValue();
                     // connexion du BusinessManager
                     adapter.updateListBusinessManager(userConnectEmail);
+                    // todo connexion du Responsable technique (méthode ok)
+                    // todo connexion autre doit afficher la liste de tous les collaborateurs
                 }
             }
 

@@ -193,7 +193,7 @@ public class CollaboratorAdapter extends RecyclerView.Adapter<CollaboratorAdapte
         notifyDataSetChanged();
     }
 
-     // Filtre sur le nom
+     // Filtre sur le nom icon de la loupe dans l'actionBar
     @Override
     public Filter getFilter() {
         return fiterName;

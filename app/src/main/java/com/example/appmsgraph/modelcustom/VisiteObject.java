@@ -55,7 +55,7 @@ public class VisiteObject implements Comparable<VisiteObject> {
             }
             visitList = listAuBonFormat;
         }
-// ne pas l'utiliser sinon problème de position des items dans l'adapter
+// la méthode fonctionne mais ne pas l'utiliser sinon problème de position des items dans l'adapter
 //        Collections.sort(listAuBonFormat);
 //        Collections.reverse(listAuBonFormat);
         return listAuBonFormat;
